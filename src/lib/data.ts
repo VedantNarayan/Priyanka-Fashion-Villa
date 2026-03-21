@@ -1,0 +1,66 @@
+import { Product } from "@/types";
+
+export const products: Product[] = [
+    {
+        id: "1",
+        name: "Noir Enchanté Gown",
+        price: 120,
+        rating: 4.5,
+        cardImage: "/images/products/black-gown.png",
+        modelImage: "/images/models/black-gown.png",
+        category: "Evening Wear",
+        description: "A stunning black gown perfect for any elegant occasion.",
+        sizes: ["XS", "S", "M", "L"],
+        colors: ["Black"],
+    },
+    {
+        id: "2",
+        name: "Midnight Silk Slip",
+        price: 180,
+        rating: 4.8,
+        cardImage: "/images/products/blue-slip.png",
+        modelImage: "/images/models/blue-slip.png",
+        category: "Cocktail",
+        description: "Pure silk slip dress with delicate lace detailing.",
+        sizes: ["S", "M", "L", "XL"],
+        colors: ["Midnight Blue"],
+    },
+    {
+        id: "3",
+        name: "Velvet Obsidian",
+        price: 250,
+        rating: 5.0,
+        cardImage: "/images/products/velvet-obsidian.png",
+        modelImage: "/images/models/velvet-obsidian.png",
+        category: "Gala",
+        description: "Luxurious velvet gown with deep plunge neckline.",
+        sizes: ["S", "M", "L"],
+        colors: ["Black"],
+    },
+    {
+        id: "4",
+        name: "Ethereal Pleat Maxi",
+        price: 160,
+        rating: 4.6,
+        cardImage: "/images/products/cream-pleat.png",
+        modelImage: "/images/models/cream-pleat.png",
+        category: "Prom",
+        description: "Flowing pleated maxi dress in soft cream.",
+        sizes: ["XS", "S", "M", "L"],
+        colors: ["Cream"],
+    },
+    {
+        id: "5",
+        name: "Starlight Sequin Mini",
+        price: 140,
+        rating: 4.7,
+        cardImage: "/images/products/silver-sequin.png",
+        modelImage: "/images/models/silver-sequin.png",
+        category: "Party",
+        description: "Dazzling sequin mini dress that catches the light.",
+        sizes: ["XS", "S", "M"],
+        colors: ["Silver"],
+    }
+];
+
+export const getProductById = (id: string) => products.find((p) => p.id === id);
