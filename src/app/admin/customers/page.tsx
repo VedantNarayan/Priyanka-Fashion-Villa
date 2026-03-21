@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Search, Mail, ShoppingBag } from "lucide-react";
+import CustomerActions from "@/components/admin/CustomerActions";
 
 export default async function AdminCustomersPage() {
     const supabase = await createClient();
@@ -50,6 +51,7 @@ export default async function AdminCustomersPage() {
                             <th className="px-6 py-4 font-medium text-xs uppercase tracking-wider text-stone-500">Orders</th>
                             <th className="px-6 py-4 font-medium text-xs uppercase tracking-wider text-stone-500">Total Spent</th>
                             <th className="px-6 py-4 font-medium text-xs uppercase tracking-wider text-stone-500">Joined</th>
+                            <th className="px-6 py-4 font-medium text-xs uppercase tracking-wider text-stone-500 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-100">
@@ -81,6 +83,15 @@ export default async function AdminCustomersPage() {
                                         <td className="px-6 py-4 text-sm font-medium">₹{stats.total.toLocaleString('en-IN')}</td>
                                         <td className="px-6 py-4 text-sm text-stone-500">
                                             {new Date(customer.created_at).toLocaleDateString()}
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <div className="flex justify-end pr-2">
+                                                <CustomerActions 
+                                                    customerId={customer.id} 
+                                                    customerName={customer.full_name || ""} 
+                                                    customerEmail={customer.email || ""}
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 );
