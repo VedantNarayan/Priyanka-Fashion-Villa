@@ -5,6 +5,7 @@ import { Search, ShoppingBag, Mail, Star, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart";
 import CartCount from "../cart/CartCount";
+import ProfileDropdown from "./ProfileDropdown";
 
 interface HeaderProps {
     theme?: 'light' | 'dark';
@@ -21,29 +22,24 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
         )}>
             <div className="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
                 {/* Logo Section */}
-                <div className="flex items-center gap-3">
+                <Link href="/" className="flex items-center gap-3 group">
                     <Star
                         size={24}
                         fill={isDark ? "white" : "black"}
-                        className={cn("transition-colors duration-1000", isDark ? "text-white" : "text-black")}
+                        className={cn("transition-colors duration-1000", isDark ? "text-white group-hover:opacity-80" : "text-black group-hover:opacity-80")}
                     />
-                    <Link href="/" className={cn(
+                    <span className={cn(
                         "font-serif text-xl tracking-wide uppercase transition-colors duration-1000",
                         isDark ? "text-white" : "text-black"
                     )}>
                         Priyanka Fashionvilla
-                    </Link>
-                </div>
+                    </span>
+                </Link>
 
                 {/* Navigation Icons */}
                 <nav className="flex items-center gap-2 md:gap-4">
-                    {/* User Icon */}
-                    <Link href="/login" className={cn(
-                        "w-9 h-9 md:w-10 md:h-10 rounded-full border flex items-center justify-center transition-all duration-300 group",
-                        isDark ? "border-white/30 text-white hover:bg-white hover:text-black" : "border-black/10 text-black hover:bg-black hover:text-white"
-                    )}>
-                        <User size={18} strokeWidth={1.5} />
-                    </Link>
+                    {/* User Icon / Profile Dropdown */}
+                    <ProfileDropdown isDark={isDark} />
 
                     {/* Search Icon */}
                     <button className={cn(
