@@ -55,7 +55,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 priority
                             />
-                            {/* Hover Toggle (Optional: Show Card Image on Hover) */}
+                            {/* Hover Toggle */}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-stone-50">
                                 <Image
                                     src={product.cardImage}
@@ -65,14 +65,27 @@ export default function ProductDetail({ product }: { product: Product }) {
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="aspect-[3/4] relative bg-stone-50 rounded-sm overflow-hidden">
-                                <Image src={product.cardImage} alt="Detail 1" fill className="object-cover opacity-90 hover:opacity-100 transition-opacity" />
+                        
+                        {/* Dynamic Gallery */}
+                        {(product.images && product.images.length > 0) ? (
+                            <div className="grid grid-cols-2 gap-4">
+                                {/* First is Card (already featured heavily, but we'll show it as a thumbnail), Second is Model, etc. */}
+                                {product.images.map((imgUrl, i) => (
+                                    <div key={i} className="aspect-[3/4] relative bg-stone-50 rounded-sm overflow-hidden group">
+                                        <Image src={imgUrl} alt={`${product.name} detail ${i+1}`} fill className="object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                                    </div>
+                                ))}
                             </div>
-                            <div className="aspect-[3/4] relative bg-stone-900 rounded-sm overflow-hidden flex items-center justify-center text-white/50 text-xs uppercase tracking-widest">
-                                More Views Coming Soon
+                        ) : (
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="aspect-[3/4] relative bg-stone-50 rounded-sm overflow-hidden">
+                                    <Image src={product.cardImage} alt="Detail 1" fill className="object-cover opacity-90 hover:opacity-100 transition-opacity" />
+                                </div>
+                                <div className="aspect-[3/4] relative bg-stone-900 rounded-sm overflow-hidden flex items-center justify-center text-white/50 text-xs uppercase tracking-widest text-center px-4">
+                                    No additional images
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
 
                     {/* Product Info */}
@@ -163,7 +176,6 @@ export default function ProductDetail({ product }: { product: Product }) {
                                         price: product.price,
                                         image: product.cardImage
                                     });
-                                    toast.success("Added to Wishlist");
                                 }}
                                 className={cn(
                                     "w-full border h-14 uppercase tracking-widest text-sm transition-colors flex items-center justify-center gap-2 group",

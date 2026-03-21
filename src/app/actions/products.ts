@@ -12,6 +12,14 @@ export async function addProduct(prevState: any, formData: FormData) {
     const price = parseFloat(formData.get("price") as string);
     const category = formData.get("category") as string;
     const image_url = formData.get("image_url") as string;
+    const imagesStr = formData.get("images") as string;
+    let images: string[] = [];
+    if (imagesStr) {
+        try { images = JSON.parse(imagesStr); } catch (e) {}
+    } else if (image_url) {
+        images = [image_url];
+    }
+
     const stock = parseInt(formData.get("stock") as string);
     const sizes = (formData.get("sizes") as string).split(",").map(s => s.trim()).filter(Boolean);
     const colors = (formData.get("colors") as string).split(",").map(c => c.trim()).filter(Boolean);
@@ -21,8 +29,8 @@ export async function addProduct(prevState: any, formData: FormData) {
         description,
         price,
         category,
-        images: image_url ? [image_url] : [],
-        image_url,
+        images,
+        image_url: images[0] || image_url,
         stock,
         sizes,
         colors,
@@ -46,6 +54,14 @@ export async function updateProduct(productId: string, formData: FormData) {
     const price = parseFloat(formData.get("price") as string);
     const category = formData.get("category") as string;
     const image_url = formData.get("image_url") as string;
+    const imagesStr = formData.get("images") as string;
+    let images: string[] = [];
+    if (imagesStr) {
+        try { images = JSON.parse(imagesStr); } catch (e) {}
+    } else if (image_url) {
+        images = [image_url];
+    }
+
     const stock = parseInt(formData.get("stock") as string);
     const sizes = (formData.get("sizes") as string).split(",").map(s => s.trim()).filter(Boolean);
     const colors = (formData.get("colors") as string).split(",").map(c => c.trim()).filter(Boolean);
@@ -57,8 +73,8 @@ export async function updateProduct(productId: string, formData: FormData) {
             description,
             price,
             category,
-            images: image_url ? [image_url] : [],
-            image_url,
+            images,
+            image_url: images[0] || image_url,
             stock,
             sizes,
             colors,

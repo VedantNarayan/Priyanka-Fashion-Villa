@@ -24,12 +24,10 @@ export async function submitReview(productId: string, formData: FormData) {
                 id,
                 orders!inner(user_id, status)
             `)
-            .eq("product_id", productId)
-            .eq("orders.user_id", user.id)
-            .in("orders.status", ["delivered"]);
+            .eq("product_id", productId);
             
         // We will allow users to review even if not purchased, but mark is_verified correctly
-        const is_verified = orderItems && orderItems.length > 0;
+        const is_verified = orderItems ? orderItems.some((item: any) => item.orders?.user_id === user.id && item.orders?.status === 'delivered') : false;
 
         const { error } = await supabase
             .from("reviews")
@@ -46,6 +44,7 @@ export async function submitReview(productId: string, formData: FormData) {
             if (error.code === '23505') { // Unique constraint
                return { error: "You have already reviewed this product." };
             }
+            return { error: error.message || "Database error submitting review" };
             throw error;
         }
 
@@ -74,7 +73,7 @@ export async function submitReview(productId: string, formData: FormData) {
         return { success: true };
     } catch (err: any) {
         console.error("Review submission error:", err);
-        return { error: "Failed to submit review." };
+        return { error: err?.message || "Failed to submit review." };
     }
 }
 

@@ -25,7 +25,7 @@ export async function createCoupon(formData: FormData) {
 
     if (error) {
         console.error("Error creating coupon:", error);
-        return { error: error.message.includes("duplicate") ? "Coupon code already exists" : "Failed to create coupon" };
+        return { error: error.message || "Failed to create coupon" };
     }
 
     revalidatePath("/admin/coupons");

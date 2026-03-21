@@ -1,9 +1,10 @@
 "use client";
 
-import { addProduct } from "@/app/actions/products";
+import { addProduct, uploadProductImage } from "@/app/actions/products";
 import Link from "next/link";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Upload, X, Loader2 } from "lucide-react";
 import { useFormStatus, useFormState } from "react-dom";
+import { useState } from "react";
 
 function SubmitButton() {
     const { pending } = useFormStatus();
@@ -25,6 +26,25 @@ const initialState = {
 
 export default function NewProductPage() {
     const [state, formAction] = useFormState(addProduct, initialState);
+    const [images, setImages] = useState<string[]>([]);
+    const [uploading, setUploading] = useState(false);
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setUploading(true);
+        const formData = new FormData();
+        formData.append("file", file);
+        const url = await uploadProductImage(formData);
+        if (url) {
+            setImages([...images, url]);
+        }
+        setUploading(false);
+    };
+
+    const removeImage = (index: number) => {
+        setImages(images.filter((_, i) => i !== index));
+    };
 
     return (
         <div className="max-w-4xl mx-auto">
@@ -68,7 +88,7 @@ export default function NewProductPage() {
                     <textarea name="description" id="description" rows={4} className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black" placeholder="Product description..."></textarea>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label htmlFor="price" className="block text-sm font-medium text-stone-700">Price ($)</label>
                         <input type="number" name="price" id="price" required step="0.01" className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black" placeholder="0.00" />
@@ -78,11 +98,41 @@ export default function NewProductPage() {
                         <label htmlFor="stock" className="block text-sm font-medium text-stone-700">Stock</label>
                         <input type="number" name="stock" id="stock" required className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black" placeholder="0" />
                     </div>
+                </div>
 
-                    <div className="space-y-2">
-                        <label htmlFor="image_url" className="block text-sm font-medium text-stone-700">Image URL</label>
-                        <input type="url" name="image_url" id="image_url" className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black" placeholder="https://..." />
+                {/* Multiple Image Upload */}
+                <div className="space-y-3">
+                    <label className="block text-sm font-medium text-stone-700">Product Images</label>
+                    <p className="text-xs text-stone-500 mb-2">First image is the Main Card Image. Second is the Model Hover Image. The rest appear in the gallery.</p>
+                    
+                    <div className="flex flex-wrap gap-4">
+                        {images.map((url, i) => (
+                            <div key={i} className="relative w-24 h-32 border border-stone-200 rounded-sm overflow-hidden group">
+                                <img src={url} alt={`Preview ${i}`} className="w-full h-full object-cover" />
+                                <button type="button" onClick={() => removeImage(i)} className="absolute top-1 right-1 bg-white/80 p-1 rounded-full text-red-500 hidden group-hover:block hover:bg-white">
+                                    <X size={14} />
+                                </button>
+                                {i === 0 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5">Card</span>}
+                                {i === 1 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5">Model</span>}
+                            </div>
+                        ))}
+
+                        <label className="w-24 h-32 border-2 border-dashed border-stone-300 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:bg-stone-50 transition-colors">
+                            {uploading ? (
+                                <Loader2 className="animate-spin text-stone-400" size={20} />
+                            ) : (
+                                <>
+                                    <Upload className="text-stone-400 mb-1" size={20} />
+                                    <span className="text-[10px] text-stone-500 uppercase">Upload</span>
+                                </>
+                            )}
+                            <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={uploading} />
+                        </label>
                     </div>
+                    
+                    {/* Fallback URL input + hidden JSON payload */}
+                    <input type="hidden" name="images" value={JSON.stringify(images)} />
+                    <input type="url" name="image_url" id="image_url" className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black mt-2" placeholder="Or paste primary image URL here (fallback)" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

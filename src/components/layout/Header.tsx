@@ -7,6 +7,10 @@ import { useCartStore } from "@/store/cart";
 import CartCount from "../cart/CartCount";
 import ProfileDropdown from "./ProfileDropdown";
 
+import { useEffect } from "react";
+import { useWishlistStore } from "@/store/wishlist";
+import { createClient } from "@/lib/supabase/client";
+
 interface HeaderProps {
     theme?: 'light' | 'dark';
 }
@@ -14,6 +18,21 @@ interface HeaderProps {
 export default function Header({ theme = 'dark' }: HeaderProps) {
     const isDark = theme === 'dark';
     const { toggleCart } = useCartStore();
+    const { syncFromDb, clearWishlist } = useWishlistStore();
+
+    useEffect(() => {
+        syncFromDb(); // initial sync
+
+        const supabase = createClient();
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+            if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+                syncFromDb();
+            } else if (event === 'SIGNED_OUT') {
+                clearWishlist();
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [syncFromDb, clearWishlist]);
 
     return (
         <header className={cn(
