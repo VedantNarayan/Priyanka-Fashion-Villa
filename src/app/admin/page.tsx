@@ -7,7 +7,7 @@ import AdminExportAndInsights from "@/components/admin/AdminExportAndInsights";
 export default async function AdminDashboard() {
     const supabase = await createClient();
 
-    // Fetch real stats
+    // Fetch real stats (excluding heavy full-table downloads)
     const [
         { count: totalOrders },
         { count: totalCustomers },
@@ -16,9 +16,6 @@ export default async function AdminDashboard() {
         { data: recentOrders },
         { data: lowStockProducts },
         { data: pendingReturns },
-        { data: allOrders },
-        { data: allCustomers },
-        { data: allProducts },
     ] = await Promise.all([
         supabase.from('orders').select('*', { count: 'exact', head: true }).eq('payment_status', 'paid'),
         supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'customer'),
@@ -27,9 +24,6 @@ export default async function AdminDashboard() {
         supabase.from('orders').select('*, profiles:user_id(full_name, email)').order('created_at', { ascending: false }).limit(5),
         supabase.from('products').select('id, name, stock').eq('is_active', true).lt('stock', 10).order('stock', { ascending: true }).limit(5),
         supabase.from('returns').select('*, profiles:user_id(full_name), orders:order_id(id)').eq('status', 'requested').order('created_at', { ascending: false }).limit(5),
-        supabase.from('orders').select('*, profiles:user_id(full_name, email)'),
-        supabase.from('profiles').select('*').eq('role', 'customer'),
-        supabase.from('products').select('*').eq('is_active', true),
     ]);
 
     const totalRevenue = revenueData?.reduce((sum, o) => sum + (o.total_amount || 0), 0) || 0;
@@ -80,11 +74,7 @@ export default async function AdminDashboard() {
                 <AdminAnalytics data={revenueData || []} />
             </div>
 
-            <AdminExportAndInsights 
-                orders={allOrders || []} 
-                customers={allCustomers || []} 
-                products={allProducts || []} 
-            />
+            <AdminExportAndInsights />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Recent Orders */}

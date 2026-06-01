@@ -60,6 +60,18 @@ export async function middleware(request: NextRequest) {
                 return NextResponse.redirect(new URL("/admin/verify-2fa", request.url));
             }
         }
+
+        // Pass authentication/authorization headers instantly downstream to Layout
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set("x-admin-email", user.email || "");
+        requestHeaders.set("x-admin-2fa-enabled", String(profile.two_factor_enabled));
+        requestHeaders.set("x-admin-id", user.id);
+
+        return NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            },
+        });
     }
 
     // Protect Checkout/Account

@@ -1,7 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { LayoutDashboard, Package, ShoppingBag, Users, Settings, LogOut, Star, RotateCcw, Tag, ShieldCheck, Menu } from "lucide-react";
-import { redirect } from "next/navigation";
+import { LayoutDashboard, Package, ShoppingBag, Users, Settings, LogOut, Star, RotateCcw, Tag, ShieldCheck } from "lucide-react";
+import { headers } from "next/headers";
 import React from "react";
 
 export default async function AdminLayout({
@@ -9,22 +8,10 @@ export default async function AdminLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-        redirect("/login");
-    }
-
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('role, two_factor_enabled')
-        .eq('id', user.id)
-        .single();
-
-    if (!profile || profile.role !== 'admin') {
-        redirect("/");
-    }
+    // Read user information instantly from Middleware HTTP request headers (zero network cost!)
+    const headersList = await headers();
+    const adminEmail = headersList.get("x-admin-email") || "admin@priyankafashionvilla.com";
+    const twoFactorEnabled = headersList.get("x-admin-2fa-enabled") === "true";
 
     const navItems = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -59,7 +46,7 @@ export default async function AdminLayout({
                 </nav>
 
                 <div className="p-4 border-t border-white/10">
-                    {!profile.two_factor_enabled && (
+                    {!twoFactorEnabled && (
                         <Link href="/admin/setup-2fa" className="flex items-center gap-3 px-4 py-2 text-sm text-amber-400 hover:bg-white/5 rounded-md transition-colors mb-2">
                             <ShieldCheck size={18} />
                             Setup 2FA
@@ -67,10 +54,10 @@ export default async function AdminLayout({
                     )}
                     <div className="flex items-center gap-3 px-4 py-3 mb-2">
                         <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold">
-                            {(user.email?.[0] || "A").toUpperCase()}
+                            {(adminEmail[0] || "A").toUpperCase()}
                         </div>
                         <div className="overflow-hidden">
-                            <p className="text-sm font-medium truncate">{user.email}</p>
+                            <p className="text-sm font-medium truncate">{adminEmail}</p>
                             <p className="text-xs text-stone-400">Store Admin</p>
                         </div>
                     </div>

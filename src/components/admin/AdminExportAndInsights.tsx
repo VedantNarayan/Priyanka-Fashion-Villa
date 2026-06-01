@@ -3,18 +3,16 @@
 import { useState } from "react";
 import { Download, Sparkles, TrendingUp, AlertCircle, ShoppingBag, Users, Package } from "lucide-react";
 import { toast } from "sonner";
+import { createClient } from "@/lib/supabase/client";
 
-interface AdminExportAndInsightsProps {
-    orders: any[];
-    customers: any[];
-    products: any[];
-}
-
-export default function AdminExportAndInsights({ orders = [], customers = [], products = [] }: AdminExportAndInsightsProps) {
+export default function AdminExportAndInsights() {
     const [generatingAI, setGeneratingAI] = useState(false);
     const [aiInsights, setAiInsights] = useState<string[] | null>(null);
+    const [exporting, setExporting] = useState<string | null>(null);
 
-    // 1. Export Functions
+    const supabase = createClient();
+
+    // 1. Convert to CSV helper
     const convertToCSV = (data: any[], headers: string[]) => {
         const rows = data.map(item => 
             headers.map(header => {
@@ -28,6 +26,7 @@ export default function AdminExportAndInsights({ orders = [], customers = [], pr
         return [headers.join(","), ...rows].join("\n");
     };
 
+    // 2. Download trigger helper
     const downloadFile = (csvContent: string, fileName: string) => {
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
@@ -40,47 +39,102 @@ export default function AdminExportAndInsights({ orders = [], customers = [], pr
         document.body.removeChild(link);
     };
 
-    const exportOrders = () => {
-        if (!orders.length) {
-            toast.error("No orders found to export.");
-            return;
+    // 3. Dynamic Export Functions (Loads data dynamically on click)
+    const exportOrders = async () => {
+        setExporting("orders");
+        try {
+            const { data: dbOrders, error } = await supabase
+                .from("orders")
+                .select("*, profiles:user_id(full_name, email)")
+                .order("created_at", { ascending: false });
+
+            if (error || !dbOrders || dbOrders.length === 0) {
+                toast.error("No orders found to export.");
+                return;
+            }
+
+            const headers = ["id", "created_at", "total_amount", "status", "payment_status", "coupon_code", "discount_amount", "profiles.full_name", "profiles.email"];
+            const csv = convertToCSV(dbOrders, headers);
+            downloadFile(csv, `orders_report_${Date.now()}.csv`);
+            toast.success("Orders report exported successfully!");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to export orders.");
+        } finally {
+            setExporting(null);
         }
-        const headers = ["id", "created_at", "total_amount", "status", "payment_status", "coupon_code", "discount_amount", "profiles.full_name", "profiles.email"];
-        const csv = convertToCSV(orders, headers);
-        downloadFile(csv, `orders_report_${Date.now()}.csv`);
-        toast.success("Orders report exported!");
     };
 
-    const exportCustomers = () => {
-        if (!customers.length) {
-            toast.error("No customers found to export.");
-            return;
+    const exportCustomers = async () => {
+        setExporting("customers");
+        try {
+            const { data: dbCustomers, error } = await supabase
+                .from("profiles")
+                .select("id, email, full_name, phone, loyalty_points, created_at")
+                .eq("role", "customer")
+                .order("created_at", { ascending: false });
+
+            if (error || !dbCustomers || dbCustomers.length === 0) {
+                toast.error("No customers found to export.");
+                return;
+            }
+
+            const headers = ["id", "email", "full_name", "phone", "loyalty_points", "created_at"];
+            const csv = convertToCSV(dbCustomers, headers);
+            downloadFile(csv, `customers_report_${Date.now()}.csv`);
+            toast.success("Customers list exported successfully!");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to export customers.");
+        } finally {
+            setExporting(null);
         }
-        const headers = ["id", "email", "full_name", "phone", "loyalty_points", "created_at"];
-        const csv = convertToCSV(customers, headers);
-        downloadFile(csv, `customers_report_${Date.now()}.csv`);
-        toast.success("Customers report exported!");
     };
 
-    const exportInventory = () => {
-        if (!products.length) {
-            toast.error("No inventory found to export.");
-            return;
+    const exportInventory = async () => {
+        setExporting("inventory");
+        try {
+            const { data: dbProducts, error } = await supabase
+                .from("products")
+                .select("id, name, category, price, stock, rating, is_active")
+                .eq("is_active", true)
+                .order("stock", { ascending: true });
+
+            if (error || !dbProducts || dbProducts.length === 0) {
+                toast.error("No inventory found to export.");
+                return;
+            }
+
+            const headers = ["id", "name", "category", "price", "stock", "rating", "is_active"];
+            const csv = convertToCSV(dbProducts, headers);
+            downloadFile(csv, `inventory_report_${Date.now()}.csv`);
+            toast.success("Inventory ledger exported successfully!");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to export inventory.");
+        } finally {
+            setExporting(null);
         }
-        const headers = ["id", "name", "category", "price", "stock", "rating", "is_active"];
-        const csv = convertToCSV(products, headers);
-        downloadFile(csv, `inventory_report_${Date.now()}.csv`);
-        toast.success("Inventory report exported!");
     };
 
-    // 2. AI Curation/Insights Engine
-    const generateAIInsights = () => {
+    // 4. Dynamic AI Insights (Loads aggregates dynamically on click)
+    const generateAIInsights = async () => {
         setGeneratingAI(true);
-        setTimeout(() => {
-            // Analytical deduction from real dashboard states
-            const lowStockCount = products.filter(p => p.stock <= 5).length;
-            const topSeller = products.length > 0 ? [...products].sort((a,b) => (b.review_count || 0) - (a.review_count || 0))[0] : null;
-            const silverCustomers = customers.filter(c => c.loyalty_points >= 1000).length;
+        try {
+            const [
+                { data: dbProducts },
+                { data: dbCustomers }
+            ] = await Promise.all([
+                supabase.from("products").select("name, stock, review_count").eq("is_active", true),
+                supabase.from("profiles").select("loyalty_points").eq("role", "customer")
+            ]);
+
+            const activeProducts = dbProducts || [];
+            const activeCustomers = dbCustomers || [];
+
+            const lowStockCount = activeProducts.filter(p => (p.stock || 0) <= 5).length;
+            const topSeller = activeProducts.length > 0 ? [...activeProducts].sort((a,b) => (b.review_count || 0) - (a.review_count || 0))[0] : null;
+            const silverCustomers = activeCustomers.filter(c => (c.loyalty_points || 0) >= 1000).length;
 
             const insights = [
                 `📈 **Seasonal Bridal Surge**: Bridal wear and wedding Lehengas have a 45% increase in searches this week. Patna peak wedding season is approaching; recommend positioning bridal items at the top of the collection slider.`,
@@ -94,9 +148,13 @@ export default function AdminExportAndInsights({ orders = [], customers = [], pr
             ];
 
             setAiInsights(insights);
+            toast.success("AI insights successfully compiled!");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to compile AI insights.");
+        } finally {
             setGeneratingAI(false);
-            toast.success("AI insights successfully updated!");
-        }, 1200);
+        }
     };
 
     return (
@@ -110,30 +168,33 @@ export default function AdminExportAndInsights({ orders = [], customers = [], pr
                         <h2 className="font-serif text-lg text-black">Export Reports</h2>
                     </div>
                     <p className="text-stone-500 text-xs mb-6 leading-relaxed">
-                        Download spreadsheet-ready CSV tables of store profiles, inventory levels, and transaction ledgers.
+                        Download spreadsheet-ready CSV tables of store profiles, inventory levels, and transaction ledgers on demand.
                     </p>
                 </div>
                 
                 <div className="space-y-3">
                     <button 
                         onClick={exportOrders}
-                        className="w-full flex items-center justify-between p-3 border border-stone-200 hover:border-black text-black text-xs uppercase tracking-widest font-semibold transition-all rounded-sm bg-stone-50"
+                        disabled={exporting !== null}
+                        className="w-full flex items-center justify-between p-3 border border-stone-200 hover:border-black text-black text-xs uppercase tracking-widest font-semibold transition-all rounded-sm bg-stone-50 disabled:opacity-50"
                     >
-                        <span className="flex items-center gap-2"><ShoppingBag size={14} /> Orders Report</span>
+                        <span className="flex items-center gap-2"><ShoppingBag size={14} /> {exporting === "orders" ? "Exporting..." : "Orders Report"}</span>
                         <Download size={12} />
                     </button>
                     <button 
                         onClick={exportCustomers}
-                        className="w-full flex items-center justify-between p-3 border border-stone-200 hover:border-black text-black text-xs uppercase tracking-widest font-semibold transition-all rounded-sm bg-stone-50"
+                        disabled={exporting !== null}
+                        className="w-full flex items-center justify-between p-3 border border-stone-200 hover:border-black text-black text-xs uppercase tracking-widest font-semibold transition-all rounded-sm bg-stone-50 disabled:opacity-50"
                     >
-                        <span className="flex items-center gap-2"><Users size={14} /> Customers List</span>
+                        <span className="flex items-center gap-2"><Users size={14} /> {exporting === "customers" ? "Exporting..." : "Customers List"}</span>
                         <Download size={12} />
                     </button>
                     <button 
                         onClick={exportInventory}
-                        className="w-full flex items-center justify-between p-3 border border-stone-200 hover:border-black text-black text-xs uppercase tracking-widest font-semibold transition-all rounded-sm bg-stone-50"
+                        disabled={exporting !== null}
+                        className="w-full flex items-center justify-between p-3 border border-stone-200 hover:border-black text-black text-xs uppercase tracking-widest font-semibold transition-all rounded-sm bg-stone-50 disabled:opacity-50"
                     >
-                        <span className="flex items-center gap-2"><Package size={14} /> Inventory Ledger</span>
+                        <span className="flex items-center gap-2"><Package size={14} /> {exporting === "inventory" ? "Exporting..." : "Inventory Ledger"}</span>
                         <Download size={12} />
                     </button>
                 </div>
@@ -173,7 +234,7 @@ export default function AdminExportAndInsights({ orders = [], customers = [], pr
                         </div>
                     ) : (
                         <div className="text-center py-10 border border-dashed border-stone-800 rounded-sm bg-black/25">
-                            <p className="text-stone-500 text-xs">Insights ready for compilation</p>
+                            <p className="text-stone-500 text-xs">Insights ready for dynamic compilation</p>
                         </div>
                     )}
                 </div>
