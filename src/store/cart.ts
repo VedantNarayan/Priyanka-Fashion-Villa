@@ -1,64 +1,95 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { createClient } from '@/lib/supabase/client';
 
 export interface CartItem {
-    id: string
-    productId: string
-    name: string
-    price: number
-    image: string
-    quantity: number
-    size: string
-    color: string
+    id: string;
+    productId: string;
+    name: string;
+    price: number;
+    image: string;
+    quantity: number;
+    size: string;
+    color: string;
 }
 
 interface CartState {
-    items: CartItem[]
-    addItem: (item: Omit<CartItem, 'id'>) => void
-    removeItem: (id: string) => void
-    updateQuantity: (id: string, quantity: number) => void
-    clearCart: () => void
-    isOpen: boolean
-    toggleCart: () => void
-    openCart: () => void
-    closeCart: () => void
+    items: CartItem[];
+    isOpen: boolean;
+    addItem: (item: Omit<CartItem, 'id'>) => Promise<void>;
+    removeItem: (id: string) => Promise<void>;
+    updateQuantity: (id: string, quantity: number) => Promise<void>;
+    clearCart: () => Promise<void>;
+    toggleCart: () => void;
+    openCart: () => void;
+    closeCart: () => void;
+    syncFromDb: () => Promise<void>;
 }
+
+const syncToSupabase = async (cartItems: CartItem[]) => {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+        await supabase.auth.updateUser({
+            data: { cart: cartItems } // Store for abandoned cart recovery
+        });
+    }
+};
 
 export const useCartStore = create<CartState>()(
     persist(
         (set, get) => ({
             items: [],
             isOpen: false,
-            addItem: (newItem) => {
-                const items = get().items
+            
+            addItem: async (newItem) => {
+                const items = get().items;
                 const existingItem = items.find(
                     (item) => item.productId === newItem.productId && item.size === newItem.size && item.color === newItem.color
-                )
-
+                );
+                
+                let newItems;
                 if (existingItem) {
-                    set({
-                        items: items.map((item) =>
-                            item.id === existingItem.id
-                                ? { ...item, quantity: item.quantity + newItem.quantity }
-                                : item
-                        ),
-                        isOpen: true,
-                    })
+                    newItems = items.map((item) =>
+                        item.id === existingItem.id
+                            ? { ...item, quantity: item.quantity + newItem.quantity }
+                            : item
+                    );
                 } else {
-                    set({
-                        items: [...items, { ...newItem, id: Math.random().toString(36).substring(7) }],
-                        isOpen: true
-                    })
+                    newItems = [...items, { ...newItem, id: Math.random().toString(36).substring(7) }];
+                }
+                
+                set({ items: newItems, isOpen: true });
+                await syncToSupabase(newItems);
+            },
+            
+            removeItem: async (id) => {
+                const newItems = get().items.filter((i) => i.id !== id);
+                set({ items: newItems });
+                await syncToSupabase(newItems);
+            },
+            
+            updateQuantity: async (id, quantity) => {
+                const newItems = get().items.map((item) =>
+                    item.id === id ? { ...item, quantity: Math.max(0, quantity) } : item
+                );
+                set({ items: newItems });
+                await syncToSupabase(newItems);
+            },
+            
+            clearCart: async () => {
+                set({ items: [] });
+                await syncToSupabase([]);
+            },
+            
+            syncFromDb: async () => {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user?.user_metadata?.cart) {
+                    set({ items: user.user_metadata.cart });
                 }
             },
-            removeItem: (id) => set({ items: get().items.filter((i) => i.id !== id) }),
-            updateQuantity: (id, quantity) =>
-                set({
-                    items: get().items.map((item) =>
-                        item.id === id ? { ...item, quantity: Math.max(0, quantity) } : item
-                    ),
-                }),
-            clearCart: () => set({ items: [] }),
+            
             toggleCart: () => set({ isOpen: !get().isOpen }),
             openCart: () => set({ isOpen: true }),
             closeCart: () => set({ isOpen: false }),
@@ -67,4 +98,4 @@ export const useCartStore = create<CartState>()(
             name: 'cart-storage',
         }
     )
-)
+);

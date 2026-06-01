@@ -27,20 +27,17 @@ export const useWishlistStore = create<WishlistState>()(
                 const supabase = createClient();
                 const { data: { user } } = await supabase.auth.getUser();
                 
-                if (!user) {
-                    toast.error("Please log in to add items to your wishlist.");
-                    return false;
-                }
-
                 const items = get().items;
                 if (!items.find((i) => i.id === item.id)) {
                     const newItems = [...items, item];
                     set({ items: newItems });
                     
-                    // Sync to supabase user_metadata
-                    await supabase.auth.updateUser({
-                        data: { wishlist: newItems }
-                    });
+                    // Sync to supabase user_metadata if user is logged in
+                    if (user) {
+                        await supabase.auth.updateUser({
+                            data: { wishlist: newItems }
+                        });
+                    }
                     toast.success("Added to Wishlist");
                     return true;
                 }

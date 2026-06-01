@@ -85,13 +85,13 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }} // Fade in the container background/ui
-            className="fixed bottom-0 left-0 w-full h-[40vh] z-20 flex items-center bg-white/50 backdrop-blur-md border-t border-white/20"
+            transition={{ delay: 0.5, duration: 1 }}
+            className="absolute bottom-0 left-0 w-full h-[40vh] z-20 flex items-center bg-white/50 backdrop-blur-md border-t border-white/20"
         >
             <div
                 ref={containerRef}
-                className="w-full h-full flex items-center overflow-x-auto snap-x snap-mandatory px-[50vw] scrollbar-hide"
-                style={{ paddingLeft: '50vw', paddingRight: '50vw' }} // Center the first and last items
+                className="w-full h-full flex items-center overflow-x-auto snap-x snap-mandatory px-[50vw] scrollbar-hide py-4"
+                style={{ paddingLeft: '50vw', paddingRight: '50vw' }}
             >
                 {products.map((product, index) => {
                     const isActive = index === activeIndex;
@@ -100,8 +100,8 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                             key={product.id}
                             ref={(el) => { cardRefs.current[index] = el; }}
                             className={cn(
-                                "snap-center shrink-0 mx-4 md:mx-8 transition-all duration-500",
-                                "w-[280px] md:w-[350px]",
+                                "snap-center shrink-0 mx-3 md:mx-6 transition-all duration-500",
+                                "w-[200px] md:w-[240px]",
                                 isActive ? "opacity-100" : "opacity-60 hover:opacity-80"
                             )}
                         >
@@ -109,7 +109,8 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                                 <motion.div
                                     layoutId={`product-card-${product.id}`}
                                     className={cn(
-                                        "relative aspect-[3/4] rounded-lg overflow-hidden shadow-xl bg-gray-100",
+                                        "relative rounded-lg overflow-hidden shadow-xl bg-gray-100",
+                                        "h-[28vh]",
                                         isActive ? "scale-100" : "scale-90"
                                     )}
                                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -118,42 +119,34 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                                         src={product.cardImage}
                                         alt={product.name}
                                         fill
+                                        sizes="(max-width: 768px) 200px, 240px"
                                         className="object-cover"
                                     />
                                     <button
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            // Handle wishlist logic here later
                                         }}
-                                        className="absolute top-3 left-3 p-2 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white hover:text-red-500 transition-colors"
+                                        className="absolute top-2 left-2 p-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white hover:text-red-500 transition-colors"
                                     >
-                                        <Heart size={18} />
+                                        <Heart size={16} />
                                     </button>
-                                </motion.div>
-
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.8 }}
-                                    className="mt-4 text-center"
-                                >
-                                    <h3 className="font-serif text-lg text-black">{product.name}</h3>
-                                    <div className="flex items-center justify-center gap-1 text-yellow-500 my-1">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={12} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
-                                        ))}
+                                    {/* Product info overlay at bottom of card */}
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-8">
+                                        <h3 className="font-serif text-sm text-white truncate">{product.name}</h3>
+                                        <div className="flex items-center gap-1 mt-0.5">
+                                            <div className="flex items-center gap-0.5 text-yellow-400">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star key={i} size={10} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
+                                                ))}
+                                            </div>
+                                            <span className="text-white/80 text-xs ml-1">₹{product.price}</span>
+                                        </div>
                                     </div>
-                                    <p className="text-gray-600">€{product.price}</p>
                                 </motion.div>
                             </Link>
                         </div>
                     );
                 })}
-            </div>
-
-            {/* Navigation Arrows (Optional, can replace with custom buttons) */}
-            <div className="absolute bottom-10 right-10 flex gap-4">
-                {/* Implemented in parent or keeping simple scroll for now */}
             </div>
         </motion.div>
     );

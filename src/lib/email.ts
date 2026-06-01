@@ -1,3 +1,9 @@
+import { Resend } from 'resend';
+
+const resend = process.env.RESEND_API_KEY 
+    ? new Resend(process.env.RESEND_API_KEY)
+    : null;
+
 export async function sendEmail({
     to,
     subject,
@@ -7,23 +13,20 @@ export async function sendEmail({
     subject: string;
     html: string;
 }) {
-    // In a real production app, you would use Resend, SendGrid, NodeMailer, etc.
-    // Ensure you have environment variables configured for your provider.
     const NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
     
-    if (process.env.RESEND_API_KEY) {
-        // Example implementation if Resend was installed:
-        /*
-        import { Resend } from 'resend';
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-            from: 'Priyanka Fashionvilla <orders@yourdomain.com>',
-            to,
-            subject,
-            html,
-        });
-        */
-        console.log(`[Email] Would send via Resend to ${to}`);
+    if (resend) {
+        try {
+            await resend.emails.send({
+                from: 'Priyanka Fashionvilla <onboarding@resend.dev>',
+                to,
+                subject,
+                html,
+            });
+            console.log(`[Email] Sent via Resend to ${to}`);
+        } catch (error) {
+            console.error('[Email] Resend delivery error:', error);
+        }
     } else {
         // Fallback for development/testing without API keys
         console.log('\n================== EMAIL MOCK ==================');

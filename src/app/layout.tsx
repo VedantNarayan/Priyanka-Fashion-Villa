@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import CartDrawer from "@/components/cart/CartDrawer";
 import Footer from "@/components/layout/Footer";
+import LiveChatWidget from "@/components/chat/LiveChatWidget";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,8 +57,60 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} antialiased bg-black text-white`}
       >
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+             __html: JSON.stringify([
+               {
+                 "@context": "https://schema.org",
+                 "@type": "Organization",
+                 "name": "Priyanka Fashionvilla",
+                 "url": process.env.NEXT_PUBLIC_SITE_URL || 'https://priyanka-fashionvilla.com',
+                 "logo": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://priyanka-fashionvilla.com'}/images/brand-icon.png`
+               },
+               {
+                 "@context": "https://schema.org",
+                 "@type": "ClothingStore",
+                 "name": "Priyanka Fashionvilla",
+                 "image": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://priyanka-fashionvilla.com'}/images/brand-icon.png`,
+                 "@id": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://priyanka-fashionvilla.com'}#store`,
+                 "url": process.env.NEXT_PUBLIC_SITE_URL || 'https://priyanka-fashionvilla.com',
+                 "telephone": "+91 99999 99999",
+                 "priceRange": "$$$$",
+                 "address": {
+                   "@type": "PostalAddress",
+                   "streetAddress": "Boring Road Crossing",
+                   "addressLocality": "Patna",
+                   "addressRegion": "Bihar",
+                   "postalCode": "800001",
+                   "addressCountry": "IN"
+                 },
+                 "geo": {
+                   "@type": "GeoCoordinates",
+                   "latitude": "25.5941",
+                   "longitude": "85.1376"
+                 },
+                 "openingHoursSpecification": {
+                   "@type": "OpeningHoursSpecification",
+                   "dayOfWeek": [
+                     "Monday",
+                     "Tuesday",
+                     "Wednesday",
+                     "Thursday",
+                     "Friday",
+                     "Saturday",
+                     "Sunday"
+                   ],
+                   "opens": "10:00",
+                   "closes": "21:00"
+                 }
+               }
+             ])
+          }}
+        />
         <CartDrawer />
         <Footer />
+        <LiveChatWidget />
       </body>
     </html>
   );

@@ -23,8 +23,8 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
     if (!show) return null;
 
     return (
-        <div className="fixed top-0 left-0 w-full h-[60vh] md:h-[70vh] z-10 flex items-end justify-center pointer-events-none">
-            <div className="relative w-full max-w-[1400px] h-full flex justify-center items-end px-0 md:px-12 pb-10">
+        <div className="absolute top-0 left-0 w-full h-[60vh] z-10 flex items-end justify-center pointer-events-none">
+            <div className="relative w-full max-w-[1400px] h-full flex justify-center items-end px-0 md:px-12">
                 {[0, 1, 2, 3, 4].map((posIndex) => {
                     const product = getProductForPosition(posIndex);
                     const isCenter = posIndex === 2;
@@ -52,11 +52,12 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
                                         transition={{ duration: 0.5, ease: "easeInOut" }}
                                         className="absolute bottom-0 w-full flex justify-center"
                                     >
-                                        <div className={`relative ${isCenter ? 'h-[75vh]' : 'h-[65vh]'} w-full transition-all duration-500`}>
+                                        <div className={`relative ${isCenter ? 'h-[55vh]' : 'h-[45vh]'} w-full transition-all duration-500`}>
                                             <Image
                                                 src={product.modelImage}
                                                 alt={`Model for ${product.name}`}
                                                 fill
+                                                sizes={isCenter ? "(max-width: 768px) 40vw, 25vw" : "(max-width: 768px) 25vw, 18vw"}
                                                 className="object-contain object-bottom"
                                                 priority={true}
                                             />

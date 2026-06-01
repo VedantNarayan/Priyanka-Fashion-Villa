@@ -4,10 +4,11 @@ import Link from "next/link";
 import { ArrowLeft, Package, Truck, CheckCircle, Clock } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import GenerateLabelButton from "@/components/admin/GenerateLabelButton";
 
-export default async function AdminOrderDetailsPage({ params }: { params: { id: string } }) {
+export default async function AdminOrderDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const supabase = await createClient();
-    const { id } = params;
+    const { id } = await params;
 
     const { data: order } = await supabase
         .from('orders')
@@ -75,7 +76,7 @@ export default async function AdminOrderDetailsPage({ params }: { params: { id: 
                                         <p className="text-sm text-stone-500">Size: {item.size} | Color: {item.color}</p>
                                         <div className="flex items-center justify-between mt-2">
                                             <p className="text-sm">Qty: {item.quantity}</p>
-                                            <p className="font-medium">${item.price}</p>
+                                            <p className="font-medium">₹{item.price}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +85,7 @@ export default async function AdminOrderDetailsPage({ params }: { params: { id: 
                         <div className="bg-stone-50 p-6 border-t border-stone-100">
                             <div className="flex justify-between items-center mb-2">
                                 <span className="text-stone-500 text-sm">Valid Order Total</span>
-                                <span className="text-sm font-medium">${order.total_amount}</span>
+                                <span className="text-sm font-medium">₹{order.total_amount}</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-stone-500 text-sm">Shipping</span>
@@ -92,7 +93,7 @@ export default async function AdminOrderDetailsPage({ params }: { params: { id: 
                             </div>
                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-stone-200">
                                 <span className="font-serif text-lg">Total</span>
-                                <span className="font-serif text-xl">${order.total_amount}</span>
+                                <span className="font-serif text-xl">₹{order.total_amount}</span>
                             </div>
                         </div>
                     </div>
@@ -121,6 +122,7 @@ export default async function AdminOrderDetailsPage({ params }: { params: { id: 
                                 </button>
                             </div>
                         </form>
+                        <GenerateLabelButton orderId={order.id} currentStatus={order.status} />
                     </div>
 
                     {/* Customer Info */}
@@ -135,6 +137,12 @@ export default async function AdminOrderDetailsPage({ params }: { params: { id: 
                                 <p className="text-xs text-stone-500 uppercase tracking-wider mb-1">Email</p>
                                 <p className="font-medium truncate">{order.profiles?.email || order.user_id}</p>
                             </div>
+                            {order.tracking_number && (
+                                <div>
+                                    <p className="text-xs text-stone-500 uppercase tracking-wider mb-1">Tracking Number</p>
+                                    <p className="font-medium text-blue-600">{order.tracking_number}</p>
+                                </div>
+                            )}
                             <div>
                                 <p className="text-xs text-stone-500 uppercase tracking-wider mb-1">Shipping Address</p>
                                 <div className="text-sm text-stone-600">

@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { DollarSign, ShoppingBag, Users, Package, AlertTriangle, RotateCcw } from "lucide-react";
 import Link from "next/link";
+import AdminAnalytics from "@/components/admin/AdminAnalytics";
+import AdminExportAndInsights from "@/components/admin/AdminExportAndInsights";
 
 export default async function AdminDashboard() {
     const supabase = await createClient();
@@ -14,14 +16,20 @@ export default async function AdminDashboard() {
         { data: recentOrders },
         { data: lowStockProducts },
         { data: pendingReturns },
+        { data: allOrders },
+        { data: allCustomers },
+        { data: allProducts },
     ] = await Promise.all([
         supabase.from('orders').select('*', { count: 'exact', head: true }).eq('payment_status', 'paid'),
         supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'customer'),
         supabase.from('products').select('*', { count: 'exact', head: true }).eq('is_active', true),
-        supabase.from('orders').select('total_amount').eq('payment_status', 'paid'),
+        supabase.from('orders').select('total_amount, created_at').eq('payment_status', 'paid'),
         supabase.from('orders').select('*, profiles:user_id(full_name, email)').order('created_at', { ascending: false }).limit(5),
         supabase.from('products').select('id, name, stock').eq('is_active', true).lt('stock', 10).order('stock', { ascending: true }).limit(5),
         supabase.from('returns').select('*, profiles:user_id(full_name), orders:order_id(id)').eq('status', 'requested').order('created_at', { ascending: false }).limit(5),
+        supabase.from('orders').select('*, profiles:user_id(full_name, email)'),
+        supabase.from('profiles').select('*').eq('role', 'customer'),
+        supabase.from('products').select('*').eq('is_active', true),
     ]);
 
     const totalRevenue = revenueData?.reduce((sum, o) => sum + (o.total_amount || 0), 0) || 0;
@@ -65,6 +73,18 @@ export default async function AdminDashboard() {
                     <Link href="/admin/products" className="text-xs text-orange-500 mt-2 inline-block hover:underline">Manage →</Link>
                 </div>
             </div>
+
+            <div className="bg-white p-6 rounded-sm shadow-sm mb-8">
+                <h2 className="font-serif text-xl mb-2">Revenue Growth</h2>
+                <p className="text-stone-400 text-sm">Visualize earnings from all completed orders</p>
+                <AdminAnalytics data={revenueData || []} />
+            </div>
+
+            <AdminExportAndInsights 
+                orders={allOrders || []} 
+                customers={allCustomers || []} 
+                products={allProducts || []} 
+            />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Recent Orders */}

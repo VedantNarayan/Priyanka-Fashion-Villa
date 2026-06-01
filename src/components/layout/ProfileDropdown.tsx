@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { User, LogOut, Settings, Package, LayoutDashboard } from "lucide-react";
+import { User, LogOut, Settings, Package, LayoutDashboard, Star } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,7 @@ export default function ProfileDropdown({ isDark }: ProfileDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState<any>(null);
     const [role, setRole] = useState<string | null>(null);
+    const [points, setPoints] = useState<number>(0);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const supabase = createClient();
@@ -26,11 +27,14 @@ export default function ProfileDropdown({ isDark }: ProfileDropdownProps) {
                 setUser(session.user);
                 const { data: profile } = await supabase
                     .from('profiles')
-                    .select('role')
+                    .select('role, loyalty_points')
                     .eq('id', session.user.id)
                     .single();
                 
-                if (profile) setRole(profile.role);
+                if (profile) {
+                    setRole(profile.role);
+                    setPoints(profile.loyalty_points || 0);
+                }
             }
         };
 
@@ -86,7 +90,13 @@ export default function ProfileDropdown({ isDark }: ProfileDropdownProps) {
                 <div className="absolute right-0 mt-2 w-56 bg-white border border-stone-200 shadow-lg p-2 z-50 rounded-sm text-black">
                     <div className="px-3 py-2 border-b border-stone-100 mb-2">
                         <p className="text-sm font-medium truncate">{user.email}</p>
-                        <p className="text-xs text-stone-500 capitalize">{role || 'Customer'}</p>
+                        <div className="flex items-center justify-between mt-1">
+                            <p className="text-xs text-stone-500 capitalize">{role || 'Customer'}</p>
+                            <div className="flex items-center gap-1 text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                                <Star size={10} className="fill-amber-600" />
+                                {points} Points
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-1">

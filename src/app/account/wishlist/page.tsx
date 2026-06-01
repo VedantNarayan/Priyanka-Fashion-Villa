@@ -58,7 +58,7 @@ export default function WishlistPage() {
                             </div>
                             <div className="p-4">
                                 <h3 className="font-serif text-lg truncate">{item.name}</h3>
-                                <p className="text-stone-500 mb-4">${item.price}</p>
+                                <p className="text-stone-500 mb-4">₹{item.price}</p>
                                 <button
                                     onClick={() => handleMoveToCart(item)}
                                     className="w-full py-2 border border-black text-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2"

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { Search, SlidersHorizontal, ChevronDown, Grid, List } from "lucide-react";
+import { products as mockProducts } from "@/lib/data";
 
 const CATEGORIES = ["All", "Evening Wear", "Cocktail", "Gala", "Prom", "Party", "Casual"];
 const SORT_OPTIONS = [
@@ -18,6 +19,9 @@ export default function ShopPage() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All");
     const [sort, setSort] = useState("created_at-desc");
+    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedColor, setSelectedColor] = useState("");
+    const [minRating, setMinRating] = useState(0);
     const [loading, setLoading] = useState(true);
     const supabase = createClient();
 
@@ -25,27 +29,63 @@ export default function ShopPage() {
 
     const fetchProducts = async () => {
         setLoading(true);
-        let query = supabase
-            .from('products')
-            .select('*')
-            .eq('is_active', true);
+        try {
+            let query = supabase
+                .from('products')
+                .select('*')
+                .eq('is_active', true);
 
-        if (category !== 'All') {
-            query = query.eq('category', category);
+            if (category !== 'All') {
+                query = query.eq('category', category);
+            }
+
+            const [sortField, sortDir] = sort.split('-');
+            query = query.order(sortField, { ascending: sortDir === 'asc' });
+
+            const { data, error } = await query;
+            
+            if (error || !data || data.length === 0) {
+                console.log("Using mock products in Shop due to DB empty/error");
+                // Mock products need category filtering too if applied
+                let mocks = [...mockProducts];
+                if (category !== 'All') {
+                     mocks = mocks.filter(m => m.category === category);
+                }
+                
+                // Sort mock products
+                if (sortField === 'price') {
+                    mocks.sort((a, b) => sortDir === 'asc' ? a.price - b.price : b.price - a.price);
+                } else if (sortField === 'rating') {
+                    mocks.sort((a, b) => b.rating - a.rating); // descending always
+                }
+                
+                setProducts(mocks);
+            } else {
+                setProducts(data);
+            }
+        } catch (e) {
+            console.error(e);
+            setProducts(mockProducts);
+        } finally {
+            setLoading(false);
         }
-
-        const [sortField, sortDir] = sort.split('-');
-        query = query.order(sortField, { ascending: sortDir === 'asc' });
-
-        const { data } = await query;
-        setProducts(data || []);
-        setLoading(false);
     };
 
-    const filtered = products.filter(p =>
-        p.name?.toLowerCase().includes(search.toLowerCase()) ||
-        p.description?.toLowerCase().includes(search.toLowerCase())
-    );
+    const filtered = products.filter(p => {
+        const matchesSearch = p.name?.toLowerCase().includes(search.toLowerCase()) || p.description?.toLowerCase().includes(search.toLowerCase());
+        const matchesSize = selectedSize ? p.sizes?.includes(selectedSize) : true;
+        
+        // Match color string precisely
+        const matchesColor = selectedColor ? p.colors?.includes(selectedColor) : true;
+        
+        const matchesRating = (p.rating || 0) >= minRating;
+        
+        return matchesSearch && matchesSize && matchesColor && matchesRating;
+    });
+
+    // Derive unique sizes and colors for filter dropdowns
+    const allSizes = Array.from(new Set(products.flatMap(p => p.sizes || []))).filter(Boolean);
+    const allColors = Array.from(new Set(products.flatMap(p => p.colors || []))).filter(Boolean);
 
     return (
         <div className="min-h-screen bg-white text-stone-900">
@@ -57,7 +97,7 @@ export default function ShopPage() {
 
             <div className="container mx-auto px-4 max-w-7xl py-10">
                 {/* Filters Bar */}
-                <div className="flex flex-col md:flex-row gap-4 mb-8">
+                <div className="flex flex-col md:flex-row gap-4 mb-4">
                     <div className="flex-1 relative">
                         <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
                         <input
@@ -68,15 +108,47 @@ export default function ShopPage() {
                             className="w-full pl-10 pr-4 py-3 border border-stone-200 rounded-sm text-sm focus:outline-none focus:border-black"
                         />
                     </div>
-                    <select
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
-                        className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none"
-                    >
-                        {SORT_OPTIONS.map(opt => (
-                            <option key={opt.value} value={opt.value}>{opt.label}</option>
-                        ))}
-                    </select>
+                    
+                    <div className="flex flex-wrap gap-2 md:gap-4 md:flex-nowrap">
+                        <select
+                            value={selectedSize}
+                            onChange={(e) => setSelectedSize(e.target.value)}
+                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none flex-1 md:flex-none"
+                        >
+                            <option value="">Any Size</option>
+                            {allSizes.map(size => (
+                                <option key={size} value={size}>{size}</option>
+                            ))}
+                        </select>
+                        <select
+                            value={selectedColor}
+                            onChange={(e) => setSelectedColor(e.target.value)}
+                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none flex-1 md:flex-none capitalize"
+                        >
+                            <option value="">Any Color</option>
+                            {allColors.map(color => (
+                                <option key={color} value={color}>{color}</option>
+                            ))}
+                        </select>
+                        <select
+                            value={minRating}
+                            onChange={(e) => setMinRating(Number(e.target.value))}
+                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none flex-1 md:flex-none"
+                        >
+                            <option value={0}>Any Rating</option>
+                            <option value={4}>4+ Stars</option>
+                            <option value={3}>3+ Stars</option>
+                        </select>
+                        <select
+                            value={sort}
+                            onChange={(e) => setSort(e.target.value)}
+                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-stone-50 focus:outline-none flex-1 md:flex-none"
+                        >
+                            {SORT_OPTIONS.map(opt => (
+                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
                 {/* Categories */}

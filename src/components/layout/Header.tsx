@@ -21,14 +21,17 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
     const { syncFromDb, clearWishlist } = useWishlistStore();
 
     useEffect(() => {
-        syncFromDb(); // initial sync
+        syncFromDb(); // initial sync wishlist
+        useCartStore.getState().syncFromDb(); // initial sync cart
 
         const supabase = createClient();
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
             if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
                 syncFromDb();
+                useCartStore.getState().syncFromDb();
             } else if (event === 'SIGNED_OUT') {
                 clearWishlist();
+                useCartStore.getState().clearCart();
             }
         });
         return () => subscription.unsubscribe();
