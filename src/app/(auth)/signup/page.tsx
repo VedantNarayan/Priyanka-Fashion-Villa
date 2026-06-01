@@ -27,7 +27,7 @@ export default function SignupPage() {
             return;
         }
 
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email,
             password,
             options: {
@@ -42,7 +42,14 @@ export default function SignupPage() {
             setError(error.message);
             setLoading(false);
         } else {
-            router.push("/auth/verify-request"); // We'll create a simple check email page
+            if (data?.session) {
+                // Email confirmation is disabled, so user is logged in automatically
+                router.push("/account");
+                router.refresh();
+            } else {
+                // Email confirmation is enabled, redirect to verification request page
+                router.push("/auth/verify-request");
+            }
         }
     };
 
