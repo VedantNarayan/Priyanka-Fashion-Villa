@@ -29,31 +29,33 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
 
     return (
         <div className={cn(
-            "fixed inset-0 z-40 flex flex-col items-center justify-center transition-colors duration-1000",
-            phase >= 5 ? "pointer-events-none" : "pointer-events-none",
-            phase >= 3 ? "bg-transparent" : "bg-black"
+            "fixed inset-0 z-40 flex flex-col items-center justify-center transition-colors duration-[1200ms] ease-out-expo",
+            phase >= 4 ? "pointer-events-none" : "pointer-events-auto",
+            phase >= 3 ? "bg-[#FAF8F5]" : "bg-[#121210]"
         )}>
             {/* Intro Text - Fades out in Phase 3 */}
             <motion.div
                 initial={{ opacity: 1 }}
                 animate={{ opacity: phase >= 3 ? 0 : 1 }}
-                transition={{ duration: 1 }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
             >
-                <div className="absolute top-1/4 w-full px-12 flex justify-between text-white">
+                <div className="absolute top-1/4 w-full px-12 flex flex-col md:flex-row justify-between items-start md:items-center text-white gap-6 md:gap-12">
                     <motion.p
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="max-w-md font-light text-lg"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="max-w-md font-serif italic text-lg md:text-xl text-[#C5A880] tracking-wide"
                     >
                         &ldquo;At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style.&rdquo;
                     </motion.p>
                     <motion.h1
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="text-6xl font-serif uppercase tracking-widest text-right leading-none"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="text-4xl md:text-6xl font-serif uppercase tracking-[0.15em] text-left md:text-right leading-tight md:leading-none text-[#FAF8F5]"
                     >
-                        Designed<br />To Make<br />An Entrance
+                        Designed<br className="hidden md:block" /> To Make<br /> An <span className="text-[#C5A880]">Entrance</span>
                     </motion.h1>
                 </div>
             </motion.div>
@@ -67,7 +69,7 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                     // Phase 5: fade out so the real carousel is visible underneath
                     opacity: phase >= 5 ? 0 : 1,
                 }}
-                transition={{ duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
+                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
             >
                 {products.map((product, index) => {
                     const isCenter = index === 2;
@@ -80,21 +82,26 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                             animate={{
                                 y: phase >= 1 ? 0 : 500,
                                 opacity: phase >= 1 || isCenter ? 1 : 0,
-                                x: phase >= 2 ? offset * 140 : 0,
-                                scale: phase >= 2 && isCenter ? 1.1 : 1,
+                                x: phase >= 2 ? offset * 150 : 0,
+                                scale: phase >= 2 && isCenter ? 1.15 : 0.95,
                                 zIndex: isCenter ? 50 : 40 - Math.abs(offset),
                             }}
-                            transition={{ duration: 1, ease: [0.4, 0.0, 0.2, 1] }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 55,
+                                damping: 15,
+                                mass: 0.8,
+                            }}
                             className={cn(
-                                "absolute w-[200px] h-[28vh] rounded-lg overflow-hidden shadow-2xl origin-bottom bg-gray-200 border-2 border-white/50",
+                                "absolute w-[180px] md:w-[210px] h-[26vh] md:h-[28vh] rounded-none overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] origin-bottom bg-stone-900 border border-[#C5A880]/30",
                             )}
                         >
                             <Image
                                 src={product.cardImage}
                                 alt={product.name}
                                 fill
-                                sizes="200px"
-                                className="object-cover"
+                                sizes="(max-width: 768px) 180px, 210px"
+                                className="object-cover transition-transform duration-[2000ms] hover:scale-105"
                             />
                         </motion.div>
                     );

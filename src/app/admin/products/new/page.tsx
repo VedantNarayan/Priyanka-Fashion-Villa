@@ -24,10 +24,26 @@ const initialState = {
     error: ""
 }
 
+import { createClient } from "@/lib/supabase/client";
+import { useEffect } from "react";
+
 export default function NewProductPage() {
     const [state, formAction] = useFormState(addProduct, initialState);
     const [images, setImages] = useState<string[]>([]);
     const [uploading, setUploading] = useState(false);
+    const [categories, setCategories] = useState<any[]>([]);
+    const supabase = createClient();
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const { data } = await supabase
+                .from("categories")
+                .select("*")
+                .order("name", { ascending: true });
+            setCategories(data || []);
+        };
+        fetchCategories();
+    }, [supabase]);
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -72,13 +88,23 @@ export default function NewProductPage() {
 
                     <div className="space-y-2">
                         <label htmlFor="category" className="block text-sm font-medium text-stone-700">Category</label>
-                        <select name="category" id="category" className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors">
-                            <option value="Evening Wear">Evening Wear</option>
-                            <option value="Cocktail">Cocktail</option>
-                            <option value="Gala">Gala</option>
-                            <option value="Prom">Prom</option>
-                            <option value="Party">Party</option>
-                            <option value="Casual">Casual</option>
+                        <select name="category" id="category" required className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors bg-white text-black">
+                            <option value="">Select a category</option>
+                            {categories.map((cat) => (
+                                <option key={cat.id} value={cat.name}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                            {categories.length === 0 && (
+                                <>
+                                    <option value="Evening Wear">Evening Wear</option>
+                                    <option value="Cocktail">Cocktail</option>
+                                    <option value="Gala">Gala</option>
+                                    <option value="Prom">Prom</option>
+                                    <option value="Party">Party</option>
+                                    <option value="Casual">Casual</option>
+                                </>
+                            )}
                         </select>
                     </div>
                 </div>

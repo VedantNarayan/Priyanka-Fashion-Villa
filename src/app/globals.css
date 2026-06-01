@@ -1,16 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-off-white: #F5F5F0;
+  --color-alabaster: #FAF8F5;
+  --color-obsidian: #121210;
+  --color-gold: #D4AF37;
+  --color-gold-antique: #C5A880;
+  --color-champagne: #EFEBE2;
+  --color-charcoal: #2A2A28;
+  --color-warm-slate: #5A5A55;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Custom Base Styles */
 @layer base {
   body {
-    @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+    @apply bg-[#121210] text-[#FAF8F5] font-sans antialiased overflow-x-hidden transition-colors duration-[1200ms] ease-out-expo;
   }
 
   h1,
@@ -23,7 +31,7 @@
   }
 }
 
-/* Utility classes for animations */
+/* Utility classes */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -31,4 +39,17 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Luxury card shadow and glassmorphism elements */
+.luxury-glass {
+  background: rgba(250, 248, 245, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.luxury-glass-dark {
+  background: rgba(18, 18, 16, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }

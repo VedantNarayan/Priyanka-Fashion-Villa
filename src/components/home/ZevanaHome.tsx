@@ -26,7 +26,7 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
     }, []);
 
     return (
-        <main className="relative w-full min-h-screen overflow-x-hidden bg-[#F5F5F0]">
+        <main className="relative w-full min-h-screen overflow-x-hidden bg-[#FAF8F5]">
             <Header theme={theme} />
 
             {/* Intro Animation Layer — stays mounted until fully faded out */}
@@ -56,17 +56,28 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                     </section>
 
                     {/* Featured Collections Section */}
-                    <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto">
-                        <h2 className="text-4xl font-serif text-center mb-16 uppercase tracking-widest text-black">New Arrivals</h2>
+                    <section className="py-28 px-8 md:px-16 max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <span className="text-[#C5A880] text-xs md:text-sm uppercase tracking-[0.25em] block mb-2 font-semibold">The Curated Edit</span>
+                            <h2 className="text-3xl md:text-4xl font-serif uppercase tracking-widest text-[#121210]">New Arrivals</h2>
+                            <div className="w-16 h-[1px] bg-[#C5A880] mx-auto mt-4"></div>
+                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             {products.slice(0, 4).map(product => (
-                                <div key={`new-${product.id}`} className="group relative rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300">
+                                <div key={`new-${product.id}`} className="group relative rounded-none overflow-hidden bg-white border border-[#C5A880]/15 hover:border-[#D4AF37]/40 shadow-sm hover:shadow-2xl transition-all duration-700">
                                     <div className="relative aspect-[3/4] w-full overflow-hidden">
-                                        <Image src={product.cardImage} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 25vw" />
+                                        <Image 
+                                            src={product.cardImage} 
+                                            alt={product.name} 
+                                            fill 
+                                            className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out-expo" 
+                                            sizes="(max-width: 768px) 100vw, 25vw" 
+                                        />
                                     </div>
-                                    <div className="p-4 text-center">
-                                        <h3 className="font-serif text-lg text-black">{product.name}</h3>
-                                        <p className="text-stone-500 text-sm mt-1">₹{product.price}</p>
+                                    <div className="p-5 text-center bg-[#FAF8F5]/30">
+                                        <h3 className="font-serif text-base text-[#121210] group-hover:text-[#D4AF37] transition-colors duration-300 line-clamp-1">{product.name}</h3>
+                                        <p className="text-[#C5A880] font-serif text-sm mt-1.5 font-semibold">₹{product.price}</p>
                                     </div>
                                     <a href={`/product/${product.id}`} className="absolute inset-0 z-10">
                                         <span className="sr-only">View {product.name}</span>
@@ -77,31 +88,59 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                     </section>
 
                     {/* Brand Story Banner */}
-                    <section className="relative w-full py-32 bg-stone-900 text-stone-50 overflow-hidden">
-                        <div className="absolute inset-0 opacity-40">
-                             <Image src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop" alt="Fashion Background" fill className="object-cover" />
+                    <section className="relative w-full py-32 bg-[#121210] text-[#FAF8F5] overflow-hidden border-y border-[#C5A880]/15">
+                        <div className="absolute inset-0 opacity-25">
+                             <Image 
+                                 src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop" 
+                                 alt="Fashion Background" 
+                                 fill 
+                                 className="object-cover scale-105" 
+                             />
                         </div>
                         <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
-                            <h2 className="text-4xl md:text-6xl font-serif mb-6 uppercase tracking-widest">Elegance Redefined</h2>
-                            <p className="text-lg md:text-xl text-stone-200 mb-10 font-light leading-relaxed">
-                                Discover the unparalleled craftsmanship and timeless elegance that defines every piece in our exclusive collection. Designed for those who make an entrance.
+                            <span className="text-[#C5A880] text-xs md:text-sm uppercase tracking-[0.25em] block mb-4 font-semibold">The Priyanka Fashionvilla Legacy</span>
+                            <h2 className="text-3xl md:text-5xl font-serif mb-6 uppercase tracking-widest text-[#FAF8F5]">Elegance Redefined</h2>
+                            <div className="w-12 h-[1px] bg-[#C5A880] mx-auto mb-6"></div>
+                            <p className="text-base md:text-lg text-stone-300 mb-10 font-serif italic max-w-2xl mx-auto leading-relaxed">
+                                &ldquo;Discover the unparalleled craftsmanship, exquisite detailing, and timeless elegance that defines every hand-woven thread in our exclusive bridal and luxury wear collections. Crafted specifically for monumental entrances.&rdquo;
                             </p>
-                            <a href="/shop" className="inline-block border border-white px-10 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-colors duration-300">Explore Collection</a>
+                            <a 
+                                href="/shop" 
+                                className="inline-block border border-[#C5A880] px-10 py-4 uppercase tracking-[0.2em] text-xs font-semibold text-[#FAF8F5] hover:bg-[#C5A880] hover:text-[#121210] transition-all duration-500"
+                            >
+                                Explore Collection
+                            </a>
                         </div>
                     </section>
 
                     {/* Newsletter */}
-                    <section className="py-24 px-6 text-center bg-[#F5F5F0]">
-                         <h2 className="text-3xl font-serif mb-4 text-black">Join The Villa</h2>
-                         <p className="text-stone-500 mb-8 max-w-md mx-auto">Subscribe for exclusive access to new collections, private sales, and behind-the-scenes content.</p>
-                         <form className="max-w-md mx-auto flex gap-2" onSubmit={(e) => e.preventDefault()}>
-                             <input type="email" placeholder="Your email address" className="flex-1 px-4 py-3 border border-stone-300 bg-transparent focus:outline-none focus:border-black text-black" required />
-                             <button type="submit" className="bg-black text-white px-8 py-3 uppercase tracking-widest text-sm hover:bg-stone-800 transition-colors">Subscribe</button>
-                         </form>
+                    <section className="py-28 px-6 text-center bg-[#FAF8F5] relative overflow-hidden border-t border-[#C5A880]/15">
+                        <div className="max-w-2xl mx-auto p-8 md:p-16 border border-[#C5A880]/30 bg-white relative">
+                            <div className="absolute inset-1 border border-[#C5A880]/10 pointer-events-none"></div>
+                            <span className="text-[#C5A880] text-xs uppercase tracking-[0.3em] block mb-3 font-semibold">Exclusive Invitation</span>
+                            <h2 className="text-3xl md:text-4xl font-serif mb-4 text-[#121210] tracking-wide uppercase">Join The Villa</h2>
+                            <div className="w-12 h-[1px] bg-[#C5A880] mx-auto mb-6"></div>
+                            <p className="text-stone-600 mb-10 max-w-md mx-auto font-serif italic text-sm md:text-base leading-relaxed">
+                                Subscribe to receive private invitations to our seasonal debuts, early access to new collections, and stories from our master artisans.
+                            </p>
+                            <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
+                                <input 
+                                    type="email" 
+                                    placeholder="Enter your email address" 
+                                    className="flex-1 px-4 py-3 border border-[#C5A880]/30 bg-[#FAF8F5]/80 focus:outline-none focus:border-[#D4AF37] text-stone-800 font-serif text-sm placeholder:text-stone-400" 
+                                    required 
+                                />
+                                <button 
+                                    type="submit" 
+                                    className="bg-[#121210] hover:bg-[#D4AF37] text-[#FAF8F5] hover:text-[#121210] px-8 py-3.5 uppercase tracking-widest text-xs font-semibold transition-all duration-500 shadow-sm border border-[#121210] hover:border-[#D4AF37]"
+                                >
+                                    Request Invite
+                                </button>
+                            </form>
+                        </div>
                     </section>
                 </>
             )}
-
         </main>
     );
 }

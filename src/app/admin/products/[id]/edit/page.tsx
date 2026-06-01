@@ -15,11 +15,21 @@ export default function EditProductPage() {
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [images, setImages] = useState<string[]>([]);
+    const [categories, setCategories] = useState<any[]>([]);
     const supabase = createClient();
 
     useEffect(() => {
         fetchProduct();
+        fetchCategories();
     }, []);
+
+    const fetchCategories = async () => {
+        const { data } = await supabase
+            .from("categories")
+            .select("*")
+            .order("name", { ascending: true });
+        setCategories(data || []);
+    };
 
     const fetchProduct = async () => {
         const { data } = await supabase
@@ -85,7 +95,22 @@ export default function EditProductPage() {
                     </div>
                     <div>
                         <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">Category</label>
-                        <input name="category" defaultValue={product.category} required className="w-full border border-stone-200 p-3 rounded-sm text-sm text-black focus:outline-none focus:border-black" />
+                        <select
+                            name="category"
+                            defaultValue={product.category}
+                            required
+                            className="w-full border border-stone-200 p-3 rounded-sm text-sm text-black focus:outline-none focus:border-black bg-white"
+                        >
+                            <option value="">Select a category</option>
+                            {categories.map((cat) => (
+                                <option key={cat.id} value={cat.name}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                            {product.category && !categories.some(c => c.name === product.category) && (
+                                <option value={product.category}>{product.category}</option>
+                            )}
+                        </select>
                     </div>
                 </div>
 

@@ -86,7 +86,7 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="absolute bottom-0 left-0 w-full h-[40vh] z-20 flex items-center bg-white/50 backdrop-blur-md border-t border-white/20"
+            className="absolute bottom-0 left-0 w-full h-[40vh] z-20 flex items-center bg-[#FAF8F5]/65 backdrop-blur-xl border-t border-[#C5A880]/25 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]"
         >
             <div
                 ref={containerRef}
@@ -109,9 +109,9 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                                 <motion.div
                                     layoutId={`product-card-${product.id}`}
                                     className={cn(
-                                        "relative rounded-lg overflow-hidden shadow-xl bg-gray-100",
+                                        "relative rounded-none overflow-hidden shadow-2xl bg-stone-900 border border-[#C5A880]/20",
                                         "h-[28vh]",
-                                        isActive ? "scale-100" : "scale-90"
+                                        isActive ? "scale-100 border-[#D4AF37]/50" : "scale-90"
                                     )}
                                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                 >
@@ -120,26 +120,26 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                                         alt={product.name}
                                         fill
                                         sizes="(max-width: 768px) 200px, 240px"
-                                        className="object-cover"
+                                        className="object-cover transition-transform duration-700 hover:scale-105"
                                     />
                                     <button
                                         onClick={(e) => {
                                             e.preventDefault();
                                         }}
-                                        className="absolute top-2 left-2 p-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white hover:text-red-500 transition-colors"
+                                        className="absolute top-3 left-3 p-1.5 rounded-full bg-[#121210]/40 backdrop-blur-sm text-stone-200 border border-white/10 hover:bg-[#FAF8F5] hover:text-[#D4AF37] transition-all duration-300"
                                     >
-                                        <Heart size={16} />
+                                        <Heart size={14} className="transition-transform duration-300 hover:scale-110" />
                                     </button>
                                     {/* Product info overlay at bottom of card */}
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-8">
-                                        <h3 className="font-serif text-sm text-white truncate">{product.name}</h3>
-                                        <div className="flex items-center gap-1 mt-0.5">
-                                            <div className="flex items-center gap-0.5 text-yellow-400">
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#121210]/90 via-[#121210]/55 to-transparent p-4 pt-10">
+                                        <h3 className="font-serif text-sm text-stone-100 tracking-wide truncate">{product.name}</h3>
+                                        <div className="flex items-center justify-between gap-1 mt-1">
+                                            <div className="flex items-center gap-0.5 text-[#D4AF37]">
                                                 {[...Array(5)].map((_, i) => (
-                                                    <Star key={i} size={10} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
+                                                    <Star key={i} size={10} fill={i < Math.floor(product.rating) ? "#D4AF37" : "none"} className="stroke-[#D4AF37]" />
                                                 ))}
                                             </div>
-                                            <span className="text-white/80 text-xs ml-1">₹{product.price}</span>
+                                            <span className="text-[#C5A880] font-serif text-xs font-semibold">₹{product.price}</span>
                                         </div>
                                     </div>
                                 </motion.div>

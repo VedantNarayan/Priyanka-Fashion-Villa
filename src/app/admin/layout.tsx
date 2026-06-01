@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Package, ShoppingBag, Users, Settings, LogOut, Star, RotateCcw, Tag, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, Users, Settings, LogOut, Star, RotateCcw, Tag, ShieldCheck, Layers } from "lucide-react";
 import { headers } from "next/headers";
 import React from "react";
 
@@ -16,6 +16,7 @@ export default async function AdminLayout({
     const navItems = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
         { href: "/admin/products", icon: Package, label: "Products" },
+        { href: "/admin/categories", icon: Layers, label: "Categories" },
         { href: "/admin/orders", icon: ShoppingBag, label: "Orders" },
         { href: "/admin/customers", icon: Users, label: "Customers" },
         { href: "/admin/returns", icon: RotateCcw, label: "Returns" },
