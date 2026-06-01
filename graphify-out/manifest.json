@@ -325,8 +325,8 @@
     "semantic_hash": "7cb4c4ce520301bd5521fd2dd98ebea3"
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/src/components/home/HeroAnimation.tsx": {
-    "mtime": 1780342037.482664,
-    "ast_hash": "33df00917e075ffd2b5ba5a823869563",
+    "mtime": 1780342300.1144743,
+    "ast_hash": "2c476e082f7e91e7ecdc4961e4ab89e5",
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/src/components/home/ModelDisplay.tsx": {
@@ -580,12 +580,12 @@
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/public/sw.js": {
-    "mtime": 1780342049.7798367,
-    "ast_hash": "3756ac0f6a7b81b559316ce5bd302f1b",
+    "mtime": 1780342310.5556421,
+    "ast_hash": "d6b5592fdc281a01645757630ea3cf6f",
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/public/workbox-f1770938.js": {
-    "mtime": 1780342049.77984,
+    "mtime": 1780342310.5556293,
     "ast_hash": "80e63d1bc987fbb9f079f9d6a8c9a60e",
     "semantic_hash": ""
   },

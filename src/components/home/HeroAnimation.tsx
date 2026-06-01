@@ -31,8 +31,8 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                 setPhase(4);                       // Cards slide down to bottom strip
                 onCardsLanded();                   // Signal parent to mount real carousel and model display
             }, 3500),
-            setTimeout(() => setPhase(5), 5000),   // Fade out intro cards overlay
-            setTimeout(() => onComplete(), 5800),  // Unmount overlay
+            // Unmount overlay exactly at 5000ms (1.5s after landing starts, when cards have landed and real carousel is fully visible)
+            setTimeout(() => onComplete(), 5000),  
         ];
         return () => timers.forEach(clearTimeout);
     }, [onCardsLanded, onComplete]);
@@ -76,12 +76,10 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                 animate={{
                     // Phase 4: Slide all fanned cards down to the bottom carousel center
                     y: phase >= 4 ? "30vh" : 0,
-                    // Phase 5: Fade out cards smoothly
-                    opacity: phase >= 5 ? 0 : 1,
                 }}
                 transition={{ 
-                    y: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
-                    opacity: { duration: 0.8, ease: "easeInOut" }
+                    duration: 1.4, 
+                    ease: [0.16, 1, 0.3, 1] 
                 }}
             >
                 {products.map((product, index) => {
