@@ -1,16 +1,16 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-02)
 
 ## Corpus Check
-- 102 files · ~66,209 words
+- 104 files · ~67,365 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 433 nodes · 688 edges · 44 communities (30 shown, 14 thin omitted)
+- 439 nodes · 702 edges · 44 communities (30 shown, 14 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fcb9d531`
+- Built from commit: `f5758b0f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -48,8 +48,8 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `$()` - 30 edges
-2. `createClient()` - 24 edges
-3. `createClient()` - 23 edges
+2. `createClient()` - 26 edges
+3. `createClient()` - 24 edges
 4. `cn()` - 19 edges
 5. `a` - 18 edges
 6. `compilerOptions` - 16 edges
@@ -84,12 +84,12 @@ Cohesion: 0.07
 Nodes (28): Home(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarouselProps, generateMetadata(), ProductPage(), products (+20 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.08
-Nodes (7): grantAdminRights(), createCoupon(), deleteCoupon(), toggleCoupon(), AnalyticsProps, OrderData, createClient()
+Cohesion: 0.05
+Nodes (18): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), deleteOrder(), updateOrderStatus(), updateTrackingNumber(), AnalyticsProps (+10 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.07
-Nodes (25): dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next, otpauth (+17 more)
+Cohesion: 0.06
+Nodes (33): dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next, otpauth (+25 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.23
@@ -100,8 +100,8 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.10
-Nodes (18): eslintConfig, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+10 more)
+Cohesion: 0.18
+Nodes (10): eslintConfig, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+2 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.22
@@ -116,16 +116,16 @@ Cohesion: 0.22
 Nodes (8): background_color, description, display, icons, name, short_name, start_url, theme_color
 
 ### Community 10 - "Community 10"
-Cohesion: 0.14
-Nodes (11): deleteOrder(), updateOrderStatus(), updateTrackingNumber(), emailTemplates, sendEmail(), OrderNotification, parseStatusCommand(), sendOrderNotification() (+3 more)
+Cohesion: 0.43
+Nodes (3): createCoupon(), deleteCoupon(), toggleCoupon()
 
 ### Community 11 - "Community 11"
 Cohesion: 0.18
 Nodes (3): inter, metadata, playfair
 
 ### Community 12 - "Community 12"
-Cohesion: 0.09
-Nodes (5): a, F, get(), h(), z()
+Cohesion: 0.10
+Nodes (6): a, get(), h(), k(), O(), z()
 
 ### Community 15 - "Community 15"
 Cohesion: 0.40
@@ -136,8 +136,8 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 42 - "Community 42"
-Cohesion: 0.09
-Nodes (19): $(), b(), deleteCacheAndMetadata(), et, G, i, j(), k() (+11 more)
+Cohesion: 0.08
+Nodes (18): $(), b(), deleteCacheAndMetadata(), et, F, G, i, j() (+10 more)
 
 ## Knowledge Gaps
 - **120 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+115 more)
@@ -147,12 +147,12 @@ Nodes (19): $(), b(), deleteCacheAndMetadata(), et, G, i, j(), k() (+11 more)
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `sendOrderNotification()` connect `Community 10` to `Community 42`?**
+- **Why does `sendOrderNotification()` connect `Community 2` to `Community 42`?**
   _High betweenness centrality (0.189) - this node is a cross-community bridge._
 - **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 8`, `Community 10`?**
-  _High betweenness centrality (0.132) - this node is a cross-community bridge._
+  _High betweenness centrality (0.133) - this node is a cross-community bridge._
 - **Why does `$()` connect `Community 42` to `Community 12`?**
-  _High betweenness centrality (0.088) - this node is a cross-community bridge._
+  _High betweenness centrality (0.087) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
   _120 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
@@ -160,4 +160,4 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.06938020351526364 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.07557354925775979 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.054098360655737705 - nodes in this community are weakly interconnected._

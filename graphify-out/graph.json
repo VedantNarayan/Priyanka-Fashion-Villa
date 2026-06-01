@@ -2770,7 +2770,7 @@
       "label": "ModelDisplayProps",
       "file_type": "code",
       "source_file": "src/components/home/ModelDisplay.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "id": "home_modeldisplay_modeldisplayprops",
       "community": 1,
       "norm_label": "modeldisplayprops"
@@ -2779,7 +2779,7 @@
       "label": "ModelDisplay()",
       "file_type": "code",
       "source_file": "src/components/home/ModelDisplay.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "id": "home_modeldisplay_modeldisplay",
       "community": 1,
       "norm_label": "modeldisplay()"
@@ -7240,9 +7240,9 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_categories",
-      "target": "actions_categories_createcategory",
-      "confidence_score": 1.0
+      "target": "actions_categories_createcategory"
     },
     {
       "relation": "contains",
@@ -7250,9 +7250,9 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_categories",
-      "target": "actions_categories_deletecategory",
-      "confidence_score": 1.0
+      "target": "actions_categories_deletecategory"
     },
     {
       "relation": "contains",
@@ -7260,9 +7260,9 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_categories",
-      "target": "actions_categories_updatecategory",
-      "confidence_score": 1.0
+      "target": "actions_categories_updatecategory"
     },
     {
       "relation": "imports_from",
@@ -7271,9 +7271,9 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_categories",
-      "target": "supabase_server",
-      "confidence_score": 1.0
+      "target": "supabase_server"
     },
     {
       "relation": "imports",
@@ -7282,9 +7282,9 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_categories",
-      "target": "supabase_server_createclient",
-      "confidence_score": 1.0
+      "target": "supabase_server_createclient"
     },
     {
       "relation": "imports_from",
@@ -7293,9 +7293,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "actions_categories",
-      "confidence_score": 1.0
+      "target": "actions_categories"
     },
     {
       "relation": "imports",
@@ -7304,9 +7304,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "actions_categories_createcategory",
-      "confidence_score": 1.0
+      "target": "actions_categories_createcategory"
     },
     {
       "relation": "imports",
@@ -7315,9 +7315,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "actions_categories_updatecategory",
-      "confidence_score": 1.0
+      "target": "actions_categories_updatecategory"
     },
     {
       "relation": "imports",
@@ -7326,9 +7326,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "actions_categories_deletecategory",
-      "confidence_score": 1.0
+      "target": "actions_categories_deletecategory"
     },
     {
       "relation": "contains",
@@ -7955,9 +7955,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "categories_page_admincategoriespage",
-      "confidence_score": 1.0
+      "target": "categories_page_admincategoriespage"
     },
     {
       "relation": "imports_from",
@@ -7966,9 +7966,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "supabase_client",
-      "confidence_score": 1.0
+      "target": "supabase_client"
     },
     {
       "relation": "imports",
@@ -7977,9 +7977,9 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "categories_page",
-      "target": "supabase_client_createclient",
-      "confidence_score": 1.0
+      "target": "supabase_client_createclient"
     },
     {
       "relation": "contains",
@@ -8296,9 +8296,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "supabase_client",
-      "confidence_score": 1.0
+      "target": "supabase_client"
     },
     {
       "relation": "imports",
@@ -8307,9 +8307,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "supabase_client_createclient",
-      "confidence_score": 1.0
+      "target": "supabase_client_createclient"
     },
     {
       "relation": "contains",
@@ -11410,5 +11410,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f5758b0f9c9efc9a747604acd7b360b76d7d591f"
+  "built_at_commit": "b7bf228888cfb2b6b4e7c15ce8260ae79bdb0bc0"
 }

@@ -5,17 +5,17 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface HeroAnimationProps {
-    onCardsLanded: () => void;   // Fires when cards reach the bottom strip — show real carousel
-    onComplete: () => void;       // Fires after fade-out — unmount this component
+    onCardsLanded: () => void;   // Fires when cards are ready and frames fade out
+    onComplete: () => void;       // Fires after fade-out completes to unmount
 }
 
 export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimationProps) {
     const [phase, setPhase] = useState(0);
-    const [carouselSpacing, setCarouselSpacing] = useState(288);
+    const [carouselSpacing, setCarouselSpacing] = useState(180);
 
     useEffect(() => {
         const handleResize = () => {
-            setCarouselSpacing(window.innerWidth < 768 ? 212 : 288);
+            setCarouselSpacing(window.innerWidth < 768 ? 100 : 180);
         };
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -24,15 +24,15 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
 
     useEffect(() => {
         const timers = [
-            setTimeout(() => setPhase(1), 500),   // Cards rise from bottom
-            setTimeout(() => setPhase(2), 1500),  // Fan out horizontally
-            setTimeout(() => setPhase(3), 2500),  // Background fades black → cream
+            setTimeout(() => setPhase(1), 500),   // Center card rises
+            setTimeout(() => setPhase(2), 1500),  // Cards fan out
+            setTimeout(() => setPhase(3), 2500),  // Background fades black → ivory
             setTimeout(() => {
-                setPhase(4);                       // Cards slide down to bottom strip & hold
-                onCardsLanded();                   // Signal parent to show real content underneath
+                setPhase(4);                       // White borders & shadows fade out
+                onCardsLanded();                   // Mount real content underneath
             }, 3500),
-            setTimeout(() => setPhase(5), 5000),   // Fade out intro cards (real carousel is visible behind)
-            setTimeout(() => onComplete(), 5800),  // Unmount after fade-out completes
+            setTimeout(() => setPhase(5), 5000),   // Fade out intro layer completely
+            setTimeout(() => onComplete(), 5800),  // Unmount overlay
         ];
         return () => timers.forEach(clearTimeout);
     }, [onCardsLanded, onComplete]);
@@ -72,17 +72,11 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
 
             {/* Animated Cards */}
             <motion.div
-                className="absolute inset-0 flex items-center justify-center"
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
                 animate={{
-                    // Phase 4+: slide the entire card group down to the bottom strip
-                    y: phase >= 4 ? "30vh" : 0,
-                    // Phase 5: fade out so the real carousel is visible underneath
                     opacity: phase >= 5 ? 0 : 1,
                 }}
-                transition={{ 
-                    y: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
-                    opacity: { duration: 0.8, ease: "easeInOut" }
-                }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
             >
                 {products.map((product, index) => {
                     const isCenter = index === 2;
@@ -95,31 +89,36 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                             animate={{
                                 y: phase >= 1 ? 0 : 500,
                                 opacity: phase >= 1 || isCenter ? 1 : 0,
-                                x: phase >= 4 
-                                    ? offset * carouselSpacing
-                                    : (phase >= 2 ? offset * 150 : 0),
-                                scale: phase >= 4
-                                    ? (isCenter ? 1.0 : 0.9)
-                                    : (phase >= 2 && isCenter ? 1.15 : 0.95),
+                                x: phase >= 2 ? offset * carouselSpacing : 0,
+                                scale: phase >= 2 && isCenter ? 1.1 : 0.9,
+                                // Animate the card borders/shadows/background to transparent in Phase 4
+                                backgroundColor: phase >= 4 ? "rgba(255, 255, 255, 0)" : "rgba(255, 255, 255, 1)",
+                                borderColor: phase >= 4 ? "rgba(197, 168, 128, 0)" : "rgba(197, 168, 128, 0.15)",
+                                boxShadow: phase >= 4 ? "none" : "0 20px 40px rgba(0, 0, 0, 0.12)",
                                 zIndex: isCenter ? 50 : 40 - Math.abs(offset),
                             }}
                             transition={{
                                 type: "spring",
-                                stiffness: 55,
-                                damping: 15,
+                                stiffness: 60,
+                                damping: 16,
                                 mass: 0.8,
                             }}
                             className={cn(
-                                "absolute w-[200px] md:w-[240px] h-[28vh] rounded-none overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] origin-bottom bg-stone-900 border border-[#C5A880]/30",
+                                "absolute rounded-2xl overflow-hidden border flex justify-center items-end origin-bottom transition-all duration-500",
+                                isCenter 
+                                    ? "h-[50vh] md:h-[55vh] w-[200px] md:w-[280px]" 
+                                    : "h-[40vh] md:h-[45vh] w-[180px] md:w-[240px]"
                             )}
                         >
-                            <Image
-                                src={product.cardImage}
-                                alt={product.name}
-                                fill
-                                sizes="(max-width: 768px) 200px, 240px"
-                                className="object-cover transition-transform duration-[2000ms] hover:scale-105"
-                            />
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src={product.modelImage}
+                                    alt={product.name}
+                                    fill
+                                    sizes="(max-width: 768px) 200px, 280px"
+                                    className="object-contain object-bottom transition-transform duration-[2000ms]"
+                                />
+                            </div>
                         </motion.div>
                     );
                 })}

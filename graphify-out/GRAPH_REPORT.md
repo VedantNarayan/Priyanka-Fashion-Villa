@@ -1,7 +1,7 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-02)
 
 ## Corpus Check
-- 104 files · ~67,365 words
+- 104 files · ~67,341 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f5758b0f`
+- Built from commit: `b7bf2288`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

@@ -1,7 +1,8 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Product } from "@/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface ModelDisplayProps {
     products: Product[];
@@ -10,62 +11,61 @@ interface ModelDisplayProps {
 }
 
 export default function ModelDisplay({ products, activeIndex, show }: ModelDisplayProps) {
-    // We display 5 models. Center is index 2.
-    // Calculate which products map to the 5 model positions.
-    // positions: 0 (Left-2), 1 (Left-1), 2 (Center), 3 (Right-1), 4 (Right-2)
-    const getProductForPosition = (posIndex: number) => {
-        const offset = posIndex - 2; // -2, -1, 0, 1, 2
-        const productIndex = activeIndex + offset;
-        if (productIndex < 0 || productIndex >= products.length) return null;
-        return products[productIndex];
-    };
+    const [carouselSpacing, setCarouselSpacing] = useState(180);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setCarouselSpacing(window.innerWidth < 768 ? 100 : 180);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     if (!show) return null;
 
     return (
-        <div className="absolute top-0 left-0 w-full h-[60vh] z-10 flex items-end justify-center pointer-events-none">
-            <div className="relative w-full max-w-[1400px] h-full flex justify-center items-end px-0 md:px-12">
-                {[0, 1, 2, 3, 4].map((posIndex) => {
-                    const product = getProductForPosition(posIndex);
-                    const isCenter = posIndex === 2;
-
-                    // On mobile, only show center and immediate neighbors (1, 2, 3)
-                    // and hide the outer ones (0, 4) or make them very small
-                    const isVisibleOnMobile = posIndex >= 1 && posIndex <= 3;
+        <div className="absolute top-0 left-0 w-full h-[60vh] z-10 flex items-end justify-center pointer-events-none overflow-hidden">
+            <div className="relative w-full max-w-[1200px] h-full flex justify-center items-end">
+                {products.map((product, idx) => {
+                    const offset = idx - activeIndex;
+                    const isCenter = idx === activeIndex;
+                    const isVisible = Math.abs(offset) <= 2;
 
                     return (
-                        <div
-                            key={posIndex}
+                        <motion.div
+                            key={product.id}
+                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.1 : 0.9 }}
+                            animate={{
+                                opacity: isVisible ? 1 : 0,
+                                x: offset * carouselSpacing,
+                                scale: isCenter ? 1.1 : 0.9,
+                                zIndex: 10 - Math.abs(offset),
+                            }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 70,
+                                damping: 18,
+                                mass: 0.9,
+                            }}
                             className={cn(
-                                "relative flex flex-col items-center justify-end h-full transition-all duration-500",
-                                !isVisibleOnMobile ? "hidden md:flex" : "flex"
+                                "absolute bottom-0 flex justify-center items-end origin-bottom transition-all duration-500",
+                                isCenter 
+                                    ? "h-[50vh] md:h-[55vh] w-[200px] md:w-[280px]" 
+                                    : "h-[40vh] md:h-[45vh] w-[180px] md:w-[240px]"
                             )}
-                            style={{ width: isCenter ? (isVisibleOnMobile ? '40%' : '25%') : (isVisibleOnMobile ? '25%' : '18%') }}
                         >
-                            <AnimatePresence mode="popLayout">
-                                {product && (
-                                    <motion.div
-                                        key={product.id}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                                        className="absolute bottom-0 w-full flex justify-center"
-                                    >
-                                        <div className={`relative ${isCenter ? 'h-[55vh]' : 'h-[45vh]'} w-full transition-all duration-500`}>
-                                            <Image
-                                                src={product.modelImage}
-                                                alt={`Model for ${product.name}`}
-                                                fill
-                                                sizes={isCenter ? "(max-width: 768px) 40vw, 25vw" : "(max-width: 768px) 25vw, 18vw"}
-                                                className="object-contain object-bottom"
-                                                priority={true}
-                                            />
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
+                            <div className="relative w-full h-full">
+                                <Image
+                                    src={product.modelImage}
+                                    alt={`Model for ${product.name}`}
+                                    fill
+                                    sizes="(max-width: 768px) 200px, 280px"
+                                    className="object-contain object-bottom"
+                                    priority={idx === activeIndex}
+                                />
+                            </div>
+                        </motion.div>
                     );
                 })}
             </div>
