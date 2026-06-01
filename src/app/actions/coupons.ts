@@ -67,6 +67,38 @@ export async function deleteCoupon(couponId: string) {
 export async function validateCoupon(code: string, orderAmount: number) {
     const supabase = await createClient();
 
+    // Check if it is a dynamic Referral Coupon (PVREF[Referrer_Partial_ID])
+    if (code.toUpperCase().startsWith("PVREF")) {
+        const partialId = code.toUpperCase().replace("PVREF", "");
+        
+        // We look up if a profile matching this partial ID exists (cast UUID to text ILIKE)
+        // Since we are checking from server-side action, we can search using pg or standard query
+        const { data: referee, error: refError } = await supabase
+            .from("profiles")
+            .select("id, email")
+            .limit(5); // Get active profiles to search in memory to avoid UUID casting errors in postgrest
+            
+        const matchingReferee = referee?.find(r => r.id.replace(/-/g, "").toUpperCase().startsWith(partialId));
+
+        if (matchingReferee) {
+            const minAmount = 2999;
+            if (orderAmount < minAmount) {
+                return { error: `Referral coupon requires a minimum order of ₹${minAmount}` };
+            }
+            return {
+                valid: true,
+                discount: 1000, // ₹1,000 off incentive for Patna luxury boutique!
+                coupon: {
+                    code: code.toUpperCase(),
+                    type: "fixed",
+                    value: 1000,
+                },
+            };
+        } else {
+            return { error: "Referrer profile not found" };
+        }
+    }
+
     const { data: coupon, error } = await supabase
         .from("coupons")
         .select("*")

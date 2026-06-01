@@ -21,8 +21,8 @@ export default function CheckoutPage() {
         phone: "",
         line1: "",
         line2: "",
-        city: "",
-        state: "",
+        city: "Patna",
+        state: "Bihar",
         postal_code: "",
         country: "IN",
     });
@@ -226,7 +226,7 @@ export default function CheckoutPage() {
                                         </button>
                                     ))}
                                     <button
-                                        onClick={() => { setSelectedAddressId("new"); setAddress({ full_name: "", phone: "", line1: "", line2: "", city: "", state: "", postal_code: "", country: "IN" }); }}
+                                        onClick={() => { setSelectedAddressId("new"); setAddress({ full_name: "", phone: "", line1: "", line2: "", city: "Patna", state: "Bihar", postal_code: "", country: "IN" }); }}
                                         className={`text-left p-4 border border-dashed rounded-sm transition-colors ${
                                             selectedAddressId === "new" ? 'border-black bg-stone-50' : 'border-stone-300 hover:border-stone-400'
                                         }`}
@@ -260,12 +260,12 @@ export default function CheckoutPage() {
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                                 <div>
-                                    <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">City</label>
-                                    <input type="text" className="w-full bg-stone-50 border border-stone-200 p-3 outline-none focus:border-black text-sm" value={address.city} onChange={(e) => setAddress({ ...address, city: e.target.value })} />
+                                    <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1">City (Locked)</label>
+                                    <input type="text" readOnly className="w-full bg-stone-100 border border-stone-200 p-3 outline-none text-stone-500 text-sm cursor-not-allowed" value={address.city} />
                                 </div>
                                 <div>
-                                    <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">State</label>
-                                    <input type="text" className="w-full bg-stone-50 border border-stone-200 p-3 outline-none focus:border-black text-sm" value={address.state} onChange={(e) => setAddress({ ...address, state: e.target.value })} />
+                                    <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1">State (Locked)</label>
+                                    <input type="text" readOnly className="w-full bg-stone-100 border border-stone-200 p-3 outline-none text-stone-500 text-sm cursor-not-allowed" value={address.state} />
                                 </div>
                                 <div>
                                     <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">PIN Code</label>

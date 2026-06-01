@@ -92,12 +92,12 @@ export default function AddressesPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">City</label>
-                            <input name="city" defaultValue={editing?.city || ''} required className="w-full border border-stone-200 p-3 rounded-sm text-sm text-black focus:outline-none focus:border-black" />
+                            <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1">City (Locked)</label>
+                            <input name="city" value="Patna" readOnly className="w-full bg-stone-100 border border-stone-200 p-3 rounded-sm text-sm text-stone-500 cursor-not-allowed focus:outline-none" />
                         </div>
                         <div>
-                            <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">State</label>
-                            <input name="state" defaultValue={editing?.state || ''} required className="w-full border border-stone-200 p-3 rounded-sm text-sm text-black focus:outline-none focus:border-black" />
+                            <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1">State (Locked)</label>
+                            <input name="state" value="Bihar" readOnly className="w-full bg-stone-100 border border-stone-200 p-3 rounded-sm text-sm text-stone-500 cursor-not-allowed focus:outline-none" />
                         </div>
                         <div>
                             <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">PIN Code</label>

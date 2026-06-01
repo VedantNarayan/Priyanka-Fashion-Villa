@@ -4,6 +4,7 @@ import "./globals.css";
 import CartDrawer from "@/components/cart/CartDrawer";
 import Footer from "@/components/layout/Footer";
 import LiveChatWidget from "@/components/chat/LiveChatWidget";
+import GlobalHeaderWrapper from "@/components/layout/GlobalHeaderWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,6 +57,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-black text-white`}
       >
+        <GlobalHeaderWrapper />
         {children}
         <script
           type="application/ld+json"

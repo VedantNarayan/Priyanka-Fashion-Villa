@@ -47,14 +47,13 @@ export async function POST(request: Request) {
 
         const supabase = await createClient();
 
-        // Find order by partial ID
-        const { data: orders } = await supabase
-            .from("orders")
-            .select("id, status")
-            .ilike("id", `${command.orderRef}%`)
+        // Find order by partial ID via Postgres RPC function (handles UUID typecasting)
+        const { data: orders, error: rpcError } = await supabase
+            .rpc("find_order_by_partial_id", { partial_id: command.orderRef })
             .limit(1);
 
-        if (!orders || orders.length === 0) {
+        if (rpcError || !orders || orders.length === 0) {
+            console.error("[WhatsApp] Order lookup error:", rpcError);
             return NextResponse.json({ status: "order_not_found" });
         }
 
