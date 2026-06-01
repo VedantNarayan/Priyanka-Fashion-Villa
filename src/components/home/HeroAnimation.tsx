@@ -11,11 +11,11 @@ interface HeroAnimationProps {
 
 export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimationProps) {
     const [phase, setPhase] = useState(0);
-    const [carouselSpacing, setCarouselSpacing] = useState(180);
+    const [carouselSpacing, setCarouselSpacing] = useState(288);
 
     useEffect(() => {
         const handleResize = () => {
-            setCarouselSpacing(window.innerWidth < 768 ? 100 : 180);
+            setCarouselSpacing(window.innerWidth < 768 ? 212 : 288);
         };
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -28,10 +28,10 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
             setTimeout(() => setPhase(2), 1500),  // Cards fan out
             setTimeout(() => setPhase(3), 2500),  // Background fades black → ivory
             setTimeout(() => {
-                setPhase(4);                       // White borders & shadows fade out
-                onCardsLanded();                   // Mount real content underneath
+                setPhase(4);                       // Cards slide down to bottom strip
+                onCardsLanded();                   // Signal parent to mount real carousel and model display
             }, 3500),
-            setTimeout(() => setPhase(5), 5000),   // Fade out intro layer completely
+            setTimeout(() => setPhase(5), 5000),   // Fade out intro cards overlay
             setTimeout(() => onComplete(), 5800),  // Unmount overlay
         ];
         return () => timers.forEach(clearTimeout);
@@ -74,9 +74,15 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
             <motion.div
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
                 animate={{
+                    // Phase 4: Slide all fanned cards down to the bottom carousel center
+                    y: phase >= 4 ? "30vh" : 0,
+                    // Phase 5: Fade out cards smoothly
                     opacity: phase >= 5 ? 0 : 1,
                 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
+                transition={{ 
+                    y: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
+                    opacity: { duration: 0.8, ease: "easeInOut" }
+                }}
             >
                 {products.map((product, index) => {
                     const isCenter = index === 2;
@@ -89,35 +95,45 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                             animate={{
                                 y: phase >= 1 ? 0 : 500,
                                 opacity: phase >= 1 || isCenter ? 1 : 0,
-                                x: phase >= 2 ? offset * carouselSpacing : 0,
-                                scale: phase >= 2 && isCenter ? 1.1 : 0.9,
-                                // Animate the card borders/shadows/background to transparent in Phase 4
-                                backgroundColor: phase >= 4 ? "rgba(255, 255, 255, 0)" : "rgba(255, 255, 255, 1)",
-                                borderColor: phase >= 4 ? "rgba(197, 168, 128, 0)" : "rgba(197, 168, 128, 0.15)",
-                                boxShadow: phase >= 4 ? "none" : "0 20px 40px rgba(0, 0, 0, 0.12)",
+                                x: phase >= 4 
+                                    ? offset * carouselSpacing
+                                    : (phase >= 2 ? offset * 150 : 0),
+                                scale: phase >= 4
+                                    ? (isCenter ? 1.0 : 0.9)
+                                    : (phase >= 2 && isCenter ? 1.15 : 0.95),
                                 zIndex: isCenter ? 50 : 40 - Math.abs(offset),
                             }}
                             transition={{
                                 type: "spring",
-                                stiffness: 60,
-                                damping: 16,
+                                stiffness: 55,
+                                damping: 15,
                                 mass: 0.8,
                             }}
                             className={cn(
-                                "absolute rounded-2xl overflow-hidden border flex justify-center items-end origin-bottom transition-all duration-500",
+                                "absolute rounded-none overflow-hidden border flex justify-center items-end origin-bottom transition-all duration-500 bg-stone-900 border-[#C5A880]/20 shadow-[0_20px_50px_rgba(0,0,0,0.3)]",
                                 isCenter 
-                                    ? "h-[50vh] md:h-[55vh] w-[200px] md:w-[280px]" 
-                                    : "h-[40vh] md:h-[45vh] w-[180px] md:w-[240px]"
+                                    ? "h-[28vh] w-[200px] md:w-[240px]" 
+                                    : "h-[28vh] w-[200px] md:w-[240px]"
                             )}
                         >
                             <div className="relative w-full h-full">
                                 <Image
-                                    src={product.modelImage}
+                                    src={product.cardImage}
                                     alt={product.name}
                                     fill
-                                    sizes="(max-width: 768px) 200px, 280px"
-                                    className="object-contain object-bottom transition-transform duration-[2000ms]"
+                                    sizes="(max-width: 768px) 200px, 240px"
+                                    className="object-cover"
                                 />
+                                {/* Bottom vignette overlay matching ProductCarousel cards */}
+                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#121210]/90 via-[#121210]/55 to-transparent p-4 pt-10">
+                                    <h3 className="font-serif text-sm text-stone-100 tracking-wide truncate">{product.name}</h3>
+                                    <div className="flex items-center justify-between gap-1 mt-1">
+                                        <div className="flex items-center gap-0.5 text-[#D4AF37]">
+                                            <span className="text-[10px] text-[#D4AF37] font-serif uppercase tracking-widest">Luxury Wear</span>
+                                        </div>
+                                        <span className="text-[#C5A880] font-serif text-xs font-semibold">₹{product.price}</span>
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     );
