@@ -11,6 +11,16 @@ interface HeroAnimationProps {
 
 export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimationProps) {
     const [phase, setPhase] = useState(0);
+    const [carouselSpacing, setCarouselSpacing] = useState(288);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setCarouselSpacing(window.innerWidth < 768 ? 212 : 288);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const timers = [
@@ -69,7 +79,10 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                     // Phase 5: fade out so the real carousel is visible underneath
                     opacity: phase >= 5 ? 0 : 1,
                 }}
-                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ 
+                    y: { duration: 1.4, ease: [0.16, 1, 0.3, 1] },
+                    opacity: { duration: 0.8, ease: "easeInOut" }
+                }}
             >
                 {products.map((product, index) => {
                     const isCenter = index === 2;
@@ -82,8 +95,12 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                             animate={{
                                 y: phase >= 1 ? 0 : 500,
                                 opacity: phase >= 1 || isCenter ? 1 : 0,
-                                x: phase >= 2 ? offset * 150 : 0,
-                                scale: phase >= 2 && isCenter ? 1.15 : 0.95,
+                                x: phase >= 4 
+                                    ? offset * carouselSpacing
+                                    : (phase >= 2 ? offset * 150 : 0),
+                                scale: phase >= 4
+                                    ? (isCenter ? 1.0 : 0.9)
+                                    : (phase >= 2 && isCenter ? 1.15 : 0.95),
                                 zIndex: isCenter ? 50 : 40 - Math.abs(offset),
                             }}
                             transition={{
@@ -93,14 +110,14 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                                 mass: 0.8,
                             }}
                             className={cn(
-                                "absolute w-[180px] md:w-[210px] h-[26vh] md:h-[28vh] rounded-none overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] origin-bottom bg-stone-900 border border-[#C5A880]/30",
+                                "absolute w-[200px] md:w-[240px] h-[28vh] rounded-none overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] origin-bottom bg-stone-900 border border-[#C5A880]/30",
                             )}
                         >
                             <Image
                                 src={product.cardImage}
                                 alt={product.name}
                                 fill
-                                sizes="(max-width: 768px) 180px, 210px"
+                                sizes="(max-width: 768px) 200px, 240px"
                                 className="object-cover transition-transform duration-[2000ms] hover:scale-105"
                             />
                         </motion.div>
