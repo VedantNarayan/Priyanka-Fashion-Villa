@@ -19,8 +19,15 @@ export default function ProductDetail({ product }: { product: Product }) {
     const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
     const [sizeGuideTab, setSizeGuideTab] = useState<'guide' | 'finder'>('guide');
     const [unit, setUnit] = useState<'in' | 'cm'>('in');
-    const [finderBust, setFinderBust] = useState('');
-    const [finderWaist, setFinderWaist] = useState('');
+    
+    // Fit Finder Interactive State
+    const [finderBust, setFinderBust] = useState('36');
+    const [finderWaist, setFinderWaist] = useState('28');
+    const [finderHeight, setFinderHeight] = useState(165);
+    const [finderWeight, setFinderWeight] = useState(55);
+    const [activeField, setActiveField] = useState<'hw' | 'bust' | 'waist'>('hw');
+    const [bustCustomized, setBustCustomized] = useState(false);
+    const [waistCustomized, setWaistCustomized] = useState(false);
     const [recommendedSize, setRecommendedSize] = useState<string | null>(null);
 
     const handleAddToCart = () => {
@@ -272,22 +279,22 @@ export default function ProductDetail({ product }: { product: Product }) {
                 ];
                 const measurements = sizeChart?.measurements || fallbackMeasurements;
 
-                const handleFindSize = () => {
-                    const b = parseFloat(finderBust);
-                    const w = parseFloat(finderWaist);
-                    if (isNaN(b) || isNaN(w)) return;
-                    if (!measurements || measurements.length === 0) {
-                        setRecommendedSize(null);
-                        return;
-                    }
+                // Dynamic calculations for real-time recommendations
+                const bustVal = parseFloat(finderBust) || 36;
+                const waistVal = parseFloat(finderWaist) || 28;
+                let calculatedSize = "M";
+                if (measurements && measurements.length > 0) {
                     let best = measurements[0];
                     let bestDist = Infinity;
                     for (const m of measurements) {
-                        const dist = Math.abs(m.bust - b) + Math.abs(m.waist - w);
-                        if (dist < bestDist) { bestDist = dist; best = m; }
+                        const dist = Math.abs(m.bust - bustVal) + Math.abs(m.waist - waistVal);
+                        if (dist < bestDist) {
+                            bestDist = dist;
+                            best = m;
+                        }
                     }
-                    setRecommendedSize(best.size);
-                };
+                    calculatedSize = best.size;
+                }
 
                 return (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/60 backdrop-blur-sm p-4 text-left">
@@ -379,86 +386,200 @@ export default function ProductDetail({ product }: { product: Product }) {
 
                         {/* Tab 2: Find My Size */}
                         {sizeGuideTab === 'finder' && (
-                            <div>
-                                {measurements && measurements.length > 0 ? (
-                                    <div className="flex flex-col items-center">
-                                        {/* SVG Body Silhouette */}
-                                        <svg viewBox="0 0 120 220" className="w-28 h-auto mb-6 text-gold-zari/40" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                            {/* Head */}
-                                            <ellipse cx="60" cy="22" rx="14" ry="16" />
-                                            {/* Neck */}
-                                            <line x1="54" y1="38" x2="54" y2="50" />
-                                            <line x1="66" y1="38" x2="66" y2="50" />
-                                            {/* Shoulders */}
-                                            <line x1="54" y1="50" x2="25" y2="58" />
-                                            <line x1="66" y1="50" x2="95" y2="58" />
-                                            {/* Arms */}
-                                            <line x1="25" y1="58" x2="18" y2="110" />
-                                            <line x1="95" y1="58" x2="102" y2="110" />
-                                            {/* Torso sides */}
-                                            <path d="M25,58 Q28,80 35,90 Q30,105 38,130" />
-                                            <path d="M95,58 Q92,80 85,90 Q90,105 82,130" />
-                                            {/* Hips to legs */}
-                                            <path d="M38,130 Q35,155 40,190 L45,210" />
-                                            <path d="M82,130 Q85,155 80,190 L75,210" />
-                                            {/* Inner legs */}
-                                            <line x1="55" y1="130" x2="52" y2="210" />
-                                            <line x1="65" y1="130" x2="68" y2="210" />
-                                            {/* Bust measurement line */}
-                                            <line x1="12" y1="72" x2="108" y2="72" strokeDasharray="3,3" className="text-burgundy" stroke="currentColor" />
-                                            <text x="110" y="74" fontSize="7" fill="currentColor" className="text-burgundy" fontWeight="600">B</text>
-                                            {/* Waist measurement line */}
-                                            <line x1="20" y1="92" x2="100" y2="92" strokeDasharray="3,3" className="text-gold-zari" stroke="currentColor" />
-                                            <text x="102" y="94" fontSize="7" fill="currentColor" className="text-gold-zari" fontWeight="600">W</text>
-                                        </svg>
+                            <div className="flex flex-col">
+                                <div className="flex items-center justify-center gap-6 md:gap-10 py-2 border-b border-gold-zari/10">
+                                    {/* Left Side: Premium SVG Torso Silhouette */}
+                                    <div className="relative w-32 flex-shrink-0 flex justify-center">
+                                        <svg viewBox="0 0 120 250" className="w-24 h-auto text-stone-300" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                          {/* Hair */}
+                                          <path d="M60,10 C65,10 70,14 70,20 C70,28 65,30 60,30 C55,30 50,28 50,20 C50,14 55,10 60,10 Z" fill="#1c1917" />
+                                          {/* Head */}
+                                          <circle cx="60" cy="22" r="8" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1" />
+                                          {/* Neck */}
+                                          <path d="M57,30 L57,36 L63,36 L63,30" stroke="#1c1917" strokeWidth="1.2" />
+                                          {/* Body Outline */}
+                                          <path d="M42,40 C42,40 50,38 60,38 C70,38 78,40 78,40 C85,42 90,46 90,52 C90,60 86,75 84,95 C82,115 85,130 85,140 C85,150 82,165 80,185 C78,205 75,230 75,245 L62,245 L62,150 L58,150 L58,245 L45,245 C45,230 42,205 40,185 C38,165 35,150 35,140 C35,130 38,115 36,95 C34,75 30,60 30,52 C30,46 35,42 42,40 Z" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1.2" />
+                                          
+                                          {/* Crop Top (Slate blue/grey) */}
+                                          <path d="M34,60 C34,60 48,55 60,55 C72,55 86,60 86,60 C86,65 85,75 83,85 C83,85 60,90 37,85 C35,75 34,65 34,60 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
+                                          <path d="M42,40 L45,55" stroke="#475569" strokeWidth="1.2" />
+                                          <path d="M78,40 L75,55" stroke="#475569" strokeWidth="1.2" />
 
-                                        {/* Input Fields */}
-                                        <div className="grid grid-cols-2 gap-4 w-full max-w-xs mb-5">
+                                          {/* Briefs (Slate blue/grey) */}
+                                          <path d="M35,115 C35,115 48,110 60,110 C72,110 85,115 85,115 C85,125 78,145 60,145 C42,145 35,125 35,115 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
+                                          
+                                          {/* Bust Line wrap (active highlight) */}
+                                          <path d="M22,72 Q60,78 98,72" stroke="#b91c1c" strokeWidth={activeField === 'bust' ? "2" : "1.2"} strokeDasharray="3,2" />
+                                          <path d="M98,72 Q60,66 22,72" stroke="#b91c1c" strokeWidth="1" opacity="0.3" />
+                                          <circle cx="22" cy="72" r={activeField === 'bust' ? "4" : "2.5"} fill="#b91c1c" />
+                                          
+                                          {/* Waist Line wrap (active highlight) */}
+                                          <path d="M31,98 Q60,103 89,98" stroke="#d97706" strokeWidth={activeField === 'waist' ? "2" : "1.2"} strokeDasharray="3,2" />
+                                          <path d="M89,98 Q60,93 31,98" stroke="#d97706" strokeWidth="1" opacity="0.3" />
+                                          <circle cx="31" cy="98" r={activeField === 'waist' ? "4" : "2.5"} fill="#d97706" />
+
+                                          {/* Line Badges */}
+                                          <circle cx="15" cy="72" r="6" fill="white" stroke="#b91c1c" strokeWidth="1" />
+                                          <text x="15" y="74.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">1</text>
+
+                                          <circle cx="15" cy="98" r="6" fill="white" stroke="#d97706" strokeWidth="1" />
+                                          <text x="15" y="100.5" fontSize="7" textAnchor="middle" fill="#d97706" fontWeight="bold">2</text>
+                                        </svg>
+                                    </div>
+
+                                    {/* Right Side: Stacked Input Cards */}
+                                    <div className="flex flex-col gap-2.5 w-full max-w-[200px]">
+                                        <button 
+                                            type="button"
+                                            onClick={() => setActiveField('hw')}
+                                            className={cn(
+                                                "p-2.5 border text-center flex flex-col items-center justify-center transition-all duration-300 rounded-none",
+                                                activeField === 'hw' 
+                                                    ? "border-gold-zari bg-gold-zari/5 shadow-[0_2px_8px_rgba(201,165,99,0.12)]" 
+                                                    : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
+                                            )}
+                                        >
+                                            <span className="text-xs font-bold text-obsidian uppercase tracking-wider font-serif">
+                                                {finderHeight} cm / {finderWeight} kg
+                                            </span>
+                                            <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Height/Weight</span>
+                                        </button>
+
+                                        <button 
+                                            type="button"
+                                            onClick={() => setActiveField('bust')}
+                                            className={cn(
+                                                "p-2.5 border text-center flex items-center justify-between transition-all duration-300 rounded-none",
+                                                activeField === 'bust' 
+                                                    ? "border-burgundy bg-burgundy/5 shadow-[0_2px_8px_rgba(114,35,46,0.12)]" 
+                                                    : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
+                                            )}
+                                        >
+                                            <span className="w-4 h-4 rounded-full bg-burgundy/10 flex items-center justify-center text-[9px] font-bold text-burgundy border border-burgundy/20">1</span>
+                                            <div className="flex flex-col items-center flex-1">
+                                                <span className="text-xs font-bold text-obsidian font-serif">{finderBust} in</span>
+                                                <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Bust</span>
+                                            </div>
+                                            <span className="w-4"></span>
+                                        </button>
+
+                                        <button 
+                                            type="button"
+                                            onClick={() => setActiveField('waist')}
+                                            className={cn(
+                                                "p-2.5 border text-center flex items-center justify-between transition-all duration-300 rounded-none",
+                                                activeField === 'waist' 
+                                                    ? "border-gold-zari bg-gold-zari/5 shadow-[0_2px_8px_rgba(201,165,99,0.12)]" 
+                                                    : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
+                                            )}
+                                        >
+                                            <span className="w-4 h-4 rounded-full bg-gold-zari/10 flex items-center justify-center text-[9px] font-bold text-gold-zari border border-gold-zari/20">2</span>
+                                            <div className="flex flex-col items-center flex-1">
+                                                <span className="text-xs font-bold text-obsidian font-serif">{finderWaist} in</span>
+                                                <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Waist</span>
+                                            </div>
+                                            <span className="w-4"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Active Sliders Panel */}
+                                <div className="mt-4 bg-stone-50/80 border border-gold-zari/10 p-4 rounded-none min-h-[140px] flex flex-col justify-center">
+                                    {activeField === 'hw' && (
+                                        <div className="flex flex-col gap-4">
                                             <div>
-                                                <label className="block text-[9px] uppercase tracking-widest font-semibold text-gold-zari mb-1.5">Bust (in)</label>
-                                                <input
-                                                    type="number"
-                                                    value={finderBust}
-                                                    onChange={(e) => setFinderBust(e.target.value)}
-                                                    placeholder="e.g. 36"
-                                                    className="w-full h-10 border border-gold-zari/30 bg-white px-3 text-xs text-obsidian placeholder:text-stone-300 focus:outline-none focus:border-gold-zari transition-colors"
+                                                <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
+                                                    <span>Height</span>
+                                                    <span className="text-gold-zari font-bold font-serif">{finderHeight} cm</span>
+                                                </div>
+                                                <input 
+                                                    type="range" min="140" max="200" value={finderHeight}
+                                                    onChange={(e) => setFinderHeight(parseInt(e.target.value))}
+                                                    className="w-full accent-gold-zari cursor-pointer"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-[9px] uppercase tracking-widest font-semibold text-gold-zari mb-1.5">Waist (in)</label>
-                                                <input
-                                                    type="number"
-                                                    value={finderWaist}
-                                                    onChange={(e) => setFinderWaist(e.target.value)}
-                                                    placeholder="e.g. 28"
-                                                    className="w-full h-10 border border-gold-zari/30 bg-white px-3 text-xs text-obsidian placeholder:text-stone-300 focus:outline-none focus:border-gold-zari transition-colors"
+                                                <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
+                                                    <span>Weight</span>
+                                                    <span className="text-gold-zari font-bold font-serif">{finderWeight} kg</span>
+                                                </div>
+                                                <input 
+                                                    type="range" min="40" max="110" value={finderWeight}
+                                                    onChange={(e) => {
+                                                        const w = parseInt(e.target.value);
+                                                        setFinderWeight(w);
+                                                        if (!bustCustomized) {
+                                                            const estBust = Math.round((w * 0.4) + 12);
+                                                            setFinderBust(String(estBust));
+                                                        }
+                                                        if (!waistCustomized) {
+                                                            const estWaist = Math.round((w * 0.4) + 4);
+                                                            setFinderWaist(String(estWaist));
+                                                        }
+                                                    }}
+                                                    className="w-full accent-gold-zari cursor-pointer"
                                                 />
                                             </div>
                                         </div>
+                                    )}
 
-                                        <button
-                                            onClick={handleFindSize}
-                                            className="w-full max-w-xs h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-burgundy-soft transition-colors"
-                                        >
-                                            Find My Size
-                                        </button>
-
-                                        {recommendedSize && (
-                                            <div className="mt-5 text-center">
-                                                <p className="text-sm text-obsidian">
-                                                    We recommend size <span className="font-bold text-gold-zari text-base">{recommendedSize}</span> for you
-                                                </p>
+                                    {activeField === 'bust' && (
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
+                                                <span>Bust (inches)</span>
+                                                <span className="text-burgundy font-bold font-serif">{finderBust} in</span>
                                             </div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-8">
-                                        <p className="text-xs text-rose-ash leading-relaxed">
-                                            Size finder is not available for this product.<br />
-                                            Please contact our <span className="text-gold-zari font-semibold">Customer Concierge</span> via WhatsApp for personalised sizing assistance.
-                                        </p>
-                                    </div>
-                                )}
+                                            <input 
+                                                type="range" min="30" max="48" value={finderBust}
+                                                onChange={(e) => {
+                                                    setFinderBust(e.target.value);
+                                                    setBustCustomized(true);
+                                                }}
+                                                className="w-full accent-burgundy cursor-pointer"
+                                            />
+                                            <p className="text-[10px] text-stone-400 mt-2 leading-relaxed italic">
+                                                1. Measure horizontally around the fullest part of your chest, keeping the tape level.
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {activeField === 'waist' && (
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
+                                                <span>Waist (inches)</span>
+                                                <span className="text-gold-zari font-bold font-serif">{finderWaist} in</span>
+                                            </div>
+                                            <input 
+                                                type="range" min="22" max="44" value={finderWaist}
+                                                onChange={(e) => {
+                                                    setFinderWaist(e.target.value);
+                                                    setWaistCustomized(true);
+                                                }}
+                                                className="w-full accent-gold-zari cursor-pointer"
+                                            />
+                                            <p className="text-[10px] text-stone-400 mt-2 leading-relaxed italic">
+                                                2. Measure around your natural waistline (above the belly button), keeping the tape flat.
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Results & Real-time Action */}
+                                <div className="mt-5 text-center flex flex-col items-center gap-3">
+                                    <p className="text-xs uppercase tracking-widest text-stone-500">
+                                        Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
+                                    </p>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setSelectedSize(calculatedSize);
+                                            setIsSizeGuideOpen(false);
+                                        }}
+                                        className="w-full h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-900 transition-colors shadow-md flex items-center justify-center gap-2"
+                                    >
+                                        Apply Size {calculatedSize} to Product
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>
