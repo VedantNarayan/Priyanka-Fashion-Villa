@@ -46,26 +46,26 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
         )}>
             <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between relative">
                 {/* Big Size Icon at Left Top Corner */}
-                <Link href="/" className="block h-20 w-24 overflow-hidden relative z-10">
+                <Link href="/" className="flex items-center h-20 z-10">
                     <Image 
                         src="/priyanka-icon.png" 
                         alt="Priyanka's Fashionvilla Icon" 
-                        width={120} 
-                        height={120} 
-                        className="absolute inset-0 w-full h-full object-contain scale-[2.1] hover:scale-[2.2] transition-transform duration-300"
+                        width={96} 
+                        height={80} 
+                        className="h-full w-auto object-contain hover:brightness-110 transition-all duration-300"
                         priority
                     />
                 </Link>
 
                 {/* Big Size Logo in Center of Header */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10">
-                    <Link href="/" className="block h-20 w-80 overflow-hidden relative">
+                    <Link href="/" className="flex items-center h-20">
                         <Image 
                             src="/priyanka-logo.png" 
                             alt="Priyanka's Fashionvilla Logo" 
-                            width={320} 
-                            height={120} 
-                            className="absolute inset-0 w-full h-full object-contain scale-[2.45] hover:scale-[2.55] transition-transform duration-300"
+                            width={280} 
+                            height={80} 
+                            className="h-full w-auto object-contain hover:brightness-110 transition-all duration-300"
                             priority
                         />
                     </Link>
