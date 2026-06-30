@@ -276,13 +276,13 @@ export default function ProductDetail({ product }: { product: Product }) {
                     const b = parseFloat(finderBust);
                     const w = parseFloat(finderWaist);
                     if (isNaN(b) || isNaN(w)) return;
-                    if (!sizeChart?.measurements) {
+                    if (!measurements || measurements.length === 0) {
                         setRecommendedSize(null);
                         return;
                     }
-                    let best = sizeChart.measurements[0];
+                    let best = measurements[0];
                     let bestDist = Infinity;
-                    for (const m of sizeChart.measurements) {
+                    for (const m of measurements) {
                         const dist = Math.abs(m.bust - b) + Math.abs(m.waist - w);
                         if (dist < bestDist) { bestDist = dist; best = m; }
                     }
@@ -380,7 +380,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                         {/* Tab 2: Find My Size */}
                         {sizeGuideTab === 'finder' && (
                             <div>
-                                {sizeChart?.measurements ? (
+                                {measurements && measurements.length > 0 ? (
                                     <div className="flex flex-col items-center">
                                         {/* SVG Body Silhouette */}
                                         <svg viewBox="0 0 120 220" className="w-28 h-auto mb-6 text-gold-zari/40" fill="none" stroke="currentColor" strokeWidth="1.2">
