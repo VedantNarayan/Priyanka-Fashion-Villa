@@ -1,16 +1,16 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-30)
 
 ## Corpus Check
-- 107 files · ~112,797 words
+- 108 files · ~113,993 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 459 nodes · 798 edges · 41 communities (26 shown, 15 thin omitted)
+- 463 nodes · 806 edges · 39 communities (25 shown, 14 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `afe51311`
+- Built from commit: `1d5fb806`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,6 @@
 - [[_COMMUNITY_Community 5|Community 5]]
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
-- [[_COMMUNITY_Community 8|Community 8]]
 - [[_COMMUNITY_Community 9|Community 9]]
 - [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
@@ -31,7 +30,6 @@
 - [[_COMMUNITY_Community 15|Community 15]]
 - [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 17|Community 17]]
-- [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 25|Community 25]]
@@ -49,7 +47,7 @@
 1. `createClient()` - 50 edges
 2. `$()` - 30 edges
 3. `createClient()` - 27 edges
-4. `cn()` - 19 edges
+4. `cn()` - 21 edges
 5. `a` - 18 edges
 6. `compilerOptions` - 16 edges
 7. `get()` - 15 edges
@@ -72,19 +70,19 @@
 ## Import Cycles
 - None detected.
 
-## Communities (41 total, 15 thin omitted)
+## Communities (39 total, 14 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
-Nodes (19): addAddress(), deleteAddress(), updateAddress(), updateProfile(), createReturn(), updateReturnStatus(), verifyAdmin(), getProductReviews() (+11 more)
+Nodes (20): addAddress(), deleteAddress(), updateAddress(), updateProfile(), createReturn(), updateReturnStatus(), verifyAdmin(), AdminExportAndInsightsProps (+12 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.08
-Nodes (35): CartCount(), CartDrawer(), CheckoutPage(), Hero(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarousel() (+27 more)
+Cohesion: 0.07
+Nodes (37): getProductReviews(), submitReview(), CartCount(), CartDrawer(), Hero(), carouselProducts, Hero(), sampleImages (+29 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.06
-Nodes (22): grantAdminRights(), createCoupon(), deleteCoupon(), toggleCoupon(), validateCoupon(), verifyAdmin(), deleteOrder(), updateOrderStatus() (+14 more)
+Cohesion: 0.05
+Nodes (28): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), verifyAdmin(), createCoupon(), deleteCoupon(), toggleCoupon() (+20 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.07
@@ -102,10 +100,6 @@ Nodes (19): eslintConfig, devDependencies, eslint, eslint-config-next, jimp, tai
 Cohesion: 0.16
 Nodes (14): getBgRemovalStats(), addProduct(), deleteProduct(), removeBgForImageUrl(), removeImageBackground(), updateProduct(), uploadProductImage(), uploadProductImageWithBgRemoval() (+6 more)
 
-### Community 8 - "Community 8"
-Cohesion: 0.57
-Nodes (4): createCategory(), deleteCategory(), updateCategory(), verifyAdmin()
-
 ### Community 9 - "Community 9"
 Cohesion: 0.22
 Nodes (8): background_color, description, display, icons, name, short_name, start_url, theme_color
@@ -115,8 +109,8 @@ Cohesion: 0.12
 Nodes (14): AboutPage(), inter, metadata, playfair, Home(), generateMetadata(), ProductPage(), Footer() (+6 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.07
-Nodes (13): $(), a, b(), deleteCacheAndMetadata(), F, G, get(), h() (+5 more)
+Cohesion: 0.06
+Nodes (15): $(), a, b(), deleteCacheAndMetadata(), F, G, get(), h() (+7 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.40
@@ -127,19 +121,19 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 42 - "Community 42"
-Cohesion: 0.12
-Nodes (11): et, i, m(), q(), r, s, st(), T() (+3 more)
+Cohesion: 0.17
+Nodes (9): et, i, m(), s, st(), T(), U(), v (+1 more)
 
 ## Knowledge Gaps
-- **124 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+119 more)
+- **126 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+121 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 7`, `Community 8`, `Community 11`?**
-  _High betweenness centrality (0.162) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 11`, `Community 7`?**
+  _High betweenness centrality (0.163) - this node is a cross-community bridge._
 - **Why does `removeBgForImageUrl()` connect `Community 7` to `Community 42`?**
   _High betweenness centrality (0.111) - this node is a cross-community bridge._
 - **Why does `$()` connect `Community 12` to `Community 42`?**
@@ -147,8 +141,8 @@ _Questions this graph is uniquely positioned to answer:_
 - **Are the 4 inferred relationships involving `createClient()` (e.g. with `CheckoutPage()` and `ProfileDropdown()`) actually correct?**
   _`createClient()` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
-  _124 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _126 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.05656565656565657 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0573025856044724 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07676767676767676 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07005649717514124 - nodes in this community are weakly interconnected._

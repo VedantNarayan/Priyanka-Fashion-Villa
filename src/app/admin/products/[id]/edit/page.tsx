@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { updateProduct, uploadProductImageWithBgRemoval, removeBgForImageUrl } from "@/app/actions/products";
 import { getBgRemovalStats } from "@/app/actions/bg-removal-stats";
-import { ArrowLeft, Loader2, Upload, X, Sparkles, Ruler, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Upload, X, Sparkles, Ruler, Plus, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
@@ -136,6 +136,25 @@ export default function EditProductPage() {
     const removeImage = (index: number) => {
         setImages(images.filter((_, i) => i !== index));
         setBgRemovedFlags(bgRemovedFlags.filter((_, i) => i !== index));
+    };
+
+    const moveImage = (index: number, direction: 'left' | 'right') => {
+        const targetIndex = direction === 'left' ? index - 1 : index + 1;
+        if (targetIndex < 0 || targetIndex >= images.length) return;
+
+        // Swap images
+        const updatedImages = [...images];
+        const tempImage = updatedImages[index];
+        updatedImages[index] = updatedImages[targetIndex];
+        updatedImages[targetIndex] = tempImage;
+        setImages(updatedImages);
+
+        // Swap bgRemovedFlags
+        const updatedFlags = [...bgRemovedFlags];
+        const tempFlag = updatedFlags[index];
+        updatedFlags[index] = updatedFlags[targetIndex];
+        updatedFlags[targetIndex] = tempFlag;
+        setBgRemovedFlags(updatedFlags);
     };
 
     const updateMeasurement = (index: number, field: keyof Measurement, value: string) => {
@@ -293,8 +312,34 @@ export default function EditProductPage() {
                                 <button type="button" onClick={() => removeImage(i)} className="absolute top-1 right-1 bg-white/80 p-1 rounded-full text-red-500 hidden group-hover:block hover:bg-white">
                                     <X size={14} />
                                 </button>
-                                {i === 0 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5">Card</span>}
-                                {i === 1 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5">Model</span>}
+                                {i === 0 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5 group-hover:hidden">Card</span>}
+                                {i === 1 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5 group-hover:hidden">Model</span>}
+                                {i > 1 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5 group-hover:hidden">#{i + 1}</span>}
+                                
+                                {/* Reordering controls shown on hover */}
+                                <div className="absolute inset-x-0 bottom-0 bg-black/85 py-1 px-1.5 flex items-center justify-between text-white hidden group-hover:flex z-20">
+                                    <button
+                                        type="button"
+                                        onClick={() => moveImage(i, 'left')}
+                                        disabled={i === 0}
+                                        className="hover:text-amber-400 disabled:opacity-30 disabled:hover:text-white cursor-pointer transition-colors"
+                                        title="Move Left"
+                                    >
+                                        <ChevronLeft size={14} />
+                                    </button>
+                                    <span className="text-[9px] font-semibold tracking-wider uppercase select-none">
+                                        {i === 0 ? "Card" : i === 1 ? "Model" : `#${i + 1}`}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        onClick={() => moveImage(i, 'right')}
+                                        disabled={i === images.length - 1}
+                                        className="hover:text-amber-400 disabled:opacity-30 disabled:hover:text-white cursor-pointer transition-colors"
+                                        title="Move Right"
+                                    >
+                                        <ChevronRight size={14} />
+                                    </button>
+                                </div>
                                 {bgRemovedFlags[i] ? (
                                     <span className="absolute top-1 left-1 bg-amber-500 text-white text-[8px] px-1 py-0.5 rounded-sm flex items-center gap-0.5">
                                         <Sparkles size={8} /> BG
