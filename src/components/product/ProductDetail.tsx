@@ -390,6 +390,40 @@ export default function ProductDetail({ product }: { product: Product }) {
                                 <div className="flex items-center justify-center gap-6 md:gap-10 py-2 border-b border-gold-zari/10">
                                     {/* Left Side: Premium SVG Torso Silhouette */}
                                     <div className="relative w-32 flex-shrink-0 flex justify-center">
+                                        {/* CSS Animations style tag */}
+                                        <style>{`
+                                            @keyframes marchLine {
+                                                0% { stroke-dashoffset: 24; }
+                                                100% { stroke-dashoffset: 0; }
+                                            }
+                                            @keyframes pulseArea {
+                                                0% { opacity: 0.3; }
+                                                50% { opacity: 0.7; }
+                                                100% { opacity: 0.3; }
+                                            }
+                                            @keyframes pulseBustArea {
+                                                0% { fill: rgba(185, 28, 28, 0.05); }
+                                                50% { fill: rgba(185, 28, 28, 0.25); }
+                                                100% { fill: rgba(185, 28, 28, 0.05); }
+                                            }
+                                            @keyframes pulseWaistArea {
+                                                0% { fill: rgba(217, 119, 6, 0.05); }
+                                                50% { fill: rgba(217, 119, 6, 0.25); }
+                                                100% { fill: rgba(217, 119, 6, 0.05); }
+                                            }
+                                            .march-active {
+                                                animation: marchLine 1.5s linear infinite;
+                                            }
+                                            .pulse-height {
+                                                animation: pulseArea 2s ease-in-out infinite;
+                                            }
+                                            .pulse-bust {
+                                                animation: pulseBustArea 1.5s ease-in-out infinite;
+                                            }
+                                            .pulse-waist {
+                                                animation: pulseWaistArea 1.5s ease-in-out infinite;
+                                            }
+                                        `}</style>
                                         <svg viewBox="0 0 120 250" className="w-24 h-auto text-stone-300" fill="none" stroke="currentColor" strokeWidth="1.2">
                                           {/* Hair */}
                                           <path d="M60,10 C65,10 70,14 70,20 C70,28 65,30 60,30 C55,30 50,28 50,20 C50,14 55,10 60,10 Z" fill="#1c1917" />
@@ -400,6 +434,14 @@ export default function ProductDetail({ product }: { product: Product }) {
                                           {/* Body Outline */}
                                           <path d="M42,40 C42,40 50,38 60,38 C70,38 78,40 78,40 C85,42 90,46 90,52 C90,60 86,75 84,95 C82,115 85,130 85,140 C85,150 82,165 80,185 C78,205 75,230 75,245 L62,245 L62,150 L58,150 L58,245 L45,245 C45,230 42,205 40,185 C38,165 35,150 35,140 C35,130 38,115 36,95 C34,75 30,60 30,52 C30,46 35,42 42,40 Z" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1.2" />
                                           
+                                          {/* Active pulses behind crop top/briefs */}
+                                          {activeField === 'bust' && (
+                                              <ellipse cx="60" cy="72" rx="25" ry="12" className="pulse-bust" stroke="none" />
+                                          )}
+                                          {activeField === 'waist' && (
+                                              <ellipse cx="60" cy="98" rx="20" ry="10" className="pulse-waist" stroke="none" />
+                                          )}
+                                          
                                           {/* Crop Top (Slate blue/grey) */}
                                           <path d="M34,60 C34,60 48,55 60,55 C72,55 86,60 86,60 C86,65 85,75 83,85 C83,85 60,90 37,85 C35,75 34,65 34,60 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
                                           <path d="M42,40 L45,55" stroke="#475569" strokeWidth="1.2" />
@@ -408,13 +450,22 @@ export default function ProductDetail({ product }: { product: Product }) {
                                           {/* Briefs (Slate blue/grey) */}
                                           <path d="M35,115 C35,115 48,110 60,110 C72,110 85,115 85,115 C85,125 78,145 60,145 C42,145 35,125 35,115 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
                                           
+                                          {/* Height Vertical helper line */}
+                                          {activeField === 'hw' && (
+                                              <g className="pulse-height" stroke="#c9a563">
+                                                  <line x1="108" y1="12" x2="108" y2="245" strokeWidth="1.2" strokeDasharray="3,3" />
+                                                  <path d="M105,17 L108,12 L111,17" strokeWidth="1.2" fill="none" />
+                                                  <path d="M105,240 L108,245 L111,240" strokeWidth="1.2" fill="none" />
+                                              </g>
+                                          )}
+
                                           {/* Bust Line wrap (active highlight) */}
-                                          <path d="M22,72 Q60,78 98,72" stroke="#b91c1c" strokeWidth={activeField === 'bust' ? "2" : "1.2"} strokeDasharray="3,2" />
+                                          <path d="M22,72 Q60,78 98,72" stroke="#b91c1c" strokeWidth={activeField === 'bust' ? "2" : "1.2"} strokeDasharray="5,3" className={activeField === 'bust' ? "march-active" : ""} />
                                           <path d="M98,72 Q60,66 22,72" stroke="#b91c1c" strokeWidth="1" opacity="0.3" />
                                           <circle cx="22" cy="72" r={activeField === 'bust' ? "4" : "2.5"} fill="#b91c1c" />
                                           
                                           {/* Waist Line wrap (active highlight) */}
-                                          <path d="M31,98 Q60,103 89,98" stroke="#d97706" strokeWidth={activeField === 'waist' ? "2" : "1.2"} strokeDasharray="3,2" />
+                                          <path d="M31,98 Q60,103 89,98" stroke="#d97706" strokeWidth={activeField === 'waist' ? "2" : "1.2"} strokeDasharray="5,3" className={activeField === 'waist' ? "march-active" : ""} />
                                           <path d="M89,98 Q60,93 31,98" stroke="#d97706" strokeWidth="1" opacity="0.3" />
                                           <circle cx="31" cy="98" r={activeField === 'waist' ? "4" : "2.5"} fill="#d97706" />
 
