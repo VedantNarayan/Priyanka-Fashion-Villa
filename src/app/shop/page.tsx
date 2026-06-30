@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
-import { Search, SlidersHorizontal, ChevronDown, Grid, List } from "lucide-react";
+import { Search, SlidersHorizontal, Grid, List } from "lucide-react";
 import { products as mockProducts } from "@/lib/data";
 
 const CATEGORIES = ["All", "Evening Wear", "Cocktail", "Gala", "Prom", "Party", "Casual"];
@@ -24,6 +24,7 @@ export default function ShopPage() {
     const [minRating, setMinRating] = useState(0);
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+    const [showFilterPanel, setShowFilterPanel] = useState(false);
     const supabase = createClient();
 
     useEffect(() => { fetchProducts(); }, [category, sort]);
@@ -47,17 +48,15 @@ export default function ShopPage() {
             
             if (error || !data || data.length === 0) {
                 console.log("Using mock products in Shop due to DB empty/error");
-                // Mock products need category filtering too if applied
                 let mocks = [...mockProducts];
                 if (category !== 'All') {
                      mocks = mocks.filter(m => m.category === category);
                 }
                 
-                // Sort mock products
                 if (sortField === 'price') {
                     mocks.sort((a, b) => sortDir === 'asc' ? a.price - b.price : b.price - a.price);
                 } else if (sortField === 'rating') {
-                    mocks.sort((a, b) => b.rating - a.rating); // descending always
+                    mocks.sort((a, b) => b.rating - a.rating);
                 }
                 
                 setProducts(mocks);
@@ -75,190 +74,252 @@ export default function ShopPage() {
     const filtered = products.filter(p => {
         const matchesSearch = p.name?.toLowerCase().includes(search.toLowerCase()) || p.description?.toLowerCase().includes(search.toLowerCase());
         const matchesSize = selectedSize ? p.sizes?.includes(selectedSize) : true;
-        
-        // Match color string precisely
         const matchesColor = selectedColor ? p.colors?.includes(selectedColor) : true;
-        
         const matchesRating = (p.rating || 0) >= minRating;
-        
         return matchesSearch && matchesSize && matchesColor && matchesRating;
     });
 
-    // Derive unique sizes and colors for filter dropdowns
     const allSizes = Array.from(new Set(products.flatMap(p => p.sizes || []))).filter(Boolean);
     const allColors = Array.from(new Set(products.flatMap(p => p.colors || []))).filter(Boolean);
 
     return (
-        <div className="min-h-screen bg-white text-stone-900">
-            {/* Hero */}
-            <div className="bg-black text-white py-20 text-center">
-                <h1 className="font-serif text-5xl mb-3">Shop Collection</h1>
-                <p className="text-stone-400 text-sm tracking-wide uppercase">Curated Fashion for Every Occasion</p>
+        <div className="min-h-screen bg-alabaster text-obsidian pt-20">
+            {/* Editorial Page Header */}
+            <div className="bg-obsidian text-alabaster py-24 text-center border-b border-gold-zari/15 relative overflow-hidden">
+                <div className="absolute inset-0 opacity-15">
+                     <img
+                         src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop"
+                         alt="Luxury Background"
+                         className="w-full h-full object-cover"
+                     />
+                </div>
+                <div className="relative z-10 max-w-2xl mx-auto px-4">
+                    <span className="text-gold-zari text-xs uppercase tracking-[0.25em] block mb-3 font-semibold">The Collections</span>
+                    <h1 className="font-serif text-4xl md:text-5xl mb-4 uppercase tracking-widest text-alabaster">Shop Boutique</h1>
+                    <div className="w-12 h-[1px] bg-gold-zari mx-auto mb-4"></div>
+                    <p className="text-stone-400 font-serif italic text-sm md:text-base leading-relaxed">
+                        Explore our handcrafted bridal, evening, and luxury fusion collections designed to leave a lasting trace.
+                    </p>
+                </div>
             </div>
 
-            <div className="container mx-auto px-4 max-w-7xl py-10">
-                {/* Filters Bar */}
-                <div className="flex flex-col md:flex-row gap-4 mb-4">
-                    <div className="flex-1 relative">
-                        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
-                        <input
-                            type="text"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search products..."
-                            className="w-full pl-10 pr-4 py-3 border border-stone-200 rounded-sm text-sm focus:outline-none focus:border-black"
-                        />
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-2 md:gap-4 md:flex-nowrap">
-                        <select
-                            value={selectedSize}
-                            onChange={(e) => setSelectedSize(e.target.value)}
-                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none flex-1 md:flex-none"
-                        >
-                            <option value="">Any Size</option>
-                            {allSizes.map(size => (
-                                <option key={size} value={size}>{size}</option>
-                            ))}
-                        </select>
-                        <select
-                            value={selectedColor}
-                            onChange={(e) => setSelectedColor(e.target.value)}
-                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none flex-1 md:flex-none capitalize"
-                        >
-                            <option value="">Any Color</option>
-                            {allColors.map(color => (
-                                <option key={color} value={color}>{color}</option>
-                            ))}
-                        </select>
-                        <select
-                            value={minRating}
-                            onChange={(e) => setMinRating(Number(e.target.value))}
-                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-white focus:outline-none flex-1 md:flex-none"
-                        >
-                            <option value={0}>Any Rating</option>
-                            <option value={4}>4+ Stars</option>
-                            <option value={3}>3+ Stars</option>
-                        </select>
-                        <select
-                            value={sort}
-                            onChange={(e) => setSort(e.target.value)}
-                            className="border border-stone-200 px-4 py-3 rounded-sm text-sm bg-stone-50 focus:outline-none flex-1 md:flex-none"
-                        >
-                            {SORT_OPTIONS.map(opt => (
-                                <option key={opt.value} value={opt.value}>{opt.label}</option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-
-                {/* Categories & View Switcher */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                    <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide flex-1">
+            <div className="container mx-auto px-4 max-w-7xl py-12">
+                {/* Categories & Layout Switches */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                    {/* Category pills */}
+                    <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide flex-1 w-full">
                         {CATEGORIES.map(cat => (
                             <button
                                 key={cat}
                                 onClick={() => setCategory(cat)}
-                                className={`px-4 py-2 text-xs uppercase tracking-wider whitespace-nowrap rounded-sm transition-colors ${
-                                    category === cat ? 'bg-black text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                                className={`px-4 py-2 text-[10px] uppercase tracking-widest whitespace-nowrap rounded-sm transition-all duration-300 font-semibold border ${
+                                    category === cat 
+                                        ? 'bg-burgundy text-white border-burgundy shadow-sm' 
+                                        : 'bg-silk-ivory text-rose-ash/80 border-gold-zari/20 hover:border-gold-zari/45 hover:bg-neutral-50'
                                 }`}
                             >
                                 {cat}
                             </button>
                         ))}
                     </div>
-                    
-                    <div className="flex items-center gap-1 border border-stone-200 p-1 rounded-sm bg-stone-50 self-stretch sm:self-auto justify-center sm:justify-start">
+
+                    {/* Filter and View Toggles */}
+                    <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
                         <button
-                            onClick={() => setViewMode("grid")}
-                            className={`p-1.5 rounded-sm transition-colors flex items-center justify-center ${viewMode === "grid" ? "bg-white text-black shadow-sm" : "text-stone-400 hover:text-stone-600"}`}
-                            title="Grid View"
+                            onClick={() => setShowFilterPanel(!showFilterPanel)}
+                            className={`flex items-center gap-2 px-4 py-2 border rounded-sm text-[10px] uppercase tracking-widest transition-all duration-300 font-semibold ${
+                                showFilterPanel
+                                    ? "bg-burgundy text-white border-burgundy"
+                                    : "bg-silk-ivory text-obsidian border-gold-zari/30 hover:border-gold-antique"
+                            }`}
                         >
-                            <Grid size={16} />
+                            <SlidersHorizontal size={12} className={showFilterPanel ? "text-white" : "text-gold-zari"} />
+                            Filter & Sort
                         </button>
-                        <button
-                            onClick={() => setViewMode("list")}
-                            className={`p-1.5 rounded-sm transition-colors flex items-center justify-center ${viewMode === "list" ? "bg-white text-black shadow-sm" : "text-stone-400 hover:text-stone-600"}`}
-                            title="List View"
-                        >
-                            <List size={16} />
-                        </button>
+
+                        <div className="flex items-center gap-1 border border-gold-zari/20 p-1 rounded-sm bg-silk-ivory">
+                            <button
+                                onClick={() => setViewMode("grid")}
+                                className={`p-1.5 rounded-sm transition-colors flex items-center justify-center ${viewMode === "grid" ? "bg-burgundy text-white shadow-sm" : "text-stone-400 hover:text-stone-600"}`}
+                                title="Grid View"
+                            >
+                                <Grid size={14} />
+                            </button>
+                            <button
+                                onClick={() => setViewMode("list")}
+                                className={`p-1.5 rounded-sm transition-colors flex items-center justify-center ${viewMode === "list" ? "bg-burgundy text-white shadow-sm" : "text-stone-400 hover:text-stone-600"}`}
+                                title="List View"
+                            >
+                                <List size={14} />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                {/* Product Grid */}
+                {/* Collapsible Filter Panel */}
+                {showFilterPanel && (
+                    <div className="bg-silk-ivory border border-gold-zari/20 p-6 md:p-8 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 animate-fadeIn text-left rounded-sm shadow-sm">
+                        {/* Search Input */}
+                        <div className="space-y-2">
+                            <label className="block text-[10px] uppercase tracking-widest text-gold-zari font-semibold">Search Collection</label>
+                            <div className="relative">
+                                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gold-zari" />
+                                <input
+                                    type="text"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    placeholder="Enter keywords..."
+                                    className="w-full pl-9 pr-4 py-2.5 border border-gold-zari/25 bg-alabaster rounded-sm text-xs focus:outline-none focus:border-burgundy text-obsidian placeholder:text-rose-ash/30"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Sizing buttons */}
+                        <div className="space-y-2">
+                            <label className="block text-[10px] uppercase tracking-widest text-gold-zari font-semibold">Sizes</label>
+                            <div className="flex flex-wrap gap-1.5">
+                                <button
+                                    onClick={() => setSelectedSize("")}
+                                    className={`px-2.5 py-1.5 text-[9px] uppercase tracking-widest border rounded-sm transition-all font-semibold ${
+                                        selectedSize === ""
+                                            ? "border-burgundy bg-burgundy text-white"
+                                            : "border-gold-zari/20 bg-alabaster hover:border-gold-zari text-rose-ash"
+                                    }`}
+                                >
+                                    All
+                                </button>
+                                {allSizes.map(size => (
+                                    <button
+                                        key={size}
+                                        onClick={() => setSelectedSize(size)}
+                                        className={`px-2.5 py-1.5 text-[9px] uppercase tracking-widest border rounded-sm transition-all font-semibold ${
+                                            selectedSize === size
+                                                ? "border-burgundy bg-burgundy text-white"
+                                                : "border-gold-zari/20 bg-alabaster hover:border-gold-zari text-rose-ash"
+                                        }`}
+                                    >
+                                        {size}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Colors dropdown */}
+                        <div className="space-y-2">
+                            <label className="block text-[10px] uppercase tracking-widest text-gold-zari font-semibold">Colorway</label>
+                            <select
+                                value={selectedColor}
+                                onChange={(e) => setSelectedColor(e.target.value)}
+                                className="w-full border border-gold-zari/25 p-2.5 bg-alabaster rounded-sm text-xs focus:outline-none focus:border-burgundy text-obsidian capitalize font-medium"
+                            >
+                                <option value="">All Colors</option>
+                                {allColors.map(color => (
+                                    <option key={color} value={color}>{color}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Sorting Options */}
+                        <div className="space-y-2">
+                            <label className="block text-[10px] uppercase tracking-widest text-gold-zari font-semibold">Sort By</label>
+                            <select
+                                value={sort}
+                                onChange={(e) => setSort(e.target.value)}
+                                className="w-full border border-gold-zari/25 p-2.5 bg-alabaster rounded-sm text-xs focus:outline-none focus:border-burgundy text-obsidian font-medium"
+                            >
+                                {SORT_OPTIONS.map(opt => (
+                                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                )}
+
+                {/* Product Listings Container */}
                 {loading ? (
-                    <div className="text-center py-20 text-stone-400">Loading products...</div>
+                    <div className="text-center py-32 text-stone-400 font-serif italic">Loading boutique products...</div>
                 ) : filtered.length === 0 ? (
-                    <div className="text-center py-20">
-                        <p className="text-stone-500 text-lg mb-2">No products found</p>
-                        <p className="text-stone-400 text-sm">Try adjusting your search or filter criteria.</p>
+                    <div className="text-center py-32 bg-silk-ivory border border-gold-zari/15 p-8 rounded-sm">
+                        <p className="text-rose-ash font-serif text-lg mb-2">No boutique creations found</p>
+                        <p className="text-stone-400 text-sm italic">Adjust your search terms or filter configurations.</p>
                     </div>
                 ) : (
                     <div className={viewMode === "grid" 
-                        ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                        ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
                         : "flex flex-col gap-6 max-w-4xl mx-auto"
                     }>
                         {filtered.map(product => (
                             <Link key={product.id} href={`/product/${product.id}`} className={viewMode === "grid" 
                                 ? "group block"
-                                : "group flex flex-col sm:flex-row gap-6 p-4 border border-stone-100 hover:border-[#C5A880]/30 hover:shadow-lg transition-all duration-500 rounded-sm bg-[#FAF8F5]/30 text-left"
+                                : "group flex flex-col sm:flex-row gap-6 p-4 border border-gold-zari/15 hover:border-gold-antique/30 hover:shadow-lg transition-all duration-500 rounded-sm bg-silk-ivory text-left"
                             }>
+                                {/* Image Container (Double-Image Hover Swap) */}
                                 <div className={viewMode === "grid"
-                                    ? "aspect-[3/4] bg-stone-100 relative overflow-hidden rounded-sm mb-3"
-                                    : "w-full sm:w-48 aspect-[3/4] sm:h-64 bg-stone-100 relative overflow-hidden rounded-sm shrink-0"
+                                    ? "aspect-[3/4] bg-neutral-100 relative overflow-hidden rounded-sm mb-3 double-image-container"
+                                    : "w-full sm:w-48 aspect-[3/4] sm:h-64 bg-neutral-100 relative overflow-hidden rounded-sm shrink-0 double-image-container"
                                 }>
                                     {(product.image_url || product.cardImage || product.images?.[0]) ? (
-                                        <img
-                                            src={product.image_url || product.cardImage || product.images?.[0]}
-                                            alt={product.name}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
+                                        <>
+                                            <img
+                                                src={product.image_url || product.cardImage || product.images?.[0]}
+                                                alt={product.name}
+                                                className="w-full h-full object-cover primary-image absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 ease-out-expo"
+                                            />
+                                            <img
+                                                src={product.modelImage || product.image_url || product.cardImage || product.images?.[0]}
+                                                alt={`${product.name} look`}
+                                                className="w-full h-full object-cover secondary-image absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-1000 ease-out-expo scale-100 group-hover:scale-105"
+                                            />
+                                        </>
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-stone-300 text-sm">No Image</div>
                                     )}
+                                    
                                     {(product.stock || 0) <= 0 && (
-                                        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 uppercase tracking-wider">
+                                        <div className="absolute top-2 left-2 bg-burgundy text-white text-[9px] font-semibold px-2 py-1 uppercase tracking-wider">
                                             Sold Out
                                         </div>
                                     )}
                                 </div>
-                                <div className={viewMode === "grid" ? "" : "flex-1 flex flex-col justify-between py-2"}>
+
+                                {/* Text Details */}
+                                <div className={viewMode === "grid" ? "px-1" : "flex-1 flex flex-col justify-between py-2"}>
                                     <div>
                                         <div className={viewMode === "grid" ? "" : "flex justify-between items-start gap-4 mb-2"}>
-                                            <h3 className="font-medium text-sm group-hover:underline md:text-base">{product.name}</h3>
+                                            <h3 className="font-serif text-base text-obsidian group-hover:text-burgundy transition-colors duration-300 line-clamp-1">{product.name}</h3>
                                             {viewMode === "list" && (
-                                                <p className="text-stone-400 text-xs tracking-wider uppercase">{product.category}</p>
+                                                <p className="text-gold-zari text-xs tracking-wider uppercase font-semibold">{product.category}</p>
                                             )}
                                         </div>
                                         <div className="flex items-center justify-between mt-1">
-                                            <p className="font-medium">₹{product.price}</p>
+                                            <p className="font-serif text-sm font-semibold text-rose-ash">₹{product.price}</p>
                                             {product.rating > 0 && (
-                                                <p className="text-xs text-stone-500">★ {product.rating}</p>
+                                                <p className="text-xs text-gold-antique">★ {product.rating}</p>
                                             )}
                                         </div>
                                         {viewMode === "list" && (
-                                            <p className="text-sm text-stone-500 mt-4 line-clamp-2 md:line-clamp-3 leading-relaxed">
+                                            <p className="text-xs text-stone-500 mt-4 line-clamp-2 md:line-clamp-3 leading-relaxed font-serif italic">
                                                 {product.description || "A luxury piece crafted from our select seasonal fabrics. Designed specifically to create a stunning silhouette."}
                                             </p>
                                         )}
                                     </div>
+                                    
                                     {viewMode === "list" && (
                                         <div className="mt-6 flex items-center gap-4">
-                                            <span className="text-xs uppercase tracking-widest text-black font-semibold border-b border-black pb-0.5 group-hover:border-[#C5A880] group-hover:text-[#C5A880] transition-colors">
-                                                View Details
+                                            <span className="text-[10px] uppercase tracking-widest text-obsidian font-bold border-b border-obsidian pb-0.5 group-hover:border-gold-zari group-hover:text-gold-zari transition-colors">
+                                                View Silhouette
                                             </span>
                                             {product.sizes && product.sizes.length > 0 && (
-                                                <div className="flex gap-1.5 text-[10px] text-stone-400">
+                                                <div className="flex gap-1.5 text-[8px] text-stone-400 font-semibold">
                                                     {product.sizes.map((s: string) => (
-                                                        <span key={s} className="border border-stone-200 px-1.5 py-0.5 rounded-sm">{s}</span>
+                                                        <span key={s} className="border border-gold-zari/20 px-1.5 py-0.5 rounded-sm bg-silk-ivory">{s}</span>
                                                     ))}
                                                 </div>
                                             )}
                                         </div>
                                     )}
                                     {viewMode === "grid" && (
-                                        <p className="text-xs text-stone-400 mt-0.5">{product.category}</p>
+                                        <p className="text-[10px] text-gold-zari uppercase tracking-widest mt-1.5 font-semibold">{product.category}</p>
                                     )}
                                 </div>
                             </Link>

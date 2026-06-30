@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-alabaster: #FAF8F5;
-  --color-obsidian: #121210;
-  --color-gold: #D4AF37;
-  --color-gold-antique: #C5A880;
-  --color-champagne: #EFEBE2;
-  --color-charcoal: #2A2A28;
-  --color-warm-slate: #5A5A55;
+  --color-alabaster: #FAF8F5;          /* Light cream page base background */
+  --color-silk-ivory: #FCFAF7;         /* Warm ivory for card/drawer canvases */
+  --color-obsidian: #0D0C0B;           /* Deep editorial dark mode/text contrast */
+  --color-burgundy: #540D1A;           /* Primary brand color (Deep Crimson Burgundy) */
+  --color-burgundy-soft: #7A192A;      /* Brand highlight/hover state */
+  --color-rose-ash: #2E2023;           /* Warm charcoal-rose for high-contrast typography */
+  --color-gold-zari: #C59B7D;          /* Muted copper gold thread tone */
+  --color-gold-antique: #D4AF37;       /* Accent shiny gold for badges, stars, links */
+  --color-sand: #EFECE6;               /* Light beige for borders/dividers */
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -18,7 +20,7 @@
 /* Custom Base Styles */
 @layer base {
   body {
-    @apply bg-[#121210] text-[#FAF8F5] font-sans antialiased overflow-x-hidden transition-colors duration-[1200ms] ease-out-expo;
+    @apply bg-alabaster text-[#0D0C0B] font-sans antialiased overflow-x-hidden transition-colors duration-[1200ms] ease-out-expo;
   }
 
   h1,
@@ -27,7 +29,7 @@
   h4,
   h5,
   h6 {
-    @apply font-serif;
+    @apply font-serif text-obsidian;
   }
 }
 
@@ -43,13 +45,39 @@
 
 /* Luxury card shadow and glassmorphism elements */
 .luxury-glass {
-  background: rgba(250, 248, 245, 0.75);
+  background: rgba(252, 250, 247, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.luxury-glass-dark {
+  background: rgba(13, 12, 11, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
-.luxury-glass-dark {
-  background: rgba(18, 18, 16, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Fine-line double-image card hover styles */
+.double-image-container img {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.double-image-container:hover .primary-image {
+  opacity: 0;
+}
+
+.double-image-container:hover .secondary-image {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* Luxury Diamond Separator motif */
+.diamond-separator::before {
+  content: "⬥  ❖  ⬥";
+  display: block;
+  font-family: var(--font-serif);
+  color: var(--color-gold-zari);
+  letter-spacing: 0.25em;
+  font-size: 0.85rem;
+  margin: 1.5rem auto;
+  text-align: center;
 }

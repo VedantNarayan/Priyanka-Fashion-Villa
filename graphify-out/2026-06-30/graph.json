@@ -2752,7 +2752,7 @@
       "label": "HeroAnimation()",
       "file_type": "code",
       "source_file": "src/components/home/HeroAnimation.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "id": "home_heroanimation_heroanimation",
       "community": 1,
       "norm_label": "heroanimation()"
@@ -9644,12 +9644,45 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/home/HeroAnimation.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "home_heroanimation",
+      "target": "types_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/HeroAnimation.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "home_heroanimation",
+      "target": "types_index_product",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/home/ZevanaHome.tsx",
       "source_location": "L5",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "home_zevanahome",
       "target": "home_heroanimation"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/HeroAnimation.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "home_heroanimation_heroanimationprops",
+      "target": "types_index_product",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -11410,5 +11443,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b7bf228888cfb2b6b4e7c15ce8260ae79bdb0bc0"
+  "built_at_commit": "3a5b66a74f37470ebd728ef1dae8dd9a82305ce1"
 }

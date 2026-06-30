@@ -2896,7 +2896,7 @@
       "label": "HeaderProps",
       "file_type": "code",
       "source_file": "src/components/layout/Header.tsx",
-      "source_location": "L15",
+      "source_location": "L13",
       "id": "layout_header_headerprops",
       "community": 0,
       "norm_label": "headerprops"
@@ -2905,7 +2905,7 @@
       "label": "Header()",
       "file_type": "code",
       "source_file": "src/components/layout/Header.tsx",
-      "source_location": "L19",
+      "source_location": "L17",
       "id": "layout_header_header",
       "community": 0,
       "norm_label": "header()"
@@ -2950,7 +2950,7 @@
       "label": "ProductDetail()",
       "file_type": "code",
       "source_file": "src/components/product/ProductDetail.tsx",
-      "source_location": "L15",
+      "source_location": "L12",
       "id": "product_productdetail_productdetail",
       "community": 0,
       "norm_label": "productdetail()"
@@ -9647,9 +9647,9 @@
       "source_file": "src/components/home/HeroAnimation.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_heroanimation",
-      "target": "types_index",
-      "confidence_score": 1.0
+      "target": "types_index"
     },
     {
       "relation": "imports",
@@ -9658,9 +9658,9 @@
       "source_file": "src/components/home/HeroAnimation.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_heroanimation",
-      "target": "types_index_product",
-      "confidence_score": 1.0
+      "target": "types_index_product"
     },
     {
       "relation": "imports_from",
@@ -9680,9 +9680,9 @@
       "source_file": "src/components/home/HeroAnimation.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_heroanimation_heroanimationprops",
-      "target": "types_index_product",
-      "confidence_score": 1.0
+      "target": "types_index_product"
     },
     {
       "relation": "calls",
@@ -11443,5 +11443,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3a5b66a74f37470ebd728ef1dae8dd9a82305ce1"
+  "built_at_commit": "8df514a638069d295921c072b27c74691c4c1c08"
 }
