@@ -3022,7 +3022,7 @@
       "label": "HeaderProps",
       "file_type": "code",
       "source_file": "src/components/layout/Header.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "id": "layout_header_headerprops",
       "community": 0,
       "norm_label": "headerprops"
@@ -3031,7 +3031,7 @@
       "label": "Header()",
       "file_type": "code",
       "source_file": "src/components/layout/Header.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "id": "layout_header_header",
       "community": 0,
       "norm_label": "header()"
@@ -12534,5 +12534,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "10ddd316c84e8e326e16ab1aad1399e36d6bfbd0"
+  "built_at_commit": "1eea7ab31c53cfbd2eda869ad7235dabf32eb37d"
 }
