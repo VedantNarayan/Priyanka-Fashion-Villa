@@ -132,6 +132,12 @@ export default function CheckoutPage() {
             return;
         }
 
+        const cleanPhone = (address.phone || "").replace(/\D/g, "");
+        if (cleanPhone.length !== 10) {
+            toast.error("Please enter a valid 10-digit phone number");
+            return;
+        }
+
         setLoading(true);
 
         try {
@@ -271,8 +277,12 @@ export default function CheckoutPage() {
                                         type="tel" 
                                         className="w-full bg-transparent border-b border-gold-zari/30 py-2.5 outline-none focus:border-burgundy text-sm text-obsidian transition-colors placeholder:text-rose-ash/30" 
                                         value={address.phone} 
-                                        onChange={(e) => setAddress({ ...address, phone: e.target.value })} 
-                                        placeholder="+91 99999-99999" 
+                                        onChange={(e) => {
+                                            const cleaned = e.target.value.replace(/\D/g, "").slice(0, 10);
+                                            setAddress({ ...address, phone: cleaned });
+                                        }} 
+                                        placeholder="10-digit mobile number" 
+                                        maxLength={10}
                                     />
                                 </div>
                             </div>
