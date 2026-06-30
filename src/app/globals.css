@@ -4,11 +4,11 @@
   --color-alabaster: #FAF8F5;          /* Light cream page base background */
   --color-silk-ivory: #FCFAF7;         /* Warm ivory for card/drawer canvases */
   --color-obsidian: #0D0C0B;           /* Deep editorial dark mode/text contrast */
-  --color-burgundy: #540D1A;           /* Primary brand color (Deep Crimson Burgundy) */
-  --color-burgundy-soft: #7A192A;      /* Brand highlight/hover state */
-  --color-rose-ash: #2E2023;           /* Warm charcoal-rose for high-contrast typography */
-  --color-gold-zari: #C59B7D;          /* Muted copper gold thread tone */
-  --color-gold-antique: #D4AF37;       /* Accent shiny gold for badges, stars, links */
+  --color-burgundy: #df1b60;           /* Priyanka luxury brand rose pink */
+  --color-burgundy-soft: #ff5e9c;      /* Priyanka soft pink highlight */
+  --color-rose-ash: #2E2023;           /* Warm charcoal-rose for typography */
+  --color-gold-zari: #cda052;          /* Priyanka gold theme color */
+  --color-gold-antique: #dcb36c;       /* Priyanka accent gold */
   --color-sand: #EFECE6;               /* Light beige for borders/dividers */
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;

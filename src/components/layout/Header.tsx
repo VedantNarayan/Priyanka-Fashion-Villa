@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cart";
 import CartCount from "../cart/CartCount";
@@ -43,28 +44,35 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                 ? "bg-[#0D0C0B]/40 backdrop-blur-md border-gold-zari/15 shadow-[0_4px_30px_rgba(0,0,0,0.3)]" 
                 : "bg-[#FCFAF7]/80 backdrop-blur-xl border-gold-zari/15 shadow-[0_4px_30px_rgba(197,168,128,0.06)]"
         )}>
-            <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
-                {/* Logo Section with Custom SVG Crest */}
-                <Link href="/" className="flex items-center gap-3 md:gap-4 group">
-                    <div className="relative w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-full bg-burgundy/5 p-0.5 border border-gold-zari/35 group-hover:border-gold-antique transition-all duration-500 overflow-hidden">
-                        <svg viewBox="0 0 100 100" className="w-8 h-8 fill-none stroke-burgundy group-hover:stroke-gold-antique transition-colors duration-500" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="50" cy="50" r="38" strokeDasharray="3 3" opacity="0.4" className="stroke-gold-zari" />
-                            <circle cx="50" cy="50" r="32" className="stroke-burgundy group-hover:stroke-gold-antique transition-colors" />
-                            <text x="36" y="58" className="font-serif text-2xl font-light tracking-tighter fill-burgundy group-hover:fill-gold-antique transition-colors" strokeWidth="0.5">P</text>
-                            <text x="52" y="66" className="font-serif text-xl font-light tracking-tighter fill-gold-zari group-hover:fill-gold-antique transition-colors" strokeWidth="0.5">F</text>
-                            <path d="M46,28 L50,22 L54,28 Z" className="fill-gold-zari group-hover:fill-gold-antique transition-colors" />
-                        </svg>
-                    </div>
-                    <span className={cn(
-                        "font-serif text-lg md:text-xl tracking-[0.18em] uppercase transition-colors duration-1000",
-                        isDark ? "text-alabaster" : "text-obsidian"
-                    )}>
-                        Priyanka <span className="text-burgundy group-hover:text-gold-antique transition-colors duration-300">Fashionvilla</span>
-                    </span>
+            <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between relative">
+                {/* Big Size Icon at Left Top Corner */}
+                <Link href="/" className="flex items-center z-10">
+                    <Image 
+                        src="/priyanka-icon.png" 
+                        alt="Priyanka's Fashionvilla Icon" 
+                        width={64} 
+                        height={64} 
+                        className="h-12 md:h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                        priority
+                    />
                 </Link>
 
+                {/* Big Size Logo in Center of Header */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10">
+                    <Link href="/" className="flex items-center">
+                        <Image 
+                            src="/priyanka-logo.png" 
+                            alt="Priyanka's Fashionvilla Logo" 
+                            width={220} 
+                            height={70} 
+                            className="h-9 md:h-11 lg:h-13 w-auto object-contain hover:scale-103 transition-transform duration-300"
+                            priority
+                        />
+                    </Link>
+                </div>
+
                 {/* Navigation Icons */}
-                <nav className="flex items-center gap-2.5 md:gap-4">
+                <nav className="flex items-center gap-2.5 md:gap-4 z-10">
                     {/* User Icon / Profile Dropdown */}
                     <ProfileDropdown isDark={isDark} />
 
