@@ -594,7 +594,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_i",
-      "community": 42,
+      "community": 12,
       "norm_label": "i"
     },
     {
@@ -603,7 +603,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_i_constructor",
-      "community": 42,
+      "community": 12,
       "norm_label": ".constructor()"
     },
     {
@@ -855,7 +855,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_v_donewaiting",
-      "community": 12,
+      "community": 42,
       "norm_label": ".donewaiting()"
     },
     {
@@ -864,7 +864,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_v_destroy",
-      "community": 12,
+      "community": 42,
       "norm_label": ".destroy()"
     },
     {
@@ -909,7 +909,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r_d",
-      "community": 12,
+      "community": 42,
       "norm_label": ".d()"
     },
     {
@@ -1278,7 +1278,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_et",
-      "community": 42,
+      "community": 12,
       "norm_label": "et"
     },
     {
@@ -1287,7 +1287,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_et_constructor",
-      "community": 42,
+      "community": 12,
       "norm_label": ".constructor()"
     },
     {
@@ -1381,10 +1381,19 @@
       "norm_label": "page.tsx"
     },
     {
-      "label": "LoginPage()",
+      "label": "LoginForm()",
       "file_type": "code",
       "source_file": "src/app/(auth)/login/page.tsx",
       "source_location": "L9",
+      "id": "login_page_loginform",
+      "community": 0,
+      "norm_label": "loginform()"
+    },
+    {
+      "label": "LoginPage()",
+      "file_type": "code",
+      "source_file": "src/app/(auth)/login/page.tsx",
+      "source_location": "L112",
       "id": "login_page_loginpage",
       "community": 0,
       "norm_label": "loginpage()"
@@ -1591,7 +1600,7 @@
       "label": "WishlistPage()",
       "file_type": "code",
       "source_file": "src/app/account/wishlist/page.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "id": "wishlist_page_wishlistpage",
       "community": 0,
       "norm_label": "wishlistpage()"
@@ -1638,34 +1647,43 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L1",
       "id": "actions_categories",
-      "community": 2,
+      "community": 18,
       "norm_label": "categories.ts"
+    },
+    {
+      "label": "verifyAdmin()",
+      "file_type": "code",
+      "source_file": "src/app/actions/categories.ts",
+      "source_location": "L6",
+      "id": "actions_categories_verifyadmin",
+      "community": 18,
+      "norm_label": "verifyadmin()"
     },
     {
       "label": "createCategory()",
       "file_type": "code",
       "source_file": "src/app/actions/categories.ts",
-      "source_location": "L6",
+      "source_location": "L14",
       "id": "actions_categories_createcategory",
-      "community": 2,
+      "community": 18,
       "norm_label": "createcategory()"
     },
     {
       "label": "updateCategory()",
       "file_type": "code",
       "source_file": "src/app/actions/categories.ts",
-      "source_location": "L25",
+      "source_location": "L38",
       "id": "actions_categories_updatecategory",
-      "community": 2,
+      "community": 18,
       "norm_label": "updatecategory()"
     },
     {
       "label": "deleteCategory()",
       "file_type": "code",
       "source_file": "src/app/actions/categories.ts",
-      "source_location": "L45",
+      "source_location": "L63",
       "id": "actions_categories_deletecategory",
-      "community": 2,
+      "community": 18,
       "norm_label": "deletecategory()"
     },
     {
@@ -1674,43 +1692,52 @@
       "source_file": "src/app/actions/coupons.ts",
       "source_location": "L1",
       "id": "actions_coupons",
-      "community": 2,
+      "community": 8,
       "norm_label": "coupons.ts"
+    },
+    {
+      "label": "verifyAdmin()",
+      "file_type": "code",
+      "source_file": "src/app/actions/coupons.ts",
+      "source_location": "L6",
+      "id": "actions_coupons_verifyadmin",
+      "community": 8,
+      "norm_label": "verifyadmin()"
     },
     {
       "label": "createCoupon()",
       "file_type": "code",
       "source_file": "src/app/actions/coupons.ts",
-      "source_location": "L6",
+      "source_location": "L14",
       "id": "actions_coupons_createcoupon",
-      "community": 2,
+      "community": 8,
       "norm_label": "createcoupon()"
     },
     {
       "label": "toggleCoupon()",
       "file_type": "code",
       "source_file": "src/app/actions/coupons.ts",
-      "source_location": "L35",
+      "source_location": "L48",
       "id": "actions_coupons_togglecoupon",
-      "community": 2,
+      "community": 8,
       "norm_label": "togglecoupon()"
     },
     {
       "label": "deleteCoupon()",
       "file_type": "code",
       "source_file": "src/app/actions/coupons.ts",
-      "source_location": "L51",
+      "source_location": "L69",
       "id": "actions_coupons_deletecoupon",
-      "community": 2,
+      "community": 8,
       "norm_label": "deletecoupon()"
     },
     {
       "label": "validateCoupon()",
       "file_type": "code",
       "source_file": "src/app/actions/coupons.ts",
-      "source_location": "L67",
+      "source_location": "L90",
       "id": "actions_coupons_validatecoupon",
-      "community": 2,
+      "community": 8,
       "norm_label": "validatecoupon()"
     },
     {
@@ -1719,34 +1746,43 @@
       "source_file": "src/app/actions/orders.ts",
       "source_location": "L1",
       "id": "actions_orders",
-      "community": 8,
+      "community": 2,
       "norm_label": "orders.ts"
+    },
+    {
+      "label": "verifyAdmin()",
+      "file_type": "code",
+      "source_file": "src/app/actions/orders.ts",
+      "source_location": "L7",
+      "id": "actions_orders_verifyadmin",
+      "community": 2,
+      "norm_label": "verifyadmin()"
     },
     {
       "label": "updateOrderStatus()",
       "file_type": "code",
       "source_file": "src/app/actions/orders.ts",
-      "source_location": "L7",
+      "source_location": "L15",
       "id": "actions_orders_updateorderstatus",
-      "community": 8,
+      "community": 2,
       "norm_label": "updateorderstatus()"
     },
     {
       "label": "deleteOrder()",
       "file_type": "code",
       "source_file": "src/app/actions/orders.ts",
-      "source_location": "L84",
+      "source_location": "L97",
       "id": "actions_orders_deleteorder",
-      "community": 8,
+      "community": 2,
       "norm_label": "deleteorder()"
     },
     {
       "label": "updateTrackingNumber()",
       "file_type": "code",
       "source_file": "src/app/actions/orders.ts",
-      "source_location": "L104",
+      "source_location": "L122",
       "id": "actions_orders_updatetrackingnumber",
-      "community": 8,
+      "community": 2,
       "norm_label": "updatetrackingnumber()"
     },
     {
@@ -1759,10 +1795,19 @@
       "norm_label": "products.ts"
     },
     {
-      "label": "addProduct()",
+      "label": "verifyAdmin()",
       "file_type": "code",
       "source_file": "src/app/actions/products.ts",
       "source_location": "L7",
+      "id": "actions_products_verifyadmin",
+      "community": 7,
+      "norm_label": "verifyadmin()"
+    },
+    {
+      "label": "addProduct()",
+      "file_type": "code",
+      "source_file": "src/app/actions/products.ts",
+      "source_location": "L15",
       "id": "actions_products_addproduct",
       "community": 7,
       "norm_label": "addproduct()"
@@ -1771,7 +1816,7 @@
       "label": "updateProduct()",
       "file_type": "code",
       "source_file": "src/app/actions/products.ts",
-      "source_location": "L57",
+      "source_location": "L70",
       "id": "actions_products_updateproduct",
       "community": 7,
       "norm_label": "updateproduct()"
@@ -1780,7 +1825,7 @@
       "label": "deleteProduct()",
       "file_type": "code",
       "source_file": "src/app/actions/products.ts",
-      "source_location": "L110",
+      "source_location": "L128",
       "id": "actions_products_deleteproduct",
       "community": 7,
       "norm_label": "deleteproduct()"
@@ -1789,7 +1834,7 @@
       "label": "uploadProductImage()",
       "file_type": "code",
       "source_file": "src/app/actions/products.ts",
-      "source_location": "L128",
+      "source_location": "L151",
       "id": "actions_products_uploadproductimage",
       "community": 7,
       "norm_label": "uploadproductimage()"
@@ -1798,7 +1843,7 @@
       "label": "removeImageBackground()",
       "file_type": "code",
       "source_file": "src/app/actions/products.ts",
-      "source_location": "L153",
+      "source_location": "L176",
       "id": "actions_products_removeimagebackground",
       "community": 7,
       "norm_label": "removeimagebackground()"
@@ -1807,7 +1852,7 @@
       "label": "uploadProductImageWithBgRemoval()",
       "file_type": "code",
       "source_file": "src/app/actions/products.ts",
-      "source_location": "L220",
+      "source_location": "L243",
       "id": "actions_products_uploadproductimagewithbgremoval",
       "community": 7,
       "norm_label": "uploadproductimagewithbgremoval()"
@@ -1867,10 +1912,19 @@
       "norm_label": "returns.ts"
     },
     {
-      "label": "createReturn()",
+      "label": "verifyAdmin()",
       "file_type": "code",
       "source_file": "src/app/actions/returns.ts",
       "source_location": "L6",
+      "id": "actions_returns_verifyadmin",
+      "community": 10,
+      "norm_label": "verifyadmin()"
+    },
+    {
+      "label": "createReturn()",
+      "file_type": "code",
+      "source_file": "src/app/actions/returns.ts",
+      "source_location": "L14",
       "id": "actions_returns_createreturn",
       "community": 10,
       "norm_label": "createreturn()"
@@ -1879,7 +1933,7 @@
       "label": "updateReturnStatus()",
       "file_type": "code",
       "source_file": "src/app/actions/returns.ts",
-      "source_location": "L35",
+      "source_location": "L43",
       "id": "actions_returns_updatereturnstatus",
       "community": 10,
       "norm_label": "updatereturnstatus()"
@@ -1917,7 +1971,7 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L1",
       "id": "categories_page",
-      "community": 2,
+      "community": 18,
       "norm_label": "page.tsx"
     },
     {
@@ -1926,7 +1980,7 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L9",
       "id": "categories_page_admincategoriespage",
-      "community": 2,
+      "community": 18,
       "norm_label": "admincategoriespage()"
     },
     {
@@ -1935,7 +1989,7 @@
       "source_file": "src/app/admin/coupons/page.tsx",
       "source_location": "L1",
       "id": "coupons_page",
-      "community": 2,
+      "community": 8,
       "norm_label": "page.tsx"
     },
     {
@@ -1944,7 +1998,7 @@
       "source_file": "src/app/admin/coupons/page.tsx",
       "source_location": "L8",
       "id": "coupons_page_admincouponspage",
-      "community": 2,
+      "community": 8,
       "norm_label": "admincouponspage()"
     },
     {
@@ -1989,7 +2043,7 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L1",
       "id": "src_app_admin_orders_id_page_tsx_id_page",
-      "community": 8,
+      "community": 2,
       "norm_label": "page.tsx"
     },
     {
@@ -1998,7 +2052,7 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L9",
       "id": "id_page_adminorderdetailspage",
-      "community": 8,
+      "community": 2,
       "norm_label": "adminorderdetailspage()"
     },
     {
@@ -2007,7 +2061,7 @@
       "source_file": "src/app/admin/orders/page.tsx",
       "source_location": "L1",
       "id": "src_app_admin_orders_page_tsx_orders_page",
-      "community": 8,
+      "community": 2,
       "norm_label": "page.tsx"
     },
     {
@@ -2016,7 +2070,7 @@
       "source_file": "src/app/admin/orders/page.tsx",
       "source_location": "L9",
       "id": "orders_page_adminorderspage",
-      "community": 8,
+      "community": 2,
       "norm_label": "adminorderspage()"
     },
     {
@@ -2313,7 +2367,7 @@
       "source_file": "src/app/api/verify-payment/route.ts",
       "source_location": "L1",
       "id": "verify_payment_route",
-      "community": 8,
+      "community": 2,
       "norm_label": "route.ts"
     },
     {
@@ -2322,7 +2376,7 @@
       "source_file": "src/app/api/verify-payment/route.ts",
       "source_location": "L7",
       "id": "verify_payment_route_post",
-      "community": 8,
+      "community": 2,
       "norm_label": "post()"
     },
     {
@@ -2358,7 +2412,7 @@
       "source_file": "src/app/api/whatsapp/webhook/route.ts",
       "source_location": "L1",
       "id": "webhook_route",
-      "community": 8,
+      "community": 2,
       "norm_label": "route.ts"
     },
     {
@@ -2367,7 +2421,7 @@
       "source_file": "src/app/api/whatsapp/webhook/route.ts",
       "source_location": "L12",
       "id": "webhook_route_get",
-      "community": 8,
+      "community": 2,
       "norm_label": "get()"
     },
     {
@@ -2376,7 +2430,7 @@
       "source_file": "src/app/api/whatsapp/webhook/route.ts",
       "source_location": "L28",
       "id": "webhook_route_post",
-      "community": 8,
+      "community": 2,
       "norm_label": "post()"
     },
     {
@@ -2482,7 +2536,7 @@
       "label": "ContactPage()",
       "file_type": "code",
       "source_file": "src/app/contact/page.tsx",
-      "source_location": "L3",
+      "source_location": "L7",
       "id": "contact_page_contactpage",
       "community": 22,
       "norm_label": "contactpage()"
@@ -2718,7 +2772,7 @@
       "source_file": "src/components/admin/GenerateLabelButton.tsx",
       "source_location": "L1",
       "id": "admin_generatelabelbutton",
-      "community": 8,
+      "community": 2,
       "norm_label": "generatelabelbutton.tsx"
     },
     {
@@ -2727,7 +2781,7 @@
       "source_file": "src/components/admin/GenerateLabelButton.tsx",
       "source_location": "L8",
       "id": "admin_generatelabelbutton_generatelabelbutton",
-      "community": 8,
+      "community": 2,
       "norm_label": "generatelabelbutton()"
     },
     {
@@ -2869,7 +2923,7 @@
       "label": "ProductCarouselProps",
       "file_type": "code",
       "source_file": "src/components/home/ProductCarousel.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "id": "home_productcarousel_productcarouselprops",
       "community": 1,
       "norm_label": "productcarouselprops"
@@ -2878,9 +2932,9 @@
       "label": "ProductCarousel()",
       "file_type": "code",
       "source_file": "src/components/home/ProductCarousel.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "id": "home_productcarousel_productcarousel",
-      "community": 1,
+      "community": 0,
       "norm_label": "productcarousel()"
     },
     {
@@ -3195,7 +3249,7 @@
       "source_file": "src/lib/email.ts",
       "source_location": "L1",
       "id": "lib_email",
-      "community": 8,
+      "community": 2,
       "norm_label": "email.ts"
     },
     {
@@ -3204,7 +3258,7 @@
       "source_file": "src/lib/email.ts",
       "source_location": "L7",
       "id": "lib_email_sendemail",
-      "community": 8,
+      "community": 2,
       "norm_label": "sendemail()"
     },
     {
@@ -3213,7 +3267,7 @@
       "source_file": "src/lib/email.ts",
       "source_location": "L40",
       "id": "lib_email_emailtemplates",
-      "community": 8,
+      "community": 2,
       "norm_label": "emailtemplates"
     },
     {
@@ -3247,10 +3301,19 @@
       "label": "createClient()",
       "file_type": "code",
       "source_file": "src/lib/supabase/server.ts",
-      "source_location": "L4",
+      "source_location": "L5",
       "id": "supabase_server_createclient",
       "community": 2,
       "norm_label": "createclient()"
+    },
+    {
+      "label": "createServiceClient()",
+      "file_type": "code",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L32",
+      "id": "supabase_server_createserviceclient",
+      "community": 2,
+      "norm_label": "createserviceclient()"
     },
     {
       "label": "utils.ts",
@@ -3276,7 +3339,7 @@
       "source_file": "src/lib/whatsapp.ts",
       "source_location": "L1",
       "id": "lib_whatsapp",
-      "community": 8,
+      "community": 2,
       "norm_label": "whatsapp.ts"
     },
     {
@@ -3285,7 +3348,7 @@
       "source_file": "src/lib/whatsapp.ts",
       "source_location": "L11",
       "id": "lib_whatsapp_ordernotification",
-      "community": 8,
+      "community": 2,
       "norm_label": "ordernotification"
     },
     {
@@ -3294,7 +3357,7 @@
       "source_file": "src/lib/whatsapp.ts",
       "source_location": "L19",
       "id": "lib_whatsapp_sendordernotification",
-      "community": 8,
+      "community": 2,
       "norm_label": "sendordernotification()"
     },
     {
@@ -3303,7 +3366,7 @@
       "source_file": "src/lib/whatsapp.ts",
       "source_location": "L67",
       "id": "lib_whatsapp_sendstatusupdate",
-      "community": 8,
+      "community": 2,
       "norm_label": "sendstatusupdate()"
     },
     {
@@ -3312,7 +3375,7 @@
       "source_file": "src/lib/whatsapp.ts",
       "source_location": "L120",
       "id": "lib_whatsapp_parsestatuscommand",
-      "community": 8,
+      "community": 2,
       "norm_label": "parsestatuscommand()"
     },
     {
@@ -3896,7 +3959,7 @@
       "file_type": "code",
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L1",
-      "community": 8,
+      "community": 2,
       "norm_label": "page.tsx",
       "id": "id_page"
     },
@@ -6772,6 +6835,16 @@
       "source_file": "src/app/(auth)/login/page.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "source": "login_page",
+      "target": "login_page_loginform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(auth)/login/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "login_page",
       "target": "login_page_loginpage"
@@ -7283,6 +7356,28 @@
       "target": "store_wishlist_usewishliststore"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/account/wishlist/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "wishlist_page",
+      "target": "supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/account/wishlist/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "wishlist_page",
+      "target": "supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/account/wishlist/page.tsx",
@@ -7374,9 +7469,9 @@
       "source_file": "src/app/actions/bg-removal-stats.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_bg_removal_stats",
-      "target": "actions_bg_removal_stats_getbgremovalstats",
-      "confidence_score": 1.0
+      "target": "actions_bg_removal_stats_getbgremovalstats"
     },
     {
       "relation": "imports_from",
@@ -7385,9 +7480,9 @@
       "source_file": "src/app/actions/bg-removal-stats.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_bg_removal_stats",
-      "target": "supabase_server",
-      "confidence_score": 1.0
+      "target": "supabase_server"
     },
     {
       "relation": "imports",
@@ -7396,9 +7491,9 @@
       "source_file": "src/app/actions/bg-removal-stats.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_bg_removal_stats",
-      "target": "supabase_server_createclient",
-      "confidence_score": 1.0
+      "target": "supabase_server_createclient"
     },
     {
       "relation": "imports_from",
@@ -7407,9 +7502,9 @@
       "source_file": "src/app/admin/products/[id]/edit/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "edit_page",
-      "target": "actions_bg_removal_stats",
-      "confidence_score": 1.0
+      "target": "actions_bg_removal_stats"
     },
     {
       "relation": "imports_from",
@@ -7418,9 +7513,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "actions_bg_removal_stats",
-      "confidence_score": 1.0
+      "target": "actions_bg_removal_stats"
     },
     {
       "relation": "imports",
@@ -7429,9 +7524,9 @@
       "source_file": "src/app/admin/products/[id]/edit/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "edit_page",
-      "target": "actions_bg_removal_stats_getbgremovalstats",
-      "confidence_score": 1.0
+      "target": "actions_bg_removal_stats_getbgremovalstats"
     },
     {
       "relation": "imports",
@@ -7440,9 +7535,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "actions_bg_removal_stats_getbgremovalstats",
-      "confidence_score": 1.0
+      "target": "actions_bg_removal_stats_getbgremovalstats"
     },
     {
       "relation": "contains",
@@ -7473,6 +7568,16 @@
       "confidence_score": 1.0,
       "source": "actions_categories",
       "target": "actions_categories_updatecategory"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/categories.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "actions_categories",
+      "target": "actions_categories_verifyadmin",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -7506,6 +7611,39 @@
       "confidence_score": 1.0,
       "source": "categories_page",
       "target": "actions_categories"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/categories.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "actions_categories_createcategory",
+      "target": "actions_categories_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/categories.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "actions_categories_deletecategory",
+      "target": "actions_categories_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/categories.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "actions_categories_updatecategory",
+      "target": "actions_categories_verifyadmin",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7581,6 +7719,16 @@
       "target": "actions_coupons_validatecoupon"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/coupons.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "actions_coupons",
+      "target": "actions_coupons_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7612,6 +7760,39 @@
       "confidence_score": 1.0,
       "source": "coupons_page",
       "target": "actions_coupons"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/coupons.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "actions_coupons_createcoupon",
+      "target": "actions_coupons_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/coupons.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "actions_coupons_deletecoupon",
+      "target": "actions_coupons_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/coupons.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "actions_coupons_togglecoupon",
+      "target": "actions_coupons_verifyadmin",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7677,6 +7858,16 @@
       "target": "actions_orders_updatetrackingnumber"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/orders.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "actions_orders",
+      "target": "actions_orders_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7738,9 +7929,9 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_admin_orders_id_page_tsx_id_page",
-      "target": "actions_orders",
-      "confidence_score": 1.0
+      "target": "actions_orders"
     },
     {
       "relation": "imports_from",
@@ -7752,6 +7943,39 @@
       "confidence_score": 1.0,
       "source": "src_app_admin_orders_page_tsx_orders_page",
       "target": "actions_orders"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/orders.ts",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "actions_orders_deleteorder",
+      "target": "actions_orders_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/orders.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "actions_orders_updateorderstatus",
+      "target": "actions_orders_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/orders.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "actions_orders_updatetrackingnumber",
+      "target": "actions_orders_verifyadmin",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -7782,9 +8006,9 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_admin_orders_id_page_tsx_id_page",
-      "target": "actions_orders_updateorderstatus",
-      "confidence_score": 1.0
+      "target": "actions_orders_updateorderstatus"
     },
     {
       "relation": "imports",
@@ -7845,9 +8069,9 @@
       "source_file": "src/app/actions/products.ts",
       "source_location": "L153",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_products",
-      "target": "actions_products_removeimagebackground",
-      "confidence_score": 1.0
+      "target": "actions_products_removeimagebackground"
     },
     {
       "relation": "contains",
@@ -7875,8 +8099,18 @@
       "source_file": "src/app/actions/products.ts",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_products",
-      "target": "actions_products_uploadproductimagewithbgremoval",
+      "target": "actions_products_uploadproductimagewithbgremoval"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/products.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "actions_products",
+      "target": "actions_products_verifyadmin",
       "confidence_score": 1.0
     },
     {
@@ -7933,6 +8167,50 @@
       "confidence_score": 1.0,
       "source": "products_page",
       "target": "actions_products"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/products.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "actions_products_addproduct",
+      "target": "actions_products_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/products.ts",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "actions_products_deleteproduct",
+      "target": "actions_products_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/products.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "actions_products_updateproduct",
+      "target": "actions_products_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/products.ts",
+      "source_location": "L248",
+      "weight": 1.0,
+      "source": "actions_products_uploadproductimagewithbgremoval",
+      "target": "actions_products_verifyadmin",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7996,9 +8274,9 @@
       "source_file": "src/app/actions/products.ts",
       "source_location": "L239",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "actions_products_uploadproductimagewithbgremoval",
-      "target": "actions_products_removeimagebackground",
-      "confidence_score": 1.0
+      "target": "actions_products_removeimagebackground"
     },
     {
       "relation": "imports",
@@ -8007,9 +8285,9 @@
       "source_file": "src/app/admin/products/[id]/edit/page.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "edit_page",
-      "target": "actions_products_uploadproductimagewithbgremoval",
-      "confidence_score": 1.0
+      "target": "actions_products_uploadproductimagewithbgremoval"
     },
     {
       "relation": "imports",
@@ -8018,9 +8296,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "actions_products_uploadproductimagewithbgremoval",
-      "confidence_score": 1.0
+      "target": "actions_products_uploadproductimagewithbgremoval"
     },
     {
       "relation": "contains",
@@ -8105,6 +8383,16 @@
       "target": "actions_returns_updatereturnstatus"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/returns.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "actions_returns",
+      "target": "actions_returns_verifyadmin",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -8136,6 +8424,17 @@
       "confidence_score": 1.0,
       "source": "src_app_admin_returns_id_page_tsx_id_page",
       "target": "actions_returns"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/actions/returns.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "actions_returns_updatereturnstatus",
+      "target": "actions_returns_verifyadmin",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -8369,9 +8668,9 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_admin_orders_id_page_tsx_id_page",
-      "target": "admin_generatelabelbutton",
-      "confidence_score": 1.0
+      "target": "admin_generatelabelbutton"
     },
     {
       "relation": "contains",
@@ -8379,9 +8678,9 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_admin_orders_id_page_tsx_id_page",
-      "target": "id_page_adminorderdetailspage",
-      "confidence_score": 1.0
+      "target": "id_page_adminorderdetailspage"
     },
     {
       "relation": "imports_from",
@@ -8390,9 +8689,9 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_admin_orders_id_page_tsx_id_page",
-      "target": "supabase_server",
-      "confidence_score": 1.0
+      "target": "supabase_server"
     },
     {
       "relation": "imports",
@@ -8401,9 +8700,9 @@
       "source_file": "src/app/admin/orders/[id]/page.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_admin_orders_id_page_tsx_id_page",
-      "target": "supabase_server_createclient",
-      "confidence_score": 1.0
+      "target": "supabase_server_createclient"
     },
     {
       "relation": "contains",
@@ -8507,9 +8806,9 @@
       "source_file": "src/app/admin/products/[id]/edit/page.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "edit_page",
-      "target": "edit_page_default_measurements",
-      "confidence_score": 1.0
+      "target": "edit_page_default_measurements"
     },
     {
       "relation": "contains",
@@ -8527,9 +8826,9 @@
       "source_file": "src/app/admin/products/[id]/edit/page.tsx",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "edit_page",
-      "target": "edit_page_measurement",
-      "confidence_score": 1.0
+      "target": "edit_page_measurement"
     },
     {
       "relation": "imports_from",
@@ -8569,9 +8868,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "new_page_default_measurements",
-      "confidence_score": 1.0
+      "target": "new_page_default_measurements"
     },
     {
       "relation": "contains",
@@ -8589,9 +8888,9 @@
       "source_file": "src/app/admin/products/new/page.tsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "new_page",
-      "target": "new_page_measurement",
-      "confidence_score": 1.0
+      "target": "new_page_measurement"
     },
     {
       "relation": "contains",
@@ -8989,6 +9288,17 @@
       "target": "supabase_server_createclient"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/verify-payment/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "verify_payment_route",
+      "target": "supabase_server_createserviceclient",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/verify-payment/route.ts",
@@ -9019,6 +9329,17 @@
       "weight": 1.0,
       "source": "verify_payment_route_post",
       "target": "lib_whatsapp_sendordernotification"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/verify-payment/route.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "verify_payment_route_post",
+      "target": "supabase_server_createserviceclient"
     },
     {
       "relation": "contains",
@@ -10207,6 +10528,28 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/home/ProductCarousel.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "home_productcarousel",
+      "target": "store_wishlist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/ProductCarousel.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "home_productcarousel",
+      "target": "store_wishlist_usewishliststore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/ProductCarousel.tsx",
       "source_location": "L4",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -10245,6 +10588,17 @@
       "confidence_score": 1.0,
       "source": "home_productcarousel_productcarouselprops",
       "target": "types_index_product"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/home/ProductCarousel.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "home_productcarousel_productcarousel",
+      "target": "store_wishlist_usewishliststore"
     },
     {
       "relation": "contains",
@@ -11234,6 +11588,16 @@
       "target": "supabase_server_createclient"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase/server.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "supabase_server",
+      "target": "supabase_server_createserviceclient",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -11876,5 +12240,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8f081248a73361107a6f8964e2482bd71721c986"
+  "built_at_commit": "4a085070a38c70bdc98df24057ea0283b8de31fe"
 }

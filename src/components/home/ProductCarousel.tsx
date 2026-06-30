@@ -5,6 +5,8 @@ import { Product } from "@/types";
 import { Heart, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useWishlistStore } from "@/store/wishlist";
+import { toast } from "sonner";
 
 interface ProductCarouselProps {
     products: Product[];
@@ -13,8 +15,10 @@ interface ProductCarouselProps {
 }
 
 export default function ProductCarousel({ products, activeIndex, setActiveIndex }: ProductCarouselProps) {
+    const { addItem: addToWishlist, removeItem, isInWishlist } = useWishlistStore();
     const containerRef = useRef<HTMLDivElement>(null);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
 
     // Initial scroll to center the active item (index 2) on mount
     useEffect(() => {
@@ -95,6 +99,26 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
             >
                 {products.map((product, index) => {
                     const isActive = index === activeIndex;
+                    const inWishlist = isInWishlist(product.id);
+                    const handleWishlistClick = async (e: React.MouseEvent) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (inWishlist) {
+                            await removeItem(product.id);
+                            toast.success("Removed from wishlist");
+                        } else {
+                            const added = await addToWishlist({
+                                id: product.id,
+                                name: product.name,
+                                price: product.price,
+                                image: product.cardImage
+                            });
+                            if (added) {
+                                toast.success("Added to wishlist");
+                            }
+                        }
+                    };
+
                     return (
                         <div
                             key={product.id}
@@ -124,12 +148,19 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                                         className="object-cover transition-transform duration-700 hover:scale-105"
                                     />
                                     <button
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                        }}
-                                        className="absolute top-3 left-3 p-1.5 rounded-full bg-[#121210]/40 backdrop-blur-sm text-stone-200 border border-white/10 hover:bg-[#FAF8F5] hover:text-[#D4AF37] transition-all duration-300"
+                                        onClick={handleWishlistClick}
+                                        className={cn(
+                                            "absolute top-3 left-3 p-1.5 rounded-full backdrop-blur-sm border transition-all duration-300",
+                                            inWishlist
+                                                ? "bg-[#FAF8F5] text-gold-antique border-gold-antique"
+                                                : "bg-[#121210]/40 text-stone-200 border-white/10 hover:bg-[#FAF8F5] hover:text-[#D4AF37]"
+                                        )}
                                     >
-                                        <Heart size={14} className="transition-transform duration-300 hover:scale-110" />
+                                        <Heart 
+                                            size={14} 
+                                            fill={inWishlist ? "currentColor" : "none"} 
+                                            className="transition-transform duration-300 hover:scale-110" 
+                                        />
                                     </button>
                                     {/* Product info overlay at bottom of card */}
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#121210]/90 via-[#121210]/55 to-transparent p-4 pt-10">

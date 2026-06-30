@@ -4,8 +4,21 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { sendEmail, emailTemplates } from "@/lib/email";
 
+async function verifyAdmin(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (!profile || profile.role !== "admin") throw new Error("Forbidden");
+}
+
+
 export async function updateOrderStatus(orderId: string, newStatus: string) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const updateData: any = { status: newStatus };
     
@@ -83,6 +96,11 @@ export async function updateOrderStatus(orderId: string, newStatus: string) {
 
 export async function deleteOrder(orderId: string) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     // Delete order items first
     await supabase.from('order_items').delete().eq('order_id', orderId);
@@ -103,6 +121,11 @@ export async function deleteOrder(orderId: string) {
 
 export async function updateTrackingNumber(orderId: string, trackingNumber: string) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const { error } = await supabase
         .from("orders")

@@ -3,6 +3,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+async function verifyAdmin(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (!profile || profile.role !== "admin") throw new Error("Forbidden");
+}
+
+
 export async function createReturn(formData: FormData) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -39,6 +47,11 @@ export async function updateReturnStatus(
     refundAmount?: number
 ) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const updateData: any = { status: newStatus };
     if (adminNotes) updateData.admin_notes = adminNotes;

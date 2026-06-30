@@ -34,7 +34,7 @@ export default async function OrdersPage() {
                 <div className="bg-white p-12 rounded-sm shadow-sm text-center">
                     <ShoppingBag size={48} className="mx-auto text-stone-300 mb-4" />
                     <p className="text-stone-500 mb-4">You haven&apos;t placed any orders yet.</p>
-                    <Link href="/" className="bg-black text-white px-6 py-2 uppercase tracking-widest text-xs hover:bg-stone-800">
+                    <Link href="/shop" className="bg-black text-white px-6 py-2 uppercase tracking-widest text-xs hover:bg-stone-800">
                         Start Shopping
                     </Link>
                 </div>

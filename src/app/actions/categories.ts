@@ -3,8 +3,21 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+async function verifyAdmin(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (!profile || profile.role !== "admin") throw new Error("Forbidden");
+}
+
+
 export async function createCategory(formData: FormData) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const name = (formData.get("name") as string).trim();
     if (!name) return { error: "Category name is required" };
@@ -24,6 +37,11 @@ export async function createCategory(formData: FormData) {
 
 export async function updateCategory(categoryId: string, formData: FormData) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const name = (formData.get("name") as string).trim();
     if (!name) return { error: "Category name is required" };
@@ -44,6 +62,11 @@ export async function updateCategory(categoryId: string, formData: FormData) {
 
 export async function deleteCategory(categoryId: string) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const { error } = await supabase
         .from("categories")

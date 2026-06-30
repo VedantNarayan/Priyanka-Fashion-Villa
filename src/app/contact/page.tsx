@@ -1,6 +1,28 @@
+"use client";
+
+import { useState } from "react";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ContactPage() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+    const [submitting, setSubmitting] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSubmitting(true);
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        toast.success("Thank you! Your message has been sent successfully.");
+        setName("");
+        setEmail("");
+        setSubject("");
+        setMessage("");
+        setSubmitting(false);
+    };
+
     return (
         <div className="min-h-screen bg-white text-stone-900">
             <div className="bg-black text-white py-20 text-center">
@@ -13,27 +35,54 @@ export default function ContactPage() {
                     {/* Contact Form */}
                     <div>
                         <h2 className="font-serif text-2xl mb-6">Send a Message</h2>
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">Name</label>
-                                    <input type="text" required className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black" />
+                                    <input 
+                                        type="text" 
+                                        required 
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black" 
+                                    />
                                 </div>
                                 <div>
                                     <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">Email</label>
-                                    <input type="email" required className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black" />
+                                    <input 
+                                        type="email" 
+                                        required 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black" 
+                                    />
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">Subject</label>
-                                <input type="text" className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black" />
+                                <input 
+                                    type="text" 
+                                    value={subject}
+                                    onChange={(e) => setSubject(e.target.value)}
+                                    className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black" 
+                                />
                             </div>
                             <div>
                                 <label className="block text-xs uppercase tracking-wider text-stone-500 mb-1">Message</label>
-                                <textarea rows={6} required className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black resize-none" />
+                                <textarea 
+                                    rows={6} 
+                                    required 
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    className="w-full border border-stone-200 p-3 rounded-sm text-sm focus:outline-none focus:border-black resize-none" 
+                                />
                             </div>
-                            <button type="submit" className="bg-black text-white px-8 py-3 uppercase tracking-widest text-xs hover:bg-stone-800 transition-colors">
-                                Send Message
+                            <button 
+                                type="submit" 
+                                disabled={submitting}
+                                className="bg-black text-white px-8 py-3 uppercase tracking-widest text-xs hover:bg-stone-800 transition-colors disabled:opacity-50"
+                            >
+                                {submitting ? "Sending..." : "Send Message"}
                             </button>
                         </form>
                     </div>

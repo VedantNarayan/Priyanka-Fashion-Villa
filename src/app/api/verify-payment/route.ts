@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { createHmac } from "crypto";
 import { sendOrderNotification } from "@/lib/whatsapp";
 import { sendEmail, emailTemplates } from "@/lib/email";
@@ -12,6 +12,8 @@ export async function POST(request: Request) {
         if (!user) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
+
+        const adminSupabase = createServiceClient();
 
         const {
             razorpay_order_id,
@@ -30,7 +32,7 @@ export async function POST(request: Request) {
         if (expectedSignature !== razorpay_signature) {
             // Mark payment as failed
             if (db_order_id) {
-                await supabase
+                await adminSupabase
                     .from('orders')
                     .update({ payment_status: 'failed' })
                     .eq('id', db_order_id);
@@ -40,7 +42,7 @@ export async function POST(request: Request) {
 
         // Payment verified — update order
         if (db_order_id) {
-            await supabase
+            await adminSupabase
                 .from('orders')
                 .update({
                     razorpay_payment_id,
@@ -51,7 +53,7 @@ export async function POST(request: Request) {
                 .eq('id', db_order_id);
 
             // Deduct stock for each item
-            const { data: orderItems } = await supabase
+            const { data: orderItems } = await adminSupabase
                 .from('order_items')
                 .select('product_id, quantity')
                 .eq('order_id', db_order_id);
@@ -59,7 +61,7 @@ export async function POST(request: Request) {
             if (orderItems) {
                 for (const item of orderItems) {
                     if (item.product_id) {
-                        await supabase.rpc('decrement_stock', {
+                        await adminSupabase.rpc('decrement_stock', {
                             p_id: item.product_id,
                             qty: item.quantity
                         });
@@ -68,7 +70,7 @@ export async function POST(request: Request) {
             }
 
             // Get order details for WhatsApp notification
-            const { data: order } = await supabase
+            const { data: order } = await adminSupabase
                 .from('orders')
                 .select('*, profiles:user_id(full_name)')
                 .eq('id', db_order_id)
@@ -106,3 +108,4 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
+

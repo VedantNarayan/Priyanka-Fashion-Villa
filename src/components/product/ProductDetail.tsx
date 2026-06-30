@@ -50,7 +50,7 @@ export default function ProductDetail({ product }: { product: Product }) {
             <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
 
                 {/* Back Link */}
-                <Link href="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-zari hover:text-burgundy mb-10 transition-colors font-semibold">
+                <Link href="/shop" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold-zari hover:text-burgundy mb-10 transition-colors font-semibold">
                     <ArrowLeft size={14} /> Back to Collection
                 </Link>
 
@@ -135,12 +135,34 @@ export default function ProductDetail({ product }: { product: Product }) {
                                             )}
                                             title={color}
                                         >
-                                            <div className={cn("w-8 h-8 rounded-full shadow-inner",
-                                                color === "Black" ? "bg-black" :
-                                                    color === "Midnight Blue" ? "bg-blue-950" :
-                                                        color === "Cream" ? "bg-[#FFFDD0] border border-stone-200" :
-                                                            "bg-stone-300" // Silver / default
-                                            )} />
+                                            <div 
+                                                className="w-8 h-8 rounded-full shadow-inner"
+                                                style={(() => {
+                                                    const c = color.trim().toLowerCase();
+                                                    switch (c) {
+                                                        case "black": return { backgroundColor: "#111" };
+                                                        case "midnight blue": return { backgroundColor: "#0b132b" };
+                                                        case "cream": return { backgroundColor: "#FFFDD0", border: "1px solid #e5e5e5" };
+                                                        case "white": return { backgroundColor: "#ffffff", border: "1px solid #e5e5e5" };
+                                                        case "red":
+                                                        case "ruby red":
+                                                            return { backgroundColor: "#9b2226" };
+                                                        case "silver": return { backgroundColor: "#e2e8f0" };
+                                                        case "gold": return { backgroundColor: "#d4af37" };
+                                                        case "pink":
+                                                        case "rose":
+                                                            return { backgroundColor: "#fda4af" };
+                                                        case "grey":
+                                                        case "gray":
+                                                            return { backgroundColor: "#78716c" };
+                                                        case "green":
+                                                        case "emerald":
+                                                            return { backgroundColor: "#065f46" };
+                                                        default:
+                                                            return { backgroundColor: color };
+                                                    }
+                                                })()}
+                                            />
                                         </button>
                                     ))}
                                 </div>

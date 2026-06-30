@@ -21,24 +21,39 @@ export default function ProfileDropdown({ isDark }: ProfileDropdownProps) {
     const supabase = createClient();
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                setUser(session.user);
+        const fetchUser = async (sessionUser?: any) => {
+            const currentUser = sessionUser || (await supabase.auth.getSession()).data.session?.user;
+            if (currentUser) {
+                setUser(currentUser);
                 const { data: profile } = await supabase
                     .from('profiles')
                     .select('role, loyalty_points')
-                    .eq('id', session.user.id)
+                    .eq('id', currentUser.id)
                     .single();
                 
                 if (profile) {
                     setRole(profile.role);
                     setPoints(profile.loyalty_points || 0);
                 }
+            } else {
+                setUser(null);
+                setRole(null);
+                setPoints(0);
             }
         };
 
         fetchUser();
+
+        // Subscribe to auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || event === 'USER_UPDATED' || event === 'TOKEN_REFRESHED') {
+                fetchUser(session?.user);
+            } else if (event === 'SIGNED_OUT') {
+                setUser(null);
+                setRole(null);
+                setPoints(0);
+            }
+        });
 
         // Close dropdown when clicking outside
         const handleClickOutside = (event: MouseEvent) => {
@@ -48,7 +63,10 @@ export default function ProfileDropdown({ isDark }: ProfileDropdownProps) {
         };
 
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            subscription.unsubscribe();
+        };
     }, [supabase]);
 
     const handleSignOut = async () => {

@@ -46,32 +46,34 @@ export default function CheckoutPage() {
     useEffect(() => {
         const init = async () => {
             const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.push("/login?redirect=/checkout");
+                return;
+            }
             setUser(user);
 
-            if (user) {
-                setAddress(prev => ({ ...prev, full_name: user.user_metadata?.full_name || "" }));
+            setAddress(prev => ({ ...prev, full_name: user.user_metadata?.full_name || "" }));
 
-                const { data: addrs } = await supabase
-                    .from('addresses')
-                    .select('*')
-                    .eq('user_id', user.id)
-                    .order('is_default', { ascending: false });
+            const { data: addrs } = await supabase
+                .from('addresses')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('is_default', { ascending: false });
 
-                if (addrs && addrs.length > 0) {
-                    setSavedAddresses(addrs);
-                    const defaultAddr = addrs.find((a: any) => a.is_default) || addrs[0];
-                    setSelectedAddressId(defaultAddr.id);
-                    setAddress({
-                        full_name: defaultAddr.full_name || "",
-                        phone: defaultAddr.phone || "",
-                        line1: defaultAddr.line1 || "",
-                        line2: defaultAddr.line2 || "",
-                        city: defaultAddr.city || "",
-                        state: defaultAddr.state || "",
-                        postal_code: defaultAddr.postal_code || "",
-                        country: "IN",
-                    });
-                }
+            if (addrs && addrs.length > 0) {
+                setSavedAddresses(addrs);
+                const defaultAddr = addrs.find((a: any) => a.is_default) || addrs[0];
+                setSelectedAddressId(defaultAddr.id);
+                setAddress({
+                    full_name: defaultAddr.full_name || "",
+                    phone: defaultAddr.phone || "",
+                    line1: defaultAddr.line1 || "",
+                    line2: defaultAddr.line2 || "",
+                    city: defaultAddr.city || "",
+                    state: defaultAddr.state || "",
+                    postal_code: defaultAddr.postal_code || "",
+                    country: "IN",
+                });
             }
         };
         init();

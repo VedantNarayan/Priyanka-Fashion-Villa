@@ -4,8 +4,21 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+async function verifyAdmin(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (!profile || profile.role !== "admin") throw new Error("Forbidden");
+}
+
+
 export async function addProduct(prevState: any, formData: FormData) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { message: "Error", error: "Unauthorized" };
+    }
 
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
@@ -56,6 +69,11 @@ export async function addProduct(prevState: any, formData: FormData) {
 
 export async function updateProduct(productId: string, formData: FormData) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
@@ -109,6 +127,11 @@ export async function updateProduct(productId: string, formData: FormData) {
 
 export async function deleteProduct(productId: string) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     // Soft delete — set is_active to false
     const { error } = await supabase
@@ -221,6 +244,12 @@ export async function uploadProductImageWithBgRemoval(
     formData: FormData
 ): Promise<{ url: string | null; bgRemoved: boolean }> {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { url: null, bgRemoved: false };
+    }
+
     const file = formData.get("file") as File;
     const imageIndex = formData.get("imageIndex") as string;
 

@@ -3,8 +3,21 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+async function verifyAdmin(supabase: any) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (!profile || profile.role !== "admin") throw new Error("Forbidden");
+}
+
+
 export async function createCoupon(formData: FormData) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const code = (formData.get("code") as string).toUpperCase().trim();
     const type = formData.get("type") as string;
@@ -34,6 +47,11 @@ export async function createCoupon(formData: FormData) {
 
 export async function toggleCoupon(couponId: string, isActive: boolean) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const { error } = await supabase
         .from("coupons")
@@ -50,6 +68,11 @@ export async function toggleCoupon(couponId: string, isActive: boolean) {
 
 export async function deleteCoupon(couponId: string) {
     const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { error: "Unauthorized" };
+    }
 
     const { error } = await supabase
         .from("coupons")

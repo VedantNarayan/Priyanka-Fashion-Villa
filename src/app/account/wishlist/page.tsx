@@ -6,11 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Trash2, ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function WishlistPage() {
     const { items, removeItem } = useWishlistStore();
     const { addItem, openCart } = useCartStore();
     const [mounted, setMounted] = useState(false);
+    const supabase = createClient();
 
     useEffect(() => {
         setMounted(true);
@@ -18,15 +20,25 @@ export default function WishlistPage() {
 
     if (!mounted) return null;
 
-    const handleMoveToCart = (item: any) => {
+    const handleMoveToCart = async (item: any) => {
+        // Query actual product for sizes and colors
+        const { data: product } = await supabase
+            .from('products')
+            .select('sizes, colors')
+            .eq('id', item.id)
+            .single();
+
+        const size = product?.sizes?.[0] || "M";
+        const color = product?.colors?.[0] || "Default";
+
         addItem({
             productId: item.id,
             name: item.name,
             price: item.price,
             image: item.image,
             quantity: 1,
-            size: "M", // Default, ideally ask user
-            color: "Default"
+            size,
+            color
         });
         removeItem(item.id);
         openCart();
@@ -39,7 +51,7 @@ export default function WishlistPage() {
             {items.length === 0 ? (
                 <div className="text-center py-20 text-stone-500">
                     <p>Your wishlist is empty.</p>
-                    <Link href="/" className="inline-block mt-4 uppercase text-xs tracking-widest border-b border-black text-black">
+                    <Link href="/shop" className="inline-block mt-4 uppercase text-xs tracking-widest border-b border-black text-black">
                         Browse Collection
                     </Link>
                 </div>
