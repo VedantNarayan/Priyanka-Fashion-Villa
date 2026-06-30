@@ -14,6 +14,7 @@ export interface Product {
     review_count?: number;
     image_url?: string;
     images?: string[];
+    size_chart?: any;
 }
 
 export type Category = "Evening Wear" | "Cocktail" | "Gala" | "Prom" | "Party" | "Casual";

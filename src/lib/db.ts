@@ -22,7 +22,8 @@ export async function getProducts(): Promise<Product[]> {
             category: p.category,
             description: p.description,
             sizes: p.sizes || ["S", "M", "L"],
-            colors: p.colors || ["Black"]
+            colors: p.colors || ["Black"],
+            size_chart: p.size_chart
         }));
 
     } catch (e) {
@@ -56,7 +57,8 @@ export async function getProduct(id: string): Promise<Product | undefined> {
             category: data.category,
             description: data.description,
             sizes: data.sizes || ["S", "M", "L"],
-            colors: data.colors || ["Black"]
+            colors: data.colors || ["Black"],
+            size_chart: data.size_chart
         };
 
     } catch (e) {
