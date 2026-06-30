@@ -1,16 +1,16 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-30)
 
 ## Corpus Check
-- 107 files · ~129,423 words
+- 107 files · ~122,148 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 457 nodes · 791 edges · 41 communities (27 shown, 14 thin omitted)
+- 458 nodes · 792 edges · 42 communities (28 shown, 14 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 26 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1eea7ab3`
+- Built from commit: `185ea451`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,6 +23,7 @@
 - [[_COMMUNITY_Community 5|Community 5]]
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
+- [[_COMMUNITY_Community 8|Community 8]]
 - [[_COMMUNITY_Community 9|Community 9]]
 - [[_COMMUNITY_Community 10|Community 10]]
 - [[_COMMUNITY_Community 11|Community 11]]
@@ -72,7 +73,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (41 total, 14 thin omitted)
+## Communities (42 total, 14 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
@@ -83,12 +84,12 @@ Cohesion: 0.06
 Nodes (33): AboutPage(), Home(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarousel(), ProductCarouselProps, generateMetadata() (+25 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.08
-Nodes (14): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), verifyAdmin(), createCoupon(), deleteCoupon(), toggleCoupon() (+6 more)
+Cohesion: 0.06
+Nodes (24): grantAdminRights(), createCoupon(), deleteCoupon(), toggleCoupon(), validateCoupon(), verifyAdmin(), deleteOrder(), updateOrderStatus() (+16 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.04
-Nodes (43): eslintConfig, dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next (+35 more)
+Cohesion: 0.07
+Nodes (25): dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next, otpauth (+17 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.23
@@ -99,12 +100,16 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.14
-Nodes (14): deleteOrder(), updateOrderStatus(), updateTrackingNumber(), verifyAdmin(), AdminOrderDetailsPage(), emailTemplates, sendEmail(), OrderNotification (+6 more)
+Cohesion: 0.10
+Nodes (19): eslintConfig, devDependencies, eslint, eslint-config-next, jimp, tailwindcss, @tailwindcss/postcss, @types/node (+11 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.16
 Nodes (13): getBgRemovalStats(), addProduct(), deleteProduct(), removeImageBackground(), updateProduct(), uploadProductImage(), uploadProductImageWithBgRemoval(), verifyAdmin() (+5 more)
+
+### Community 8 - "Community 8"
+Cohesion: 0.57
+Nodes (4): createCategory(), deleteCategory(), updateCategory(), verifyAdmin()
 
 ### Community 9 - "Community 9"
 Cohesion: 0.22
@@ -120,7 +125,7 @@ Nodes (3): inter, metadata, playfair
 
 ### Community 12 - "Community 12"
 Cohesion: 0.06
-Nodes (15): $(), a, b(), deleteCacheAndMetadata(), F, G, get(), h() (+7 more)
+Nodes (17): $(), a, b(), deleteCacheAndMetadata(), et, F, G, get() (+9 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.40
@@ -131,27 +136,27 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 42 - "Community 42"
-Cohesion: 0.17
-Nodes (9): et, i, m(), s, st(), T(), U(), v (+1 more)
+Cohesion: 0.21
+Nodes (7): m(), s, st(), T(), U(), v, y
 
 ## Knowledge Gaps
-- **123 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+118 more)
+- **124 isolated node(s):** `name`, `version`, `private`, `dev`, `build` (+119 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 6`, `Community 7`, `Community 10`?**
-  _High betweenness centrality (0.192) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 8`, `Community 10`?**
+  _High betweenness centrality (0.191) - this node is a cross-community bridge._
 - **Why does `removeImageBackground()` connect `Community 7` to `Community 42`?**
-  _High betweenness centrality (0.122) - this node is a cross-community bridge._
+  _High betweenness centrality (0.121) - this node is a cross-community bridge._
 - **Why does `$()` connect `Community 12` to `Community 42`?**
-  _High betweenness centrality (0.087) - this node is a cross-community bridge._
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `createClient()` (e.g. with `CheckoutPage()` and `ProfileDropdown()`) actually correct?**
   _`createClient()` has 4 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
-  _123 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `name`, `version`, `private` to the rest of the system?**
+  _124 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.08200290275761973 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
