@@ -576,7 +576,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r",
-      "community": 42,
+      "community": 12,
       "norm_label": "r"
     },
     {
@@ -585,7 +585,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r_constructor",
-      "community": 42,
+      "community": 12,
       "norm_label": ".constructor()"
     },
     {
@@ -594,7 +594,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r_setcatchhandler",
-      "community": 42,
+      "community": 12,
       "norm_label": ".setcatchhandler()"
     },
     {
@@ -864,7 +864,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_v_donewaiting",
-      "community": 42,
+      "community": 12,
       "norm_label": ".donewaiting()"
     },
     {
@@ -873,7 +873,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_v_destroy",
-      "community": 42,
+      "community": 12,
       "norm_label": ".destroy()"
     },
     {
@@ -891,7 +891,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r_handle",
-      "community": 42,
+      "community": 12,
       "norm_label": ".handle()"
     },
     {
@@ -900,7 +900,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r_handleall",
-      "community": 42,
+      "community": 12,
       "norm_label": ".handleall()"
     },
     {
@@ -918,7 +918,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_r_d",
-      "community": 42,
+      "community": 12,
       "norm_label": ".d()"
     },
     {
@@ -936,7 +936,7 @@
       "source_file": "public/workbox-f1770938.js",
       "source_location": "L1",
       "id": "public_workbox_f1770938_q",
-      "community": 42,
+      "community": 12,
       "norm_label": "q()"
     },
     {
@@ -1656,7 +1656,7 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L1",
       "id": "actions_categories",
-      "community": 8,
+      "community": 2,
       "norm_label": "categories.ts"
     },
     {
@@ -1665,7 +1665,7 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L6",
       "id": "actions_categories_verifyadmin",
-      "community": 8,
+      "community": 2,
       "norm_label": "verifyadmin()"
     },
     {
@@ -1674,7 +1674,7 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L14",
       "id": "actions_categories_createcategory",
-      "community": 8,
+      "community": 2,
       "norm_label": "createcategory()"
     },
     {
@@ -1683,7 +1683,7 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L38",
       "id": "actions_categories_updatecategory",
-      "community": 8,
+      "community": 2,
       "norm_label": "updatecategory()"
     },
     {
@@ -1692,7 +1692,7 @@
       "source_file": "src/app/actions/categories.ts",
       "source_location": "L63",
       "id": "actions_categories_deletecategory",
-      "community": 8,
+      "community": 2,
       "norm_label": "deletecategory()"
     },
     {
@@ -1962,7 +1962,7 @@
       "source_file": "src/app/actions/reviews.ts",
       "source_location": "L1",
       "id": "actions_reviews",
-      "community": 0,
+      "community": 1,
       "norm_label": "reviews.ts"
     },
     {
@@ -1971,7 +1971,7 @@
       "source_file": "src/app/actions/reviews.ts",
       "source_location": "L6",
       "id": "actions_reviews_submitreview",
-      "community": 0,
+      "community": 1,
       "norm_label": "submitreview()"
     },
     {
@@ -1980,7 +1980,7 @@
       "source_file": "src/app/actions/reviews.ts",
       "source_location": "L100",
       "id": "actions_reviews_getproductreviews",
-      "community": 0,
+      "community": 1,
       "norm_label": "getproductreviews()"
     },
     {
@@ -1989,7 +1989,7 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L1",
       "id": "categories_page",
-      "community": 8,
+      "community": 2,
       "norm_label": "page.tsx"
     },
     {
@@ -1998,7 +1998,7 @@
       "source_file": "src/app/admin/categories/page.tsx",
       "source_location": "L9",
       "id": "categories_page_admincategoriespage",
-      "community": 8,
+      "community": 2,
       "norm_label": "admincategoriespage()"
     },
     {
@@ -2538,7 +2538,7 @@
       "source_file": "src/app/checkout/page.tsx",
       "source_location": "L12",
       "id": "checkout_page_checkoutpage",
-      "community": 1,
+      "community": 0,
       "norm_label": "checkoutpage()"
     },
     {
@@ -2709,7 +2709,7 @@
       "source_file": "src/components/admin/AdminAnalytics.tsx",
       "source_location": "L1",
       "id": "admin_adminanalytics",
-      "community": 18,
+      "community": 2,
       "norm_label": "adminanalytics.tsx"
     },
     {
@@ -2718,7 +2718,7 @@
       "source_file": "src/components/admin/AdminAnalytics.tsx",
       "source_location": "L6",
       "id": "admin_adminanalytics_orderdata",
-      "community": 18,
+      "community": 2,
       "norm_label": "orderdata"
     },
     {
@@ -2727,7 +2727,7 @@
       "source_file": "src/components/admin/AdminAnalytics.tsx",
       "source_location": "L11",
       "id": "admin_adminanalytics_analyticsprops",
-      "community": 18,
+      "community": 2,
       "norm_label": "analyticsprops"
     },
     {
@@ -2736,7 +2736,7 @@
       "source_file": "src/components/admin/AdminAnalytics.tsx",
       "source_location": "L15",
       "id": "admin_adminanalytics_adminanalytics",
-      "community": 18,
+      "community": 2,
       "norm_label": "adminanalytics()"
     },
     {
@@ -2857,6 +2857,24 @@
       "norm_label": "livechatwidget()"
     },
     {
+      "label": "Hero.backup.tsx",
+      "file_type": "code",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L1",
+      "id": "home_hero_backup",
+      "community": 1,
+      "norm_label": "hero.backup.tsx"
+    },
+    {
+      "label": "Hero()",
+      "file_type": "code",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L9",
+      "id": "home_hero_backup_hero",
+      "community": 1,
+      "norm_label": "hero()"
+    },
+    {
       "label": "Hero.tsx",
       "file_type": "code",
       "source_file": "src/components/home/Hero.tsx",
@@ -2866,10 +2884,28 @@
       "norm_label": "hero.tsx"
     },
     {
+      "label": "sampleImages",
+      "file_type": "code",
+      "source_file": "src/components/home/Hero.tsx",
+      "source_location": "L7",
+      "id": "home_hero_sampleimages",
+      "community": 1,
+      "norm_label": "sampleimages"
+    },
+    {
+      "label": "carouselProducts",
+      "file_type": "code",
+      "source_file": "src/components/home/Hero.tsx",
+      "source_location": "L15",
+      "id": "home_hero_carouselproducts",
+      "community": 1,
+      "norm_label": "carouselproducts"
+    },
+    {
       "label": "Hero()",
       "file_type": "code",
       "source_file": "src/components/home/Hero.tsx",
-      "source_location": "L9",
+      "source_location": "L22",
       "id": "home_hero_hero",
       "community": 1,
       "norm_label": "hero()"
@@ -3132,7 +3168,7 @@
       "source_file": "src/components/product/ProductReviews.tsx",
       "source_location": "L1",
       "id": "product_productreviews",
-      "community": 0,
+      "community": 1,
       "norm_label": "productreviews.tsx"
     },
     {
@@ -3141,7 +3177,7 @@
       "source_file": "src/components/product/ProductReviews.tsx",
       "source_location": "L10",
       "id": "product_productreviews_productreviews",
-      "community": 0,
+      "community": 1,
       "norm_label": "productreviews()"
     },
     {
@@ -3474,7 +3510,7 @@
       "source_file": "src/store/wishlist.ts",
       "source_location": "L1",
       "id": "store_wishlist",
-      "community": 1,
+      "community": 0,
       "norm_label": "wishlist.ts"
     },
     {
@@ -3483,7 +3519,7 @@
       "source_file": "src/store/wishlist.ts",
       "source_location": "L6",
       "id": "store_wishlist_wishlistitem",
-      "community": 1,
+      "community": 0,
       "norm_label": "wishlistitem"
     },
     {
@@ -3492,7 +3528,7 @@
       "source_file": "src/store/wishlist.ts",
       "source_location": "L13",
       "id": "store_wishlist_wishliststate",
-      "community": 1,
+      "community": 0,
       "norm_label": "wishliststate"
     },
     {
@@ -10568,12 +10604,97 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "home_hero_backup",
+      "target": "home_hero_backup_hero",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "home_hero_backup",
+      "target": "lib_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "home_hero_backup",
+      "target": "lib_data_products",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "home_hero_backup",
+      "target": "lib_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "home_hero_backup",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/home/Hero.backup.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "home_hero_backup_hero",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "home_hero",
+      "target": "home_hero_carouselproducts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/components/home/Hero.tsx",
       "source_location": "L9",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "home_hero",
       "target": "home_hero_hero"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/home/Hero.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "home_hero",
+      "target": "home_hero_sampleimages",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -12627,5 +12748,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "afe513110a2e07a87872984f120852319995db19"
+  "built_at_commit": "1d5fb8064b2905b175eea2ddc984d763720a1c8d"
 }
