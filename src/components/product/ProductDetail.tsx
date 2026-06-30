@@ -31,6 +31,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     const [finderStep, setFinderStep] = useState<'main' | 'edit'>('main');
     const [agreedToTerms, setAgreedToTerms] = useState(true);
     const [recommendedSize, setRecommendedSize] = useState<string | null>(null);
+    const [hasEnteredInfo, setHasEnteredInfo] = useState(false);
 
     const handleAddToCart = () => {
         addItem({
@@ -448,7 +449,94 @@ export default function ProductDetail({ product }: { product: Product }) {
                                     </table>
                                 </div>
 
-                                <p className="text-[10px] text-stone-400 mt-6 italic">
+                                <div className="mt-8 border-t border-gold-zari/15 pt-6">
+                                    <h3 className="text-[10px] font-semibold text-obsidian uppercase tracking-widest mb-4 font-serif">Product Measurements</h3>
+                                    <div className="flex flex-col md:flex-row gap-6 items-start">
+                                        {/* Left: How to measure text list */}
+                                        <div className="flex-1 space-y-3.5 text-[10px] text-stone-500 font-serif leading-relaxed">
+                                            <p className="font-bold text-obsidian uppercase tracking-wider text-[9px] mb-1">How to measure the product's size?</p>
+                                            <div>
+                                                <span className="font-semibold text-burgundy tracking-wider">1. SHOULDER</span>
+                                                <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the sleeve from one side to the other side.</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-burgundy tracking-wider">2. BUST</span>
+                                                <p className="text-stone-400 mt-0.5">Measure from the stitches below the armpits from one side to the other.</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-burgundy tracking-wider">3. WAIST</span>
+                                                <p className="text-stone-400 mt-0.5">Measure straight across the narrowest waistline from edge to edge.</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-burgundy tracking-wider">4. HIPS</span>
+                                                <p className="text-stone-400 mt-0.5">Measure straight across the widest hip line from edge to edge.</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-burgundy tracking-wider">5. LENGTH</span>
+                                                <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the collar to the hem.</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-burgundy tracking-wider">6. SLEEVES</span>
+                                                <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the sleeve to the cuff.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Right: Elegant Shirt SVG with annotations */}
+                                        <div className="w-32 h-32 md:w-36 md:h-36 flex-shrink-0 flex items-center justify-center bg-stone-50/50 border border-gold-zari/10 p-2 relative self-center md:self-start">
+                                            <svg viewBox="0 0 120 120" className="w-full h-full text-stone-400" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                                {/* Long sleeve shirt outline */}
+                                                <path d="M 30,30 L 40,25 L 48,27 C 55,25 65,25 72,27 L 80,25 L 90,30 L 105,65 L 95,68 L 85,45 L 85,100 L 35,100 L 35,45 L 25,68 L 15,65 Z" fill="#FAF8F5" stroke="#475569" strokeWidth="1.2" />
+                                                
+                                                {/* Collar */}
+                                                <path d="M 48,27 C 52,32 68,32 72,27" stroke="#475569" strokeWidth="1" />
+                                                
+                                                {/* 1. Shoulder Line */}
+                                                <line x1="38" y1="26" x2="82" y2="26" stroke="#b91c1c" strokeWidth="1" strokeDasharray="2,2" />
+                                                <circle cx="38" cy="26" r="1.5" fill="#b91c1c" />
+                                                <circle cx="82" cy="26" r="1.5" fill="#b91c1c" />
+                                                <circle cx="60" cy="26" r="5" fill="white" stroke="#b91c1c" strokeWidth="1" />
+                                                <text x="60" y="28.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">1</text>
+
+                                                {/* 2. Bust Line */}
+                                                <line x1="35" y1="45" x2="85" y2="45" stroke="#b91c1c" strokeWidth="1" strokeDasharray="2,2" />
+                                                <circle cx="35" cy="45" r="1.5" fill="#b91c1c" />
+                                                <circle cx="85" cy="45" r="1.5" fill="#b91c1c" />
+                                                <circle cx="60" cy="45" r="5" fill="white" stroke="#b91c1c" strokeWidth="1" />
+                                                <text x="60" y="47.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">2</text>
+
+                                                {/* 3. Waist Line */}
+                                                <line x1="35" y1="70" x2="85" y2="70" stroke="#b91c1c" strokeWidth="1" strokeDasharray="2,2" />
+                                                <circle cx="35" cy="70" r="1.5" fill="#b91c1c" />
+                                                <circle cx="85" cy="70" r="1.5" fill="#b91c1c" />
+                                                <circle cx="60" cy="70" r="5" fill="white" stroke="#b91c1c" strokeWidth="1" />
+                                                <text x="60" y="72.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">3</text>
+
+                                                {/* 4. Hips / Hem Line */}
+                                                <line x1="35" y1="100" x2="85" y2="100" stroke="#b91c1c" strokeWidth="1" strokeDasharray="2,2" />
+                                                <circle cx="35" cy="100" r="1.5" fill="#b91c1c" />
+                                                <circle cx="85" cy="100" r="1.5" fill="#b91c1c" />
+                                                <circle cx="60" cy="100" r="5" fill="white" stroke="#b91c1c" strokeWidth="1" />
+                                                <text x="60" y="102.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">4</text>
+
+                                                {/* 5. Length Line */}
+                                                <line x1="50" y1="27" x2="50" y2="100" stroke="#065f46" strokeWidth="1" strokeDasharray="2,2" />
+                                                <circle cx="50" cy="27" r="1.5" fill="#065f46" />
+                                                <circle cx="50" cy="100" r="1.5" fill="#065f46" />
+                                                <circle cx="50" cy="60" r="5" fill="white" stroke="#065f46" strokeWidth="1" />
+                                                <text x="50" y="62.5" fontSize="7" textAnchor="middle" fill="#065f46" fontWeight="bold">5</text>
+
+                                                {/* 6. Sleeve Line */}
+                                                <line x1="80" y1="25" x2="102" y2="60" stroke="#d97706" strokeWidth="1" strokeDasharray="2,2" />
+                                                <circle cx="80" cy="25" r="1.5" fill="#d97706" />
+                                                <circle cx="102" cy="60" r="1.5" fill="#d97706" />
+                                                <circle cx="91" cy="42.5" r="5" fill="white" stroke="#d97706" strokeWidth="1" />
+                                                <text x="91" y="45" fontSize="7" textAnchor="middle" fill="#d97706" fontWeight="bold">6</text>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p className="text-[9px] text-stone-400 mt-6 italic leading-normal border-t border-stone-100 pt-3 font-serif">
                                     * Custom tailors are available for bridal orders. Please contact customer concierge via WhatsApp for exact custom adjustments.
                                 </p>
                             </div>
@@ -572,7 +660,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                     )}
                                                 >
                                                     <span className="text-xs font-bold text-obsidian uppercase tracking-wider font-serif">
-                                                        {finderHeight} cm / {finderWeight} kg
+                                                        {hasEnteredInfo ? `${finderHeight} cm / ${finderWeight} kg` : "-- / --"}
                                                     </span>
                                                     <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Height/Weight</span>
                                                 </button>
@@ -589,7 +677,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                 >
                                                     <span className="w-4 h-4 rounded-full bg-burgundy/10 flex items-center justify-center text-[9px] font-bold text-burgundy border border-burgundy/20">1</span>
                                                     <div className="flex flex-col items-center flex-1">
-                                                        <span className="text-xs font-bold text-obsidian font-serif">{finderBust} in</span>
+                                                        <span className="text-xs font-bold text-obsidian font-serif">{hasEnteredInfo ? `${finderBust} in` : "-"}</span>
                                                         <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Bust</span>
                                                     </div>
                                                     <span className="w-4"></span>
@@ -607,7 +695,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                 >
                                                     <span className="w-4 h-4 rounded-full bg-gold-zari/10 flex items-center justify-center text-[9px] font-bold text-gold-zari border border-gold-zari/20">2</span>
                                                     <div className="flex flex-col items-center flex-1">
-                                                        <span className="text-xs font-bold text-obsidian font-serif">{finderWaist} in</span>
+                                                        <span className="text-xs font-bold text-obsidian font-serif">{hasEnteredInfo ? `${finderWaist} in` : "-"}</span>
                                                         <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Waist</span>
                                                     </div>
                                                     <span className="w-4"></span>
@@ -617,19 +705,39 @@ export default function ProductDetail({ product }: { product: Product }) {
 
                                         {/* Results & Action */}
                                         <div className="mt-6 text-center flex flex-col items-center gap-3">
-                                            <p className="text-xs uppercase tracking-widest text-stone-500">
-                                                Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
-                                            </p>
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setSelectedSize(calculatedSize);
-                                                    setIsSizeGuideOpen(false);
-                                                }}
-                                                className="w-full h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-900 transition-colors shadow-md flex items-center justify-center gap-2"
-                                            >
-                                                Apply Size {calculatedSize} to Product
-                                            </button>
+                                            {hasEnteredInfo ? (
+                                                <>
+                                                    <p className="text-xs uppercase tracking-widest text-stone-500">
+                                                        Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
+                                                    </p>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setSelectedSize(calculatedSize);
+                                                            setIsSizeGuideOpen(false);
+                                                        }}
+                                                        className="w-full h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-900 transition-colors shadow-md flex items-center justify-center gap-2"
+                                                    >
+                                                        Apply Size {calculatedSize} to Product
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p className="text-xs uppercase tracking-widest text-stone-400 italic">
+                                                        Please enter measurements to calculate recommended size.
+                                                    </p>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setActiveField('hw');
+                                                            setFinderStep('edit');
+                                                        }}
+                                                        className="w-full h-11 bg-stone-100 hover:bg-stone-200 text-obsidian uppercase tracking-widest text-[10px] font-semibold transition-colors shadow-sm flex items-center justify-center border border-stone-200"
+                                                    >
+                                                        Enter Sizing Measurements
+                                                    </button>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 ) : (
@@ -761,7 +869,10 @@ export default function ProductDetail({ product }: { product: Product }) {
                                         <button
                                             type="button"
                                             disabled={!agreedToTerms}
-                                            onClick={() => setFinderStep('main')}
+                                            onClick={() => {
+                                                setFinderStep('main');
+                                                setHasEnteredInfo(true);
+                                            }}
                                             className="w-full h-11 bg-black text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-800 transition-colors disabled:opacity-50 mt-2 rounded-none"
                                         >
                                             Update
