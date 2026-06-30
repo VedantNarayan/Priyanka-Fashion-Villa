@@ -50,9 +50,9 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                     <Image 
                         src="/priyanka-icon.png" 
                         alt="Priyanka's Fashionvilla Icon" 
-                        width={64} 
-                        height={64} 
-                        className="h-12 md:h-14 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                        width={120} 
+                        height={120} 
+                        className="h-16 md:h-20 w-auto object-contain scale-[2.1] origin-left translate-x-2 md:translate-x-4 hover:scale-[2.2] transition-transform duration-300"
                         priority
                     />
                 </Link>
@@ -63,9 +63,9 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                         <Image 
                             src="/priyanka-logo.png" 
                             alt="Priyanka's Fashionvilla Logo" 
-                            width={220} 
-                            height={70} 
-                            className="h-9 md:h-11 lg:h-13 w-auto object-contain hover:scale-103 transition-transform duration-300"
+                            width={320} 
+                            height={120} 
+                            className="h-16 md:h-20 w-auto object-contain scale-[2.4] hover:scale-[2.5] transition-transform duration-300"
                             priority
                         />
                     </Link>
