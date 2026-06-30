@@ -116,7 +116,7 @@ export default function NewProductPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                        <label htmlFor="price" className="block text-sm font-medium text-stone-700">Price ($)</label>
+                        <label htmlFor="price" className="block text-sm font-medium text-stone-700">Price (₹)</label>
                         <input type="number" name="price" id="price" required step="0.01" className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black" placeholder="0.00" />
                     </div>
 

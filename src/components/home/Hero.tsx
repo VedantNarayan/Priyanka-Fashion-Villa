@@ -57,7 +57,7 @@ export default function Hero() {
                     animate={{ opacity: phase < 3 ? 0.9 : 0, x: 0 }}
                     className="max-w-md text-white font-light text-center md:text-left text-base md:text-lg"
                 >
-                    <p>"At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style."</p>
+                    <p>&ldquo;At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style.&rdquo;</p>
                 </motion.div>
 
                 <motion.div

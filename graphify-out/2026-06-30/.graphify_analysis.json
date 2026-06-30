@@ -1,0 +1,530 @@
+{
+  "communities": {
+    "0": [
+      "actions_reviews",
+      "actions_reviews_getproductreviews",
+      "actions_reviews_submitreview",
+      "cart_cartcount",
+      "cart_cartdrawer",
+      "cart_cartdrawer_cartdrawer",
+      "checkout_page",
+      "checkout_page_checkoutpage",
+      "layout_header",
+      "layout_header_header",
+      "layout_header_headerprops",
+      "layout_profiledropdown",
+      "lib_utils",
+      "lib_utils_cn",
+      "login_page",
+      "login_page_loginpage",
+      "product_productdetail",
+      "product_productreviews",
+      "reset_password_page",
+      "reset_password_page_resetpasswordpage",
+      "returns_page_adminreturnspage",
+      "settings_page",
+      "settings_page_adminsettingspage",
+      "signup_page",
+      "signup_page_signuppage",
+      "src_app_admin_returns_page_tsx_returns_page",
+      "store_cart",
+      "store_cart_cartitem",
+      "store_cart_cartstate",
+      "store_cart_synctosupabase",
+      "store_cart_usecartstore",
+      "store_wishlist",
+      "store_wishlist_usewishliststore",
+      "store_wishlist_wishlistitem",
+      "store_wishlist_wishliststate",
+      "supabase_client",
+      "supabase_client_createclient",
+      "update_password_page",
+      "update_password_page_updatepasswordpage",
+      "wishlist_page",
+      "wishlist_page_wishlistpage"
+    ],
+    "1": [
+      "app_page",
+      "app_page_home",
+      "home_hero",
+      "home_hero_hero",
+      "home_heroanimation",
+      "home_modeldisplay",
+      "home_modeldisplay_modeldisplayprops",
+      "home_productcarousel",
+      "home_productstrip",
+      "home_zevanahome",
+      "id_page_generatemetadata",
+      "id_page_productpage",
+      "lib_data",
+      "lib_data_getproductbyid",
+      "lib_data_products",
+      "lib_db",
+      "lib_db_getproduct",
+      "lib_db_getproducts",
+      "product_productrecommendations",
+      "product_productrecommendations_props",
+      "shop_page",
+      "shop_page_categories",
+      "shop_page_shoppage",
+      "shop_page_sort_options",
+      "src_app_product_id_page_tsx_id_page",
+      "types_index",
+      "types_index_address",
+      "types_index_adminsetting",
+      "types_index_category",
+      "types_index_coupon",
+      "types_index_order",
+      "types_index_orderitem",
+      "types_index_orderstatus",
+      "types_index_product",
+      "types_index_profile",
+      "types_index_returnrequest",
+      "types_index_returnstatus",
+      "types_index_review",
+      "ui_productcard",
+      "ui_productcard_productcardprops"
+    ],
+    "2": [
+      "account_layout",
+      "account_layout_accountlayout",
+      "actions_admin",
+      "actions_admin_grantadminrights",
+      "admin_adminanalytics",
+      "admin_adminanalytics_analyticsprops",
+      "admin_adminanalytics_orderdata",
+      "admin_customeractions",
+      "admin_layout",
+      "admin_layout_adminlayout",
+      "admin_page",
+      "admin_page_admindashboard",
+      "create_order_route",
+      "create_order_route_post",
+      "customers_page",
+      "customers_page_admincustomerspage",
+      "orders_page_orderspage",
+      "returns_page_userreturnspage",
+      "setup_2fa_route",
+      "setup_2fa_route_post",
+      "shipping_label_route",
+      "shipping_label_route_post",
+      "signout_route",
+      "signout_route_post",
+      "src_app_account_orders_page_tsx_orders_page",
+      "src_app_account_returns_page_tsx_returns_page",
+      "supabase_server",
+      "supabase_server_createclient",
+      "verify_2fa_route",
+      "verify_2fa_route_post"
+    ],
+    "3": [
+      "package_dependencies",
+      "package_dependencies_clsx",
+      "package_dependencies_crypto_js",
+      "package_dependencies_ducanh2912_next_pwa",
+      "package_dependencies_framer_motion",
+      "package_dependencies_lucide_react",
+      "package_dependencies_next",
+      "package_dependencies_otpauth",
+      "package_dependencies_qrcode",
+      "package_dependencies_razorpay",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_recharts",
+      "package_dependencies_resend",
+      "package_dependencies_sonner",
+      "package_dependencies_supabase_supabase_js",
+      "package_dependencies_tailwind_merge",
+      "package_dependencies_types_crypto_js",
+      "package_dependencies_types_qrcode",
+      "package_dependencies_zustand",
+      "seed_products",
+      "seed_products_createclient",
+      "seed_products_products",
+      "seed_products_supabase"
+    ],
+    "4": [
+      "actions_orders",
+      "actions_orders_deleteorder",
+      "actions_orders_updateorderstatus",
+      "actions_orders_updatetrackingnumber",
+      "admin_generatelabelbutton",
+      "id_page_adminorderdetailspage",
+      "lib_email",
+      "lib_email_emailtemplates",
+      "lib_email_sendemail",
+      "lib_whatsapp",
+      "lib_whatsapp_ordernotification",
+      "lib_whatsapp_parsestatuscommand",
+      "lib_whatsapp_sendordernotification",
+      "lib_whatsapp_sendstatusupdate",
+      "orders_page_adminorderspage",
+      "src_app_admin_orders_id_page_tsx_id_page",
+      "src_app_admin_orders_page_tsx_orders_page",
+      "verify_payment_route",
+      "verify_payment_route_post",
+      "webhook_route",
+      "webhook_route_get",
+      "webhook_route_post"
+    ],
+    "5": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include",
+      "tsconfig_paths"
+    ],
+    "6": [
+      "eslint_config",
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_typescript",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_start",
+      "package_version"
+    ],
+    "7": [
+      "actions_products",
+      "actions_products_addproduct",
+      "actions_products_deleteproduct",
+      "actions_products_updateproduct",
+      "actions_products_uploadproductimage",
+      "edit_page",
+      "edit_page_editproductpage",
+      "new_page",
+      "new_page_initialstate",
+      "new_page_submitbutton",
+      "products_page",
+      "products_page_adminproductspage"
+    ],
+    "8": [
+      "account_page",
+      "account_page_accountpage",
+      "actions_profile",
+      "actions_profile_addaddress",
+      "actions_profile_deleteaddress",
+      "actions_profile_updateaddress",
+      "actions_profile_updateprofile",
+      "addresses_page",
+      "addresses_page_addressespage"
+    ],
+    "9": [
+      "public_manifest",
+      "public_manifest_background_color",
+      "public_manifest_description",
+      "public_manifest_display",
+      "public_manifest_icons",
+      "public_manifest_name",
+      "public_manifest_short_name",
+      "public_manifest_start_url",
+      "public_manifest_theme_color"
+    ],
+    "10": [
+      "actions_returns",
+      "actions_returns_createreturn",
+      "actions_returns_updatereturnstatus",
+      "id_page_adminreturndetailpage",
+      "id_page_orderdetailpage",
+      "id_page_status_steps",
+      "src_app_account_orders_id_page_tsx_id_page",
+      "src_app_admin_returns_id_page_tsx_id_page"
+    ],
+    "11": [
+      "app_layout",
+      "app_layout_inter",
+      "app_layout_metadata",
+      "app_layout_playfair",
+      "app_layout_rootlayout",
+      "chat_livechatwidget",
+      "layout_footer",
+      "layout_footer_footer"
+    ],
+    "12": [
+      "actions_coupons",
+      "actions_coupons_createcoupon",
+      "actions_coupons_deletecoupon",
+      "actions_coupons_togglecoupon",
+      "actions_coupons_validatecoupon",
+      "coupons_page",
+      "coupons_page_admincouponspage"
+    ],
+    "13": [
+      "next_svg",
+      "readme_nextjs_project",
+      "readme_page_tsx",
+      "vercel_svg"
+    ],
+    "14": [
+      "test_supabase",
+      "test_supabase_createclient",
+      "test_supabase_supabase",
+      "test_supabase_test"
+    ],
+    "15": [
+      "graphify_out_graph",
+      "graphify_rule",
+      "graphify_workflow"
+    ],
+    "16": [
+      "inventory_route",
+      "inventory_route_post",
+      "inventory_route_resend"
+    ],
+    "17": [
+      "next_config",
+      "next_config_nextconfig",
+      "next_config_withpwa"
+    ],
+    "18": [
+      "about_page",
+      "about_page_aboutpage"
+    ],
+    "19": [
+      "auth_code_error_page",
+      "auth_code_error_page_authcodeerror"
+    ],
+    "20": [
+      "black_gown_concept",
+      "black_gown_png"
+    ],
+    "21": [
+      "callback_route",
+      "callback_route_get"
+    ],
+    "22": [
+      "contact_page",
+      "contact_page_contactpage"
+    ],
+    "23": [
+      "cream_pleat_concept",
+      "cream_pleat_png"
+    ],
+    "24": [
+      "policies_page",
+      "policies_page_policiespage"
+    ],
+    "25": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "26": [
+      "setup_2fa_page",
+      "setup_2fa_page_setup2fapage"
+    ],
+    "27": [
+      "src_middleware",
+      "src_middleware_config"
+    ],
+    "28": [
+      "test_coupon",
+      "test_coupon_createclient"
+    ],
+    "29": [
+      "verify_2fa_page",
+      "verify_2fa_page_verify2fapage"
+    ],
+    "30": [
+      "verify_request_page",
+      "verify_request_page_verifyrequest"
+    ],
+    "31": [
+      "file_svg"
+    ],
+    "32": [
+      "globe_svg"
+    ],
+    "33": [
+      "window_svg"
+    ],
+    "34": [
+      "hero_center_hero_center"
+    ],
+    "35": [
+      "blue_slip_png"
+    ],
+    "36": [
+      "silver_sequin_png"
+    ],
+    "37": [
+      "velvet_obsidian_png"
+    ]
+  },
+  "cohesion": {
+    "0": 0.10975609756097561,
+    "1": 0.0858974358974359,
+    "2": 0.09885057471264368,
+    "3": 0.08333333333333333,
+    "4": 0.15151515151515152,
+    "5": 0.1,
+    "6": 0.11764705882352941,
+    "7": 0.24242424242424243,
+    "8": 0.3333333333333333,
+    "9": 0.2222222222222222,
+    "10": 0.32142857142857145,
+    "11": 0.25,
+    "12": 0.42857142857142855,
+    "13": 0.5,
+    "14": 0.5,
+    "15": 0.6666666666666666,
+    "16": 0.6666666666666666,
+    "17": 0.6666666666666666,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0
+  },
+  "gods": [
+    {
+      "id": "supabase_client_createclient",
+      "label": "createClient()",
+      "degree": 23
+    },
+    {
+      "id": "supabase_server_createclient",
+      "label": "createClient()",
+      "degree": 23
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "lib_utils_cn",
+      "label": "cn()",
+      "degree": 14
+    },
+    {
+      "id": "store_cart_usecartstore",
+      "label": "useCartStore",
+      "degree": 11
+    },
+    {
+      "id": "types_index_product",
+      "label": "Product",
+      "degree": 11
+    },
+    {
+      "id": "lib_data_products",
+      "label": "products",
+      "degree": 6
+    },
+    {
+      "id": "store_wishlist_usewishliststore",
+      "label": "useWishlistStore",
+      "degree": 6
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "lib_email_sendemail",
+      "label": "sendEmail()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Hero()",
+      "target": "cn()",
+      "source_files": [
+        "src/components/home/Hero.tsx",
+        "src/lib/utils.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities; peripheral node `Hero()` unexpectedly reaches hub `cn()`"
+    },
+    {
+      "source": "CheckoutPage()",
+      "target": "useCartStore",
+      "source_files": [
+        "src/app/checkout/page.tsx",
+        "src/store/cart.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `CheckoutPage()` unexpectedly reaches hub `useCartStore`"
+    },
+    {
+      "source": "generateMetadata()",
+      "target": "getProduct()",
+      "source_files": [
+        "src/app/product/[id]/page.tsx",
+        "src/lib/db.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "ProductPage()",
+      "target": "getProduct()",
+      "source_files": [
+        "src/app/product/[id]/page.tsx",
+        "src/lib/db.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "CartDrawer()",
+      "target": "useCartStore",
+      "source_files": [
+        "src/components/cart/CartDrawer.tsx",
+        "src/store/cart.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `CartDrawer()` unexpectedly reaches hub `useCartStore`"
+    }
+  ],
+  "tokens": {
+    "input": 151140,
+    "output": 2885
+  }
+}

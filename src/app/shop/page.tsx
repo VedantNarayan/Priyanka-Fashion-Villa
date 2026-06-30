@@ -23,6 +23,7 @@ export default function ShopPage() {
     const [selectedColor, setSelectedColor] = useState("");
     const [minRating, setMinRating] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
     const supabase = createClient();
 
     useEffect(() => { fetchProducts(); }, [category, sort]);
@@ -151,19 +152,38 @@ export default function ShopPage() {
                     </div>
                 </div>
 
-                {/* Categories */}
-                <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
-                    {CATEGORIES.map(cat => (
+                {/* Categories & View Switcher */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                    <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide flex-1">
+                        {CATEGORIES.map(cat => (
+                            <button
+                                key={cat}
+                                onClick={() => setCategory(cat)}
+                                className={`px-4 py-2 text-xs uppercase tracking-wider whitespace-nowrap rounded-sm transition-colors ${
+                                    category === cat ? 'bg-black text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                                }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                    
+                    <div className="flex items-center gap-1 border border-stone-200 p-1 rounded-sm bg-stone-50 self-stretch sm:self-auto justify-center sm:justify-start">
                         <button
-                            key={cat}
-                            onClick={() => setCategory(cat)}
-                            className={`px-4 py-2 text-xs uppercase tracking-wider whitespace-nowrap rounded-sm transition-colors ${
-                                category === cat ? 'bg-black text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                            }`}
+                            onClick={() => setViewMode("grid")}
+                            className={`p-1.5 rounded-sm transition-colors flex items-center justify-center ${viewMode === "grid" ? "bg-white text-black shadow-sm" : "text-stone-400 hover:text-stone-600"}`}
+                            title="Grid View"
                         >
-                            {cat}
+                            <Grid size={16} />
                         </button>
-                    ))}
+                        <button
+                            onClick={() => setViewMode("list")}
+                            className={`p-1.5 rounded-sm transition-colors flex items-center justify-center ${viewMode === "list" ? "bg-white text-black shadow-sm" : "text-stone-400 hover:text-stone-600"}`}
+                            title="List View"
+                        >
+                            <List size={16} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Product Grid */}
@@ -175,13 +195,22 @@ export default function ShopPage() {
                         <p className="text-stone-400 text-sm">Try adjusting your search or filter criteria.</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className={viewMode === "grid" 
+                        ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                        : "flex flex-col gap-6 max-w-4xl mx-auto"
+                    }>
                         {filtered.map(product => (
-                            <Link key={product.id} href={`/product/${product.id}`} className="group">
-                                <div className="aspect-[3/4] bg-stone-100 relative overflow-hidden rounded-sm mb-3">
+                            <Link key={product.id} href={`/product/${product.id}`} className={viewMode === "grid" 
+                                ? "group block"
+                                : "group flex flex-col sm:flex-row gap-6 p-4 border border-stone-100 hover:border-[#C5A880]/30 hover:shadow-lg transition-all duration-500 rounded-sm bg-[#FAF8F5]/30 text-left"
+                            }>
+                                <div className={viewMode === "grid"
+                                    ? "aspect-[3/4] bg-stone-100 relative overflow-hidden rounded-sm mb-3"
+                                    : "w-full sm:w-48 aspect-[3/4] sm:h-64 bg-stone-100 relative overflow-hidden rounded-sm shrink-0"
+                                }>
                                     {(product.image_url || product.cardImage || product.images?.[0]) ? (
                                         <img
-                                            src={product.image_url || product.cardImage || product.images[0]}
+                                            src={product.image_url || product.cardImage || product.images?.[0]}
                                             alt={product.name}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
@@ -194,14 +223,44 @@ export default function ShopPage() {
                                         </div>
                                     )}
                                 </div>
-                                <h3 className="font-medium text-sm group-hover:underline">{product.name}</h3>
-                                <div className="flex items-center justify-between mt-1">
-                                    <p className="font-medium">₹{product.price}</p>
-                                    {product.rating > 0 && (
-                                        <p className="text-xs text-stone-500">★ {product.rating}</p>
+                                <div className={viewMode === "grid" ? "" : "flex-1 flex flex-col justify-between py-2"}>
+                                    <div>
+                                        <div className={viewMode === "grid" ? "" : "flex justify-between items-start gap-4 mb-2"}>
+                                            <h3 className="font-medium text-sm group-hover:underline md:text-base">{product.name}</h3>
+                                            {viewMode === "list" && (
+                                                <p className="text-stone-400 text-xs tracking-wider uppercase">{product.category}</p>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center justify-between mt-1">
+                                            <p className="font-medium">₹{product.price}</p>
+                                            {product.rating > 0 && (
+                                                <p className="text-xs text-stone-500">★ {product.rating}</p>
+                                            )}
+                                        </div>
+                                        {viewMode === "list" && (
+                                            <p className="text-sm text-stone-500 mt-4 line-clamp-2 md:line-clamp-3 leading-relaxed">
+                                                {product.description || "A luxury piece crafted from our select seasonal fabrics. Designed specifically to create a stunning silhouette."}
+                                            </p>
+                                        )}
+                                    </div>
+                                    {viewMode === "list" && (
+                                        <div className="mt-6 flex items-center gap-4">
+                                            <span className="text-xs uppercase tracking-widest text-black font-semibold border-b border-black pb-0.5 group-hover:border-[#C5A880] group-hover:text-[#C5A880] transition-colors">
+                                                View Details
+                                            </span>
+                                            {product.sizes && product.sizes.length > 0 && (
+                                                <div className="flex gap-1.5 text-[10px] text-stone-400">
+                                                    {product.sizes.map((s: string) => (
+                                                        <span key={s} className="border border-stone-200 px-1.5 py-0.5 rounded-sm">{s}</span>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                    {viewMode === "grid" && (
+                                        <p className="text-xs text-stone-400 mt-0.5">{product.category}</p>
                                     )}
                                 </div>
-                                <p className="text-xs text-stone-400 mt-0.5">{product.category}</p>
                             </Link>
                         ))}
                     </div>

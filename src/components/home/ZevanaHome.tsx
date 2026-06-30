@@ -32,6 +32,7 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
             {/* Intro Animation Layer — stays mounted until fully faded out */}
             {!introComplete && (
                 <HeroAnimation
+                    products={products}
                     onCardsLanded={handleCardsLanded}
                     onComplete={handleIntroComplete}
                 />
@@ -84,6 +85,109 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                                     </a>
                                 </div>
                             ))}
+                        </div>
+                    </section>
+
+                    {/* The Lookbook Feed Section (Induces scroll-based visual engagement) */}
+                    <section className="py-28 px-4 md:px-8 bg-[#FAF8F5] max-w-7xl mx-auto border-t border-[#C5A880]/15">
+                        <div className="text-center mb-20">
+                            <span className="text-[#C5A880] text-xs md:text-sm uppercase tracking-[0.25em] block mb-2 font-semibold">Chasing the Light</span>
+                            <h2 className="text-3xl md:text-5xl font-serif uppercase tracking-widest text-[#121210]">Seasonal Lookbook</h2>
+                            <div className="w-16 h-[1px] bg-[#C5A880] mx-auto mt-4"></div>
+                            <p className="text-stone-500 font-serif italic text-sm mt-6 max-w-md mx-auto">
+                                An editorial perspective on movement, draping, and modern elegance. Scroll to feel the textures.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                            {/* Column 1: Wide Banner */}
+                            <div className="lg:col-span-8 group relative overflow-hidden bg-white border border-[#C5A880]/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[60vh] flex flex-col justify-end">
+                                <div className="absolute inset-0 overflow-hidden">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2670&auto=format&fit=crop"
+                                        alt="Silk Movement Lookbook"
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-700"></div>
+                                </div>
+                                <div className="relative z-10 p-8 md:p-12 text-white max-w-lg">
+                                    <span className="text-[#C5A880] text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume I</span>
+                                    <h3 className="font-serif text-2xl md:text-3xl uppercase tracking-wider mb-4">Fluid Geometrics</h3>
+                                    <p className="text-stone-300 text-xs md:text-sm leading-relaxed mb-6 font-serif italic">
+                                        Explorations of light and shadow on pure hand-spun mulberry silk. Curated specifically for monumental arrivals.
+                                    </p>
+                                    <a href="/shop" className="inline-block border-b border-white pb-1 text-xs uppercase tracking-widest hover:text-[#C5A880] hover:border-[#C5A880] transition-colors font-semibold">
+                                        Shop The Silhouette
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Column 2: Tall Banner */}
+                            <div className="lg:col-span-4 group relative overflow-hidden bg-[#121210] border border-[#C5A880]/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[60vh] flex flex-col justify-end">
+                                <div className="absolute inset-0 overflow-hidden">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2576&auto=format&fit=crop"
+                                        alt="Embellishments Lookbook"
+                                        fill
+                                        className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-70 group-hover:opacity-85 transition-opacity duration-700"></div>
+                                </div>
+                                <div className="relative z-10 p-8 text-white">
+                                    <span className="text-[#C5A880] text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume II</span>
+                                    <h3 className="font-serif text-xl md:text-2xl uppercase tracking-wider mb-3">Structured Atelier</h3>
+                                    <p className="text-stone-300 text-xs leading-relaxed mb-6 font-serif italic">
+                                        Handcrafted glass beads and zardozi embroidery stitched meticulously by master artisans.
+                                    </p>
+                                    <a href="/shop" className="inline-block border-b border-white pb-1 text-xs uppercase tracking-widest hover:text-[#C5A880] hover:border-[#C5A880] transition-colors font-semibold">
+                                        Discover Details
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Column 3: Small Card Left */}
+                            <div className="lg:col-span-5 group relative overflow-hidden bg-white border border-[#C5A880]/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[50vh] flex flex-col justify-end">
+                                <div className="absolute inset-0 overflow-hidden">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2574&auto=format&fit=crop"
+                                        alt="Classic Glamour Lookbook"
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-700"></div>
+                                </div>
+                                <div className="relative z-10 p-8 text-white">
+                                    <span className="text-[#C5A880] text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume III</span>
+                                    <h3 className="font-serif text-xl uppercase tracking-wider mb-3">Gilded Noir</h3>
+                                    <a href="/shop" className="inline-block border-b border-white pb-1 text-xs uppercase tracking-widest hover:text-[#C5A880] hover:border-[#C5A880] transition-colors font-semibold">
+                                        Browse Velvet & Satin
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Column 4: Wide Banner Right */}
+                            <div className="lg:col-span-7 group relative overflow-hidden bg-white border border-[#C5A880]/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[50vh] flex flex-col justify-end">
+                                <div className="absolute inset-0 overflow-hidden">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2673&auto=format&fit=crop"
+                                        alt="Modern Ethos Lookbook"
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-700"></div>
+                                </div>
+                                <div className="relative z-10 p-8 md:p-10 text-white">
+                                    <span className="text-[#C5A880] text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume IV</span>
+                                    <h3 className="font-serif text-xl md:text-2xl uppercase tracking-wider mb-3">Modern Heritage</h3>
+                                    <p className="text-stone-300 text-xs leading-relaxed mb-6 font-serif italic max-w-md">
+                                        Contemporary cuts reimagining traditional silhouettes for modern occasions. Designed for effortless transitions.
+                                    </p>
+                                    <a href="/shop" className="inline-block border-b border-white pb-1 text-xs uppercase tracking-widest hover:text-[#C5A880] hover:border-[#C5A880] transition-colors font-semibold">
+                                        View Collection
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </section>
 

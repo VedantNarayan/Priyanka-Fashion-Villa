@@ -138,7 +138,7 @@ export default function CheckoutPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     items,
-                    amount: total,
+                    amount: subtotal + shipping,
                     shipping_address: address,
                     coupon_code: couponApplied?.code || null,
                 }),

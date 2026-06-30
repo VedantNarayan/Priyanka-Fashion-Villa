@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Star, ShieldCheck, User } from "lucide-react";
 import { submitReview, getProductReviews } from "@/app/actions/reviews";
 import { toast } from "sonner";
@@ -16,6 +16,13 @@ export default function ProductReviews({ productId }: { productId: string }) {
     const [rating, setRating] = useState(0);
     const [user, setUser] = useState<any>(null);
 
+    const fetchReviews = useCallback(async () => {
+        setLoading(true);
+        const data = await getProductReviews(productId);
+        setReviews(data || []);
+        setLoading(false);
+    }, [productId]);
+
     useEffect(() => {
         const fetchUserData = async () => {
             const supabase = createClient();
@@ -24,14 +31,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
         };
         fetchUserData();
         fetchReviews();
-    }, [productId]);
-
-    const fetchReviews = async () => {
-        setLoading(true);
-        const data = await getProductReviews(productId);
-        setReviews(data || []);
-        setLoading(false);
-    };
+    }, [productId, fetchReviews]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

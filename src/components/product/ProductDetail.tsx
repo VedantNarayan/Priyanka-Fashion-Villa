@@ -96,7 +96,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-4 leading-tight">{product.name}</h1>
 
                         <div className="flex items-center gap-4 mb-8">
-                            <span className="text-2xl md:text-3xl font-light">${product.price}</span>
+                            <span className="text-2xl md:text-3xl font-light">₹{product.price}</span>
                             <div className="flex items-center gap-1 text-amber-400 text-sm">
                                 <Star fill="currentColor" size={14} />
                                 <span className="text-black font-medium ml-1">{product.rating || 0}</span>

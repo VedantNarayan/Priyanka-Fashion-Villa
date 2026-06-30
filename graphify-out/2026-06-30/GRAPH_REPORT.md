@@ -1,16 +1,16 @@
-# Graph Report - Priyanka Fashionvilla  (2026-06-30)
+# Graph Report - Priyanka Fashionvilla  (2026-06-02)
 
 ## Corpus Check
-- 104 files · ~68,179 words
+- 104 files · ~67,341 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 439 nodes · 705 edges · 44 communities (30 shown, 14 thin omitted)
+- 439 nodes · 702 edges · 44 communities (30 shown, 14 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3a5b66a7`
+- Built from commit: `b7bf2288`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,7 +56,7 @@
 7. `get()` - 15 edges
 8. `v` - 14 edges
 9. `z()` - 14 edges
-10. `Product` - 14 edges
+10. `useCartStore` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `HeroAnimation()` --calls--> `cn()`  [EXTRACTED]
@@ -140,7 +140,7 @@ Cohesion: 0.08
 Nodes (18): $(), b(), deleteCacheAndMetadata(), et, F, G, i, j() (+10 more)
 
 ## Knowledge Gaps
-- **119 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+114 more)
+- **120 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+115 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -154,10 +154,10 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `$()` connect `Community 42` to `Community 12`?**
   _High betweenness centrality (0.087) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
-  _119 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _120 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.08295625942684766 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07215541165587419 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06938020351526364 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.054098360655737705 - nodes in this community are weakly interconnected._

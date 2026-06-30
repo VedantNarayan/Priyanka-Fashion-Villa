@@ -111,7 +111,7 @@ export default function CartDrawer() {
                                                         <Plus size={14} />
                                                     </button>
                                                 </div>
-                                                <p className="font-medium">${item.price * item.quantity}</p>
+                                                <p className="font-medium">₹{item.price * item.quantity}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@ export default function CartDrawer() {
                             <div className="p-6 border-t border-stone-100 bg-stone-50">
                                 <div className="flex justify-between items-center mb-4">
                                     <span className="uppercase tracking-wide text-sm text-stone-500">Subtotal</span>
-                                    <span className="font-medium text-lg">${subtotal}</span>
+                                    <span className="font-medium text-lg">₹{subtotal}</span>
                                 </div>
                                 <p className="text-xs text-stone-400 mb-6 text-center">
                                     Shipping and taxes calculated at checkout.

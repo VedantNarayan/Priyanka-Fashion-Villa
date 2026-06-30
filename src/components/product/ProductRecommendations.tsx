@@ -11,7 +11,7 @@ interface Props {
 export default async function ProductRecommendations({ currentProductId, category }: Props) {
   const allProducts = await getProducts();
   // Filter out the current product and prioritize same category
-  let filtered = allProducts.filter((p: Product) => p.id !== currentProductId);
+  const filtered = allProducts.filter((p: Product) => p.id !== currentProductId);
   
   const sameCategory = filtered.filter((p: Product) => p.category === category);
   const otherCategory = filtered.filter((p: Product) => p.category !== category);
@@ -26,7 +26,7 @@ export default async function ProductRecommendations({ currentProductId, categor
       <h3 className="text-xl font-medium text-stone-900 mb-8 font-serif">Complete The Look</h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {recommendations.map((product) => (
-          <Link key={product.id} href={`/shop/product/${product.id}`} className="group block">
+          <Link key={product.id} href={`/product/${product.id}`} className="group block">
             <div className="aspect-[3/4] relative bg-stone-100 rounded-sm overflow-hidden mb-3">
               <Image
                 src={product.cardImage}

@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { products } from "@/lib/data";
+import { Product } from "@/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface HeroAnimationProps {
+    products: Product[];
     onCardsLanded: () => void;   // Fires when cards are ready and frames fade out
     onComplete: () => void;       // Fires after fade-out completes to unmount
 }
 
-export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimationProps) {
+export default function HeroAnimation({ products, onCardsLanded, onComplete }: HeroAnimationProps) {
     const [phase, setPhase] = useState(0);
     const [carouselSpacing, setCarouselSpacing] = useState(288);
 
@@ -36,6 +37,8 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
         ];
         return () => timers.forEach(clearTimeout);
     }, [onCardsLanded, onComplete]);
+
+    const centerIndex = Math.floor(products.length / 2);
 
     return (
         <div className={cn(
@@ -83,8 +86,8 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                 }}
             >
                 {products.map((product, index) => {
-                    const isCenter = index === 2;
-                    const offset = index - 2;
+                    const isCenter = index === centerIndex;
+                    const offset = index - centerIndex;
 
                     return (
                         <motion.div
@@ -121,6 +124,7 @@ export default function HeroAnimation({ onCardsLanded, onComplete }: HeroAnimati
                                     fill
                                     sizes="(max-width: 768px) 200px, 240px"
                                     className="object-cover"
+                                    priority={isCenter}
                                 />
                                 {/* Bottom vignette overlay matching ProductCarousel cards */}
                                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#121210]/90 via-[#121210]/55 to-transparent p-4 pt-10">
