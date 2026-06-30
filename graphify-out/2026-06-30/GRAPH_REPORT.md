@@ -1,7 +1,7 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-30)
 
 ## Corpus Check
-- 107 files · ~112,656 words
+- 107 files · ~112,788 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3e065bfc`
+- Built from commit: `bcc5843d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -55,9 +55,9 @@
 5. `a` - 18 edges
 6. `compilerOptions` - 16 edges
 7. `get()` - 15 edges
-8. `v` - 14 edges
-9. `z()` - 14 edges
-10. `Product` - 14 edges
+8. `Product` - 14 edges
+9. `v` - 14 edges
+10. `z()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `LoginForm()` --calls--> `createClient()`  [INFERRED]
@@ -141,7 +141,7 @@ Cohesion: 0.09
 Nodes (20): $(), b(), deleteCacheAndMetadata(), et, F, G, i, j() (+12 more)
 
 ## Knowledge Gaps
-- **124 isolated node(s):** `DEFAULT_MEASUREMENTS`, `Measurement`, `initialState`, `DEFAULT_MEASUREMENTS`, `Measurement` (+119 more)
+- **124 isolated node(s):** `Category`, `Profile`, `Address`, `Order`, `OrderStatus` (+119 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -156,7 +156,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.086) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `createClient()` (e.g. with `CheckoutPage()` and `ProfileDropdown()`) actually correct?**
   _`createClient()` has 4 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `DEFAULT_MEASUREMENTS`, `Measurement`, `initialState` to the rest of the system?**
+- **What connects `Category`, `Profile`, `Address` to the rest of the system?**
   _124 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.08013468013468013 - nodes in this community are weakly interconnected._
