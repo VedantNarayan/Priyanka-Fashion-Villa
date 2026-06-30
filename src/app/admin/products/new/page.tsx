@@ -85,9 +85,21 @@ export default function NewProductPage() {
             if (result.url) {
                 setImages(prev => [...prev, result.url!]);
                 setBgRemovedFlags(prev => [...prev, false]);
+            } else {
+                const formData2 = new FormData();
+                formData2.append("file", file);
+                const { uploadProductImage } = await import("@/app/actions/products");
+                const url = await uploadProductImage(formData2);
+                if (url) {
+                    setImages(prev => [...prev, url]);
+                    setBgRemovedFlags(prev => [...prev, false]);
+                } else {
+                    alert("Upload failed. Please check your permissions and try again.");
+                }
             }
-        } catch {
-            // silently fail
+        } catch (err) {
+            console.error("Image upload error:", err);
+            alert("Upload failed. Please try again.");
         }
         setUploading(false);
     };
