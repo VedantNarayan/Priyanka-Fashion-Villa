@@ -302,7 +302,6 @@ export default function EditProductPage() {
                         </label>
                     </div>
                     <input type="hidden" name="images" value={JSON.stringify(images)} />
-                    <input type="url" name="image_url" id="image_url" defaultValue={images[0] || ""} className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black mt-2" placeholder="Or paste primary image URL here (fallback)" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

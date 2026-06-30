@@ -289,9 +289,7 @@ export default function NewProductPage() {
                         </label>
                     </div>
                     
-                    {/* Fallback URL input + hidden JSON payload */}
                     <input type="hidden" name="images" value={JSON.stringify(images)} />
-                    <input type="url" name="image_url" id="image_url" className="w-full border border-stone-200 p-3 rounded-sm focus:outline-none focus:border-black transition-colors text-black mt-2" placeholder="Or paste primary image URL here (fallback)" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
