@@ -308,6 +308,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                 const bustVal = parseFloat(finderBust) || 36;
                 const waistVal = parseFloat(finderWaist) || 28;
                 let calculatedSize = "M";
+                let fitFeedback = "Standard customized silhouette";
                 if (measurements && measurements.length > 0) {
                     let best = measurements[0];
                     let bestDist = Infinity;
@@ -319,6 +320,20 @@ export default function ProductDetail({ product }: { product: Product }) {
                         }
                     }
                     calculatedSize = best.size;
+
+                    const bustDiff = best.bust - bustVal;
+                    const waistDiff = best.waist - waistVal;
+                    if (bustDiff >= 2 && waistDiff >= 2) {
+                        fitFeedback = "Provides a comfortable, relaxed drape throughout";
+                    } else if (Math.abs(bustDiff) <= 1.5 && Math.abs(waistDiff) <= 1.5) {
+                        fitFeedback = "Offers a precise, tailored fit at bust and waist";
+                    } else if (bustDiff < 0) {
+                        fitFeedback = "Snug fit at the bust; standard waist fit";
+                    } else if (waistDiff < 0) {
+                        fitFeedback = "Snug fit at the waist; standard bust fit";
+                    } else if (waistDiff >= 2) {
+                        fitFeedback = "Fitted chest with a flowy, comfortable waistline";
+                    }
                 }
 
                 // Ruler Slider Renderer Helper
@@ -556,7 +571,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                                             onClick={() => setFinderStep('edit')}
                                             className="w-full py-3 bg-stone-100 hover:bg-stone-200 text-obsidian text-[10px] font-semibold uppercase tracking-widest transition-colors mb-5 text-center border border-stone-200/50 rounded-none"
                                         >
-                                            Add more information
+                                            {hasEnteredInfo ? "Refine Sizing Measurements" : "Add Sizing Information"}
                                         </button>
 
                                         <div className="flex items-center justify-center gap-6 md:gap-10 py-2 border-b border-gold-zari/10">
@@ -641,12 +656,16 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                   <path d="M89,98 Q60,93 31,98" stroke="#d97706" strokeWidth="1" opacity="0.3" />
                                                   <circle cx="31" cy="98" r={activeField === 'waist' ? "4" : "2.5"} fill="#d97706" />
 
-                                                  {/* Line Badges */}
-                                                  <circle cx="15" cy="72" r="6" fill="white" stroke="#b91c1c" strokeWidth="1" />
-                                                  <text x="15" y="74.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">1</text>
+                                                  {/* Interactive Line Badges */}
+                                                  <g className="cursor-pointer" onClick={() => { setActiveField('bust'); setFinderStep('edit'); }}>
+                                                      <circle cx="15" cy="72" r="7" fill="white" stroke="#b91c1c" strokeWidth="1.2" className="hover:fill-red-50 transition-colors" />
+                                                      <text x="15" y="74.5" fontSize="7.5" textAnchor="middle" fill="#b91c1c" fontWeight="bold">1</text>
+                                                  </g>
 
-                                                  <circle cx="15" cy="98" r="6" fill="white" stroke="#d97706" strokeWidth="1" />
-                                                  <text x="15" y="100.5" fontSize="7" textAnchor="middle" fill="#d97706" fontWeight="bold">2</text>
+                                                  <g className="cursor-pointer" onClick={() => { setActiveField('waist'); setFinderStep('edit'); }}>
+                                                      <circle cx="15" cy="98" r="7" fill="white" stroke="#d97706" strokeWidth="1.2" className="hover:fill-amber-50 transition-colors" />
+                                                      <text x="15" y="100.5" fontSize="7.5" textAnchor="middle" fill="#d97706" fontWeight="bold">2</text>
+                                                  </g>
                                                 </svg>
                                             </div>
 
@@ -663,7 +682,11 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                     )}
                                                 >
                                                     <span className="text-xs font-bold text-obsidian uppercase tracking-wider font-serif">
-                                                        {hasEnteredInfo ? `${finderHeight} cm / ${finderWeight} kg` : "-- / --"}
+                                                        {hasEnteredInfo 
+                                                            ? (unit === 'in' 
+                                                                ? `${Math.round(finderHeight / 2.54)} in / ${Math.round(finderWeight * 2.205)} lbs` 
+                                                                : `${finderHeight} cm / ${finderWeight} kg`) 
+                                                            : "-- / --"}
                                                     </span>
                                                     <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Height/Weight</span>
                                                 </button>
@@ -680,7 +703,13 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                 >
                                                     <span className="w-4 h-4 rounded-full bg-burgundy/10 flex items-center justify-center text-[9px] font-bold text-burgundy border border-burgundy/20">1</span>
                                                     <div className="flex flex-col items-center flex-1">
-                                                        <span className="text-xs font-bold text-obsidian font-serif">{hasEnteredInfo ? `${finderBust} in` : "-"}</span>
+                                                        <span className="text-xs font-bold text-obsidian font-serif">
+                                                            {hasEnteredInfo 
+                                                                ? (unit === 'in' 
+                                                                    ? `${finderBust} in` 
+                                                                    : `${Math.round(parseFloat(finderBust) * 2.54)} cm`) 
+                                                                : "-"}
+                                                        </span>
                                                         <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Bust</span>
                                                     </div>
                                                     <span className="w-4"></span>
@@ -698,7 +727,13 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                 >
                                                     <span className="w-4 h-4 rounded-full bg-gold-zari/10 flex items-center justify-center text-[9px] font-bold text-gold-zari border border-gold-zari/20">2</span>
                                                     <div className="flex flex-col items-center flex-1">
-                                                        <span className="text-xs font-bold text-obsidian font-serif">{hasEnteredInfo ? `${finderWaist} in` : "-"}</span>
+                                                        <span className="text-xs font-bold text-obsidian font-serif">
+                                                            {hasEnteredInfo 
+                                                                ? (unit === 'in' 
+                                                                    ? `${finderWaist} in` 
+                                                                    : `${Math.round(parseFloat(finderWaist) * 2.54)} cm`) 
+                                                                : "-"}
+                                                        </span>
                                                         <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Waist</span>
                                                     </div>
                                                     <span className="w-4"></span>
@@ -707,12 +742,17 @@ export default function ProductDetail({ product }: { product: Product }) {
                                         </div>
 
                                         {/* Results & Action */}
-                                        <div className="mt-6 text-center flex flex-col items-center gap-3">
+                                        <div className="mt-6 text-center flex flex-col items-center gap-3 w-full">
                                             {hasEnteredInfo ? (
                                                 <>
-                                                    <p className="text-xs uppercase tracking-widest text-stone-500">
-                                                        Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
-                                                    </p>
+                                                    <div className="flex flex-col items-center">
+                                                        <p className="text-xs uppercase tracking-widest text-stone-500">
+                                                            Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
+                                                        </p>
+                                                        <p className="text-[10px] text-stone-400 mt-1.5 italic tracking-wide font-serif">
+                                                            {fitFeedback}
+                                                        </p>
+                                                    </div>
                                                     <button
                                                         type="button"
                                                         onClick={() => {
