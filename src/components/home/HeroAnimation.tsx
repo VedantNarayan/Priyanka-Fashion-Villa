@@ -25,15 +25,15 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
 
     useEffect(() => {
         const timers = [
-            setTimeout(() => setPhase(1), 500),   // Center card rises
-            setTimeout(() => setPhase(2), 1500),  // Cards fan out
-            setTimeout(() => setPhase(3), 2500),  // Background fades black → ivory
+            setTimeout(() => setPhase(1), 300),   // Center card rises
+            setTimeout(() => setPhase(2), 900),   // Cards fan out
+            setTimeout(() => setPhase(3), 1500),  // Background fades black → ivory
             setTimeout(() => {
                 setPhase(4);                       // Cards slide down to bottom strip
                 onCardsLanded();                   // Signal parent to mount real carousel and model display
-            }, 3500),
-            // Unmount overlay exactly at 5000ms (1.5s after landing starts, when cards have landed and real carousel is fully visible)
-            setTimeout(() => onComplete(), 5000),  
+            }, 2100),
+            // Unmount overlay exactly at 3000ms (900ms after landing starts, when cards have landed and real carousel is fully visible)
+            setTimeout(() => onComplete(), 3000),  
         ];
         return () => timers.forEach(clearTimeout);
     }, [onCardsLanded, onComplete]);
@@ -42,7 +42,7 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
 
     return (
         <div className={cn(
-            "fixed inset-0 z-40 flex flex-col items-center justify-center transition-colors duration-[1200ms] ease-out-expo",
+            "fixed inset-0 z-40 flex flex-col items-center justify-center transition-colors duration-[800ms] ease-out-expo",
             phase >= 4 ? "pointer-events-none" : "pointer-events-auto",
             phase >= 3 ? "bg-[#FAF8F5]" : "bg-[#121210]"
         )}>
@@ -50,14 +50,14 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
             <motion.div
                 initial={{ opacity: 1 }}
                 animate={{ opacity: phase >= 3 ? 0 : 1 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
             >
                 <div className="absolute top-1/4 w-full px-12 flex flex-col md:flex-row justify-between items-start md:items-center text-white gap-6 md:gap-12">
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-md font-serif italic text-lg md:text-xl text-[#C5A880] tracking-wide"
                     >
                         &ldquo;At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style.&rdquo;
@@ -65,7 +65,7 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="text-4xl md:text-6xl font-serif uppercase tracking-[0.15em] text-left md:text-right leading-tight md:leading-none text-[#FAF8F5]"
                     >
                         Designed<br className="hidden md:block" /> To Make<br /> An <span className="text-[#C5A880]">Entrance</span>
@@ -81,7 +81,7 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
                     y: phase >= 4 ? "30vh" : 0,
                 }}
                 transition={{ 
-                    duration: 1.4, 
+                    duration: 0.9, 
                     ease: [0.16, 1, 0.3, 1] 
                 }}
             >
@@ -106,9 +106,9 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
                             }}
                             transition={{
                                 type: "spring",
-                                stiffness: 55,
-                                damping: 15,
-                                mass: 0.8,
+                                stiffness: 85,
+                                damping: 16,
+                                mass: 0.7,
                             }}
                             className={cn(
                                 "absolute rounded-none overflow-hidden border flex justify-center items-end origin-bottom transition-all duration-500 bg-stone-900 border-[#C5A880]/20 shadow-[0_20px_50px_rgba(0,0,0,0.3)]",
