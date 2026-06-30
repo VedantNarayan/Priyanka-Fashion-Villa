@@ -52,7 +52,7 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                         alt="Priyanka's Fashionvilla Icon" 
                         width={96} 
                         height={80} 
-                        className="h-full w-auto object-contain hover:brightness-110 transition-all duration-300"
+                        className="h-[79px] w-auto object-contain hover:brightness-110 transition-all duration-300"
                         priority
                     />
                 </Link>
