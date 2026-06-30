@@ -14,7 +14,8 @@ export default async function AdminOrderDetailsPage({ params }: { params: Promis
         .from('orders')
         .select(`
             *,
-            profiles:user_id (email, full_name, phone)
+            profiles:user_id (email, full_name, phone),
+            items:order_items (*)
         `)
         .eq('id', id)
         .single();

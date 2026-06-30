@@ -8,11 +8,58 @@ import ProductCarousel from "@/components/home/ProductCarousel";
 import { Product } from "@/types";
 import Image from "next/image";
 
-export default function ZevanaHome({ products }: { products: Product[] }) {
+export default function ZevanaHome({ products, settings }: { products: Product[]; settings?: Record<string, any> }) {
     const [showMainContent, setShowMainContent] = useState(false); // Show carousel underneath intro
     const [introComplete, setIntroComplete] = useState(false);     // Remove HeroAnimation entirely
     const [activeIndex, setActiveIndex] = useState(Math.floor(products.length / 2));
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+    const cms = settings?.homepage_cms || {};
+    
+    // Story Banner Settings
+    const storyBadge = cms.story?.badge || "The Priyanka Fashionvilla Legacy";
+    const storyTitle = cms.story?.title || "Elegance Redefined";
+    const storyDesc = cms.story?.description || "Discover the unparalleled craftsmanship, exquisite detailing, and timeless elegance that defines every hand-woven thread in our exclusive bridal and luxury wear collections. Crafted specifically for monumental entrances.";
+    const storyImage = cms.story?.image || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop";
+    const storyCtaText = cms.story?.cta_text || "Explore Collection";
+    const storyCtaUrl = cms.story?.cta_url || "/shop";
+
+    // Newsletter Settings
+    const newsBadge = cms.newsletter?.badge || "Exclusive Invitation";
+    const newsTitle = cms.newsletter?.title || "Join The Villa";
+    const newsDesc = cms.newsletter?.description || "Subscribe to receive private invitations to our seasonal debuts, early access to new collections, and stories from our master artisans.";
+
+    // Lookbook Volumes Settings
+    const lookbooks = cms.lookbooks || [
+        {
+            title: "Fluid Geometrics",
+            subtitle: "Volume I",
+            description: "Explorations of light and shadow on pure hand-spun mulberry silk. Curated specifically for monumental arrivals.",
+            image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2670&auto=format&fit=crop",
+            link: "/shop"
+        },
+        {
+            title: "Structured Atelier",
+            subtitle: "Volume II",
+            description: "Handcrafted glass beads and zardozi embroidery stitched meticulously by master artisans.",
+            image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2576&auto=format&fit=crop",
+            link: "/shop"
+        },
+        {
+            title: "Gilded Noir",
+            subtitle: "Volume III",
+            description: "Browse velvet & satin silhouettes.",
+            image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2574&auto=format&fit=crop",
+            link: "/shop"
+        },
+        {
+            title: "Modern Heritage",
+            subtitle: "Volume IV",
+            description: "Contemporary cuts reimagining traditional silhouettes for modern occasions. Designed for effortless transitions.",
+            image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2673&auto=format&fit=crop",
+            link: "/shop"
+        }
+    ];
 
     // Phase 4: Cards have landed at the bottom — show the real carousel behind them
     const handleCardsLanded = useCallback(() => {
@@ -33,6 +80,7 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
             {!introComplete && (
                 <HeroAnimation
                     products={products}
+                    settings={settings}
                     onCardsLanded={handleCardsLanded}
                     onComplete={handleIntroComplete}
                 />
@@ -112,20 +160,20 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                                 <div className="lg:col-span-8 group relative overflow-hidden bg-obsidian border border-gold-zari/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[65vh] flex flex-col justify-end">
                                     <div className="absolute inset-0 overflow-hidden">
                                         <Image
-                                            src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2670&auto=format&fit=crop"
-                                            alt="Silk Movement Lookbook"
+                                            src={lookbooks[0]?.image || "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2670&auto=format&fit=crop"}
+                                            alt={lookbooks[0]?.title || "Silk Movement Lookbook"}
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0B]/90 via-[#0D0C0B]/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700"></div>
                                     </div>
                                     <div className="relative z-10 p-8 md:p-12 text-white max-w-xl">
-                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume I</span>
-                                        <h3 className="font-serif text-2xl md:text-3xl uppercase tracking-wider mb-4 text-alabaster">Fluid Geometrics</h3>
+                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">{lookbooks[0]?.subtitle || "Volume I"}</span>
+                                        <h3 className="font-serif text-2xl md:text-3xl uppercase tracking-wider mb-4 text-alabaster">{lookbooks[0]?.title || "Fluid Geometrics"}</h3>
                                         <p className="text-stone-300 text-xs md:text-sm leading-relaxed mb-6 font-serif italic">
-                                            Explorations of light and shadow on pure hand-spun mulberry silk. Curated specifically for monumental arrivals.
+                                            {lookbooks[0]?.description || "Explorations of light and shadow on pure hand-spun mulberry silk. Curated specifically for monumental arrivals."}
                                         </p>
-                                        <a href="/shop" className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
+                                        <a href={lookbooks[0]?.link || "/shop"} className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
                                             Shop The Silhouette
                                         </a>
                                     </div>
@@ -135,20 +183,20 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                                 <div className="lg:col-span-4 group relative overflow-hidden bg-obsidian border border-gold-zari/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[65vh] flex flex-col justify-end lg:translate-y-8">
                                     <div className="absolute inset-0 overflow-hidden">
                                         <Image
-                                            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2576&auto=format&fit=crop"
-                                            alt="Embellishments Lookbook"
+                                            src={lookbooks[1]?.image || "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2576&auto=format&fit=crop"}
+                                            alt={lookbooks[1]?.title || "Embellishments Lookbook"}
                                             fill
                                             className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0B]/90 via-[#0D0C0B]/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700"></div>
                                     </div>
                                     <div className="relative z-10 p-8 text-white">
-                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume II</span>
-                                        <h3 className="font-serif text-xl md:text-2xl uppercase tracking-wider mb-3 text-alabaster">Structured Atelier</h3>
+                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">{lookbooks[1]?.subtitle || "Volume II"}</span>
+                                        <h3 className="font-serif text-xl md:text-2xl uppercase tracking-wider mb-3 text-alabaster">{lookbooks[1]?.title || "Structured Atelier"}</h3>
                                         <p className="text-stone-300 text-xs leading-relaxed mb-6 font-serif italic">
-                                            Handcrafted glass beads and zardozi embroidery stitched meticulously by master artisans.
+                                            {lookbooks[1]?.description || "Handcrafted glass beads and zardozi embroidery stitched meticulously by master artisans."}
                                         </p>
-                                        <a href="/shop" className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
+                                        <a href={lookbooks[1]?.link || "/shop"} className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
                                             Discover Details
                                         </a>
                                     </div>
@@ -158,17 +206,17 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                                 <div className="lg:col-span-5 group relative overflow-hidden bg-obsidian border border-gold-zari/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[50vh] flex flex-col justify-end lg:-translate-y-4">
                                     <div className="absolute inset-0 overflow-hidden">
                                         <Image
-                                            src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2574&auto=format&fit=crop"
-                                            alt="Classic Glamour Lookbook"
+                                            src={lookbooks[2]?.image || "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2574&auto=format&fit=crop"}
+                                            alt={lookbooks[2]?.title || "Classic Glamour Lookbook"}
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0B]/90 via-[#0D0C0B]/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700"></div>
                                     </div>
                                     <div className="relative z-10 p-8 text-white">
-                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume III</span>
-                                        <h3 className="font-serif text-xl uppercase tracking-wider mb-3 text-alabaster">Gilded Noir</h3>
-                                        <a href="/shop" className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
+                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">{lookbooks[2]?.subtitle || "Volume III"}</span>
+                                        <h3 className="font-serif text-xl uppercase tracking-wider mb-3 text-alabaster">{lookbooks[2]?.title || "Gilded Noir"}</h3>
+                                        <a href={lookbooks[2]?.link || "/shop"} className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
                                             Browse Velvet & Satin
                                         </a>
                                     </div>
@@ -177,20 +225,20 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                                 <div className="lg:col-span-7 group relative overflow-hidden bg-obsidian border border-gold-zari/15 shadow-sm hover:shadow-2xl transition-all duration-700 h-[50vh] flex flex-col justify-end">
                                     <div className="absolute inset-0 overflow-hidden">
                                         <Image
-                                            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2673&auto=format&fit=crop"
-                                            alt="Modern Ethos Lookbook"
+                                            src={lookbooks[3]?.image || "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2673&auto=format&fit=crop"}
+                                            alt={lookbooks[3]?.title || "Modern Ethos Lookbook"}
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out-expo"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0B]/90 via-[#0D0C0B]/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700"></div>
                                     </div>
                                     <div className="relative z-10 p-8 md:p-10 text-white">
-                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">Volume IV</span>
-                                        <h3 className="font-serif text-xl md:text-2xl uppercase tracking-wider mb-3 text-alabaster">Modern Heritage</h3>
+                                        <span className="text-gold-zari text-xs uppercase tracking-[0.2em] font-semibold mb-2 block">{lookbooks[3]?.subtitle || "Volume IV"}</span>
+                                        <h3 className="font-serif text-xl md:text-2xl uppercase tracking-wider mb-3 text-alabaster">{lookbooks[3]?.title || "Modern Heritage"}</h3>
                                         <p className="text-stone-300 text-xs leading-relaxed mb-6 font-serif italic max-w-md">
-                                            Contemporary cuts reimagining traditional silhouettes for modern occasions. Designed for effortless transitions.
+                                            {lookbooks[3]?.description || "Contemporary cuts reimagining traditional silhouettes for modern occasions. Designed for effortless transitions."}
                                         </p>
-                                        <a href="/shop" className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
+                                        <a href={lookbooks[3]?.link || "/shop"} className="inline-block border-b border-gold-zari pb-1 text-xs uppercase tracking-widest text-gold-antique hover:text-white hover:border-white transition-colors font-semibold">
                                             View Collection
                                         </a>
                                     </div>
@@ -203,24 +251,24 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                     <section className="relative w-full py-32 bg-obsidian text-alabaster overflow-hidden border-y border-gold-zari/15">
                         <div className="absolute inset-0 opacity-20">
                              <Image 
-                                 src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop" 
+                                 src={storyImage} 
                                  alt="Fashion Background" 
                                  fill 
                                  className="object-cover scale-105" 
                              />
                         </div>
                         <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
-                            <span className="text-gold-zari text-xs md:text-sm uppercase tracking-[0.25em] block mb-4 font-semibold">The Priyanka Fashionvilla Legacy</span>
-                            <h2 className="text-3xl md:text-5xl font-serif mb-6 uppercase tracking-widest text-alabaster">Elegance Redefined</h2>
+                            <span className="text-gold-zari text-xs md:text-sm uppercase tracking-[0.25em] block mb-4 font-semibold">{storyBadge}</span>
+                            <h2 className="text-3xl md:text-5xl font-serif mb-6 uppercase tracking-widest text-alabaster">{storyTitle}</h2>
                             <div className="w-12 h-[1px] bg-gold-zari mx-auto mb-6"></div>
                             <p className="text-base md:text-lg text-stone-300 mb-10 font-serif italic max-w-2xl mx-auto leading-relaxed">
-                                &ldquo;Discover the unparalleled craftsmanship, exquisite detailing, and timeless elegance that defines every hand-woven thread in our exclusive bridal and luxury wear collections. Crafted specifically for monumental entrances.&rdquo;
+                                &ldquo;{storyDesc}&rdquo;
                             </p>
                             <a 
-                                href="/shop" 
+                                href={storyCtaUrl} 
                                 className="inline-block border border-gold-zari px-10 py-4 uppercase tracking-[0.2em] text-xs font-semibold text-alabaster hover:bg-gold-zari hover:text-obsidian transition-all duration-500"
                             >
-                                Explore Collection
+                                {storyCtaText}
                             </a>
                         </div>
                     </section>
@@ -229,11 +277,11 @@ export default function ZevanaHome({ products }: { products: Product[] }) {
                     <section className="py-32 px-6 text-center bg-alabaster relative overflow-hidden border-t border-gold-zari/15">
                         <div className="max-w-2xl mx-auto p-8 md:p-16 border border-gold-zari/30 bg-silk-ivory relative">
                             <div className="absolute inset-1 border border-gold-zari/10 pointer-events-none"></div>
-                            <span className="text-gold-zari text-xs uppercase tracking-[0.3em] block mb-3 font-semibold">Exclusive Invitation</span>
-                            <h2 className="text-3xl md:text-4xl font-serif mb-4 text-obsidian tracking-wide uppercase">Join The Villa</h2>
+                            <span className="text-gold-zari text-xs uppercase tracking-[0.3em] block mb-3 font-semibold">{newsBadge}</span>
+                            <h2 className="text-3xl md:text-4xl font-serif mb-4 text-obsidian tracking-wide uppercase">{newsTitle}</h2>
                             <div className="w-12 h-[1px] bg-gold-zari mx-auto mb-6"></div>
                             <p className="text-rose-ash/70 mb-10 max-w-md mx-auto font-serif italic text-sm md:text-base leading-relaxed">
-                                Subscribe to receive private invitations to our seasonal debuts, early access to new collections, and stories from our master artisans.
+                                {newsDesc}
                             </p>
                             <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
                                 <input 

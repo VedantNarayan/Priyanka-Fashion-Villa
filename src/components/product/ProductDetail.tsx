@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
-import { ArrowLeft, Star, ShoppingBag, Truck, ShieldCheck, Heart } from "lucide-react";
+import { ArrowLeft, Star, ShoppingBag, Truck, ShieldCheck, Heart, X } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Product } from "@/types";
@@ -16,6 +16,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     // Default to first option if available
     const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || "M");
     const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || "Default");
+    const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
 
     const handleAddToCart = () => {
         addItem({
@@ -135,7 +136,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                             <div>
                                 <div className="flex justify-between items-center mb-3">
                                     <span className="block text-[10px] uppercase tracking-widest font-semibold text-gold-zari">Size: <span className="text-obsidian font-bold">{selectedSize}</span></span>
-                                    <button className="text-[10px] uppercase tracking-widest underline text-stone-400 hover:text-obsidian font-semibold">Size Guide</button>
+                                    <button onClick={() => setIsSizeGuideOpen(true)} className="text-[10px] uppercase tracking-widest underline text-stone-400 hover:text-obsidian font-semibold">Size Guide</button>
                                 </div>
                                 <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
                                     {product.sizes.map((size) => (
@@ -249,6 +250,53 @@ export default function ProductDetail({ product }: { product: Product }) {
                 </div>
 
             </div>
+
+            {/* Size Guide Modal Overlay */}
+            {isSizeGuideOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/60 backdrop-blur-sm p-4 text-left">
+                    <div className="bg-silk-ivory border border-gold-zari/30 max-w-lg w-full p-6 md:p-8 relative shadow-2xl rounded-none">
+                        <button
+                            onClick={() => setIsSizeGuideOpen(false)}
+                            className="absolute top-4 right-4 text-gold-zari hover:text-burgundy transition-colors p-1"
+                        >
+                            <X size={20} />
+                        </button>
+                        
+                        <h2 className="font-serif text-2xl uppercase tracking-wider text-obsidian mb-2">Atelier Sizing Guide</h2>
+                        <div className="w-12 h-[1px] bg-gold-zari mb-5"></div>
+                        
+                        <p className="text-xs text-rose-ash/80 mb-6 leading-relaxed">
+                            Our standard luxury evening and bridal silhouettes are tailored to drape gracefully. Review our dimensions table to select your perfect fit.
+                        </p>
+                        
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr className="border-b border-gold-zari/25 text-gold-zari uppercase tracking-widest text-[9px]">
+                                        <th className="py-2.5 font-semibold">Size</th>
+                                        <th className="py-2.5 font-semibold">Bust (in)</th>
+                                        <th className="py-2.5 font-semibold">Waist (in)</th>
+                                        <th className="py-2.5 font-semibold">Hips (in)</th>
+                                        <th className="py-2.5 font-semibold">Length (in)</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gold-zari/10 text-rose-ash font-medium">
+                                    <tr><td className="py-2.5 font-bold text-burgundy">XS</td><td className="py-2.5">32</td><td className="py-2.5">24</td><td className="py-2.5">34</td><td className="py-2.5">54</td></tr>
+                                    <tr><td className="py-2.5 font-bold text-burgundy">S</td><td className="py-2.5">34</td><td className="py-2.5">26</td><td className="py-2.5">36</td><td className="py-2.5">55</td></tr>
+                                    <tr><td className="py-2.5 font-bold text-burgundy">M</td><td className="py-2.5">36</td><td className="py-2.5">28</td><td className="py-2.5">38</td><td className="py-2.5">56</td></tr>
+                                    <tr><td className="py-2.5 font-bold text-burgundy">L</td><td className="py-2.5">38</td><td className="py-2.5">30</td><td className="py-2.5">40</td><td className="py-2.5">57</td></tr>
+                                    <tr><td className="py-2.5 font-bold text-burgundy">XL</td><td className="py-2.5">40</td><td className="py-2.5">32</td><td className="py-2.5">42</td><td className="py-2.5">58</td></tr>
+                                    <tr><td className="py-2.5 font-bold text-burgundy">XXL</td><td className="py-2.5">42</td><td className="py-2.5">34</td><td className="py-2.5">44</td><td className="py-2.5">59</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <p className="text-[10px] text-stone-400 mt-6 italic">
+                            * Custom tailors are available for bridal orders. Please contact customer concierge via WhatsApp for exact custom adjustments.
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

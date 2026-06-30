@@ -64,3 +64,23 @@ export async function getProduct(id: string): Promise<Product | undefined> {
         return mockProducts.find(p => p.id === id);
     }
 }
+
+export async function getAdminSettings(): Promise<Record<string, any>> {
+    const supabase = await createClient();
+    try {
+        const { data, error } = await supabase.from('admin_settings').select('*');
+        if (error || !data) return {};
+        const map: Record<string, any> = {};
+        data.forEach(s => {
+            try {
+                map[s.key] = typeof s.value === 'string' ? JSON.parse(s.value) : s.value;
+            } catch (e) {
+                map[s.key] = s.value;
+            }
+        });
+        return map;
+    } catch (e) {
+        console.error("Failed to fetch settings", e);
+        return {};
+    }
+}

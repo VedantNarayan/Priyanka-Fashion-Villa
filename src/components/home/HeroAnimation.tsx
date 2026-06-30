@@ -6,13 +6,21 @@ import { cn } from "@/lib/utils";
 
 interface HeroAnimationProps {
     products: Product[];
+    settings?: Record<string, any>;
     onCardsLanded: () => void;   // Fires when cards are ready and frames fade out
     onComplete: () => void;       // Fires after fade-out completes to unmount
 }
 
-export default function HeroAnimation({ products, onCardsLanded, onComplete }: HeroAnimationProps) {
+export default function HeroAnimation({ products, settings, onCardsLanded, onComplete }: HeroAnimationProps) {
     const [phase, setPhase] = useState(0);
     const [carouselSpacing, setCarouselSpacing] = useState(288);
+
+    const cms = settings?.homepage_cms || {};
+    const heroQuote = cms.hero?.quote || "At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style.";
+    const heroTitle1 = cms.hero?.title1 || "Designed";
+    const heroTitle2 = cms.hero?.title2 || "To Make";
+    const heroTitle3 = cms.hero?.title3 || "An Entrance";
+    const heroTitleAccent = cms.hero?.titleAccent || "Entrance";
 
     useEffect(() => {
         const handleResize = () => {
@@ -60,7 +68,7 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
                         transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-md font-serif italic text-lg md:text-xl text-gold-zari tracking-wide"
                     >
-                        &ldquo;At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style.&rdquo;
+                        &ldquo;{heroQuote}&rdquo;
                     </motion.p>
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
@@ -68,7 +76,7 @@ export default function HeroAnimation({ products, onCardsLanded, onComplete }: H
                         transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="text-4xl md:text-6xl font-serif uppercase tracking-[0.15em] text-left md:text-right leading-tight md:leading-none text-alabaster"
                     >
-                        Designed<br className="hidden md:block" /> To Make<br /> An <span className="text-gold-antique">Entrance</span>
+                        {heroTitle1}<br className="hidden md:block" /> {heroTitle2}<br /> {heroTitle3.includes(heroTitleAccent) ? heroTitle3.replace(heroTitleAccent, "") : heroTitle3} <span className="text-gold-antique">{heroTitleAccent}</span>
                     </motion.h1>
                 </div>
             </motion.div>

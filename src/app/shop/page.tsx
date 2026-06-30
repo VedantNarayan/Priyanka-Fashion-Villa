@@ -25,9 +25,35 @@ export default function ShopPage() {
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
     const [showFilterPanel, setShowFilterPanel] = useState(false);
+    const [shopCms, setShopCms] = useState<any>({
+        banner_image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop",
+        banner_badge: "The Collections",
+        banner_title: "Shop Boutique",
+        banner_desc: "Explore our handcrafted bridal, evening, and luxury fusion collections designed to leave a lasting trace.",
+        categories: ["All", "Evening Wear", "Cocktail", "Gala", "Prom", "Party", "Casual"]
+    });
     const supabase = createClient();
 
     useEffect(() => { fetchProducts(); }, [category, sort]);
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+            const { data } = await supabase
+                .from('admin_settings')
+                .select('*')
+                .eq('key', 'shop_cms')
+                .single();
+            if (data && data.value) {
+                try {
+                    const val = typeof data.value === 'string' ? JSON.parse(data.value) : data.value;
+                    setShopCms((prev: any) => ({ ...prev, ...val }));
+                } catch (e) {
+                    console.error("Failed to parse shop settings", e);
+                }
+            }
+        };
+        fetchSettings();
+    }, []);
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -88,17 +114,17 @@ export default function ShopPage() {
             <div className="bg-obsidian text-alabaster py-24 text-center border-b border-gold-zari/15 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-15">
                      <img
-                         src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2670&auto=format&fit=crop"
+                         src={shopCms.banner_image}
                          alt="Luxury Background"
                          className="w-full h-full object-cover"
                      />
                 </div>
                 <div className="relative z-10 max-w-2xl mx-auto px-4">
-                    <span className="text-gold-zari text-xs uppercase tracking-[0.25em] block mb-3 font-semibold">The Collections</span>
-                    <h1 className="font-serif text-4xl md:text-5xl mb-4 uppercase tracking-widest text-alabaster">Shop Boutique</h1>
+                    <span className="text-gold-zari text-xs uppercase tracking-[0.25em] block mb-3 font-semibold">{shopCms.banner_badge}</span>
+                    <h1 className="font-serif text-4xl md:text-5xl mb-4 uppercase tracking-widest text-alabaster">{shopCms.banner_title}</h1>
                     <div className="w-12 h-[1px] bg-gold-zari mx-auto mb-4"></div>
                     <p className="text-stone-400 font-serif italic text-sm md:text-base leading-relaxed">
-                        Explore our handcrafted bridal, evening, and luxury fusion collections designed to leave a lasting trace.
+                        {shopCms.banner_desc}
                     </p>
                 </div>
             </div>
@@ -108,7 +134,7 @@ export default function ShopPage() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                     {/* Category pills */}
                     <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide flex-1 w-full">
-                        {CATEGORIES.map(cat => (
+                        {(shopCms.categories || CATEGORIES).map((cat: string) => (
                             <button
                                 key={cat}
                                 onClick={() => setCategory(cat)}

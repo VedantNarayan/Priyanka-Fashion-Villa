@@ -64,8 +64,6 @@ export const useWishlistStore = create<WishlistState>()(
                 
                 if (user && user.user_metadata?.wishlist) {
                     set({ items: user.user_metadata.wishlist });
-                } else if (!user) {
-                    set({ items: [] });
                 }
             },
             clearWishlist: () => set({ items: [] })

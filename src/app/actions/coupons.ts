@@ -75,8 +75,7 @@ export async function validateCoupon(code: string, orderAmount: number) {
         // Since we are checking from server-side action, we can search using pg or standard query
         const { data: referee, error: refError } = await supabase
             .from("profiles")
-            .select("id, email")
-            .limit(5); // Get active profiles to search in memory to avoid UUID casting errors in postgrest
+            .select("id");
             
         const matchingReferee = referee?.find(r => r.id.replace(/-/g, "").toUpperCase().startsWith(partialId));
 
