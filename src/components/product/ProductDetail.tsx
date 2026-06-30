@@ -369,7 +369,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
                 return (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/60 backdrop-blur-sm p-4 text-left">
-                    <div className="bg-silk-ivory border border-gold-zari/30 max-w-lg w-full p-6 md:p-8 relative shadow-2xl rounded-none">
+                    <div className="bg-silk-ivory border border-gold-zari/30 max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-none">
                         <button
                             onClick={() => { setIsSizeGuideOpen(false); setRecommendedSize(null); setFinderStep('main'); }}
                             className="absolute top-4 right-4 text-gold-zari hover:text-burgundy transition-colors p-1"
@@ -451,38 +451,10 @@ export default function ProductDetail({ product }: { product: Product }) {
 
                                 <div className="mt-8 border-t border-gold-zari/15 pt-6">
                                     <h3 className="text-[10px] font-semibold text-obsidian uppercase tracking-widest mb-4 font-serif">Product Measurements</h3>
-                                    <div className="flex flex-col md:flex-row gap-6 items-start">
-                                        {/* Left: How to measure text list */}
-                                        <div className="flex-1 space-y-3.5 text-[10px] text-stone-500 font-serif leading-relaxed">
-                                            <p className="font-bold text-obsidian uppercase tracking-wider text-[9px] mb-1">How to measure the product's size?</p>
-                                            <div>
-                                                <span className="font-semibold text-burgundy tracking-wider">1. SHOULDER</span>
-                                                <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the sleeve from one side to the other side.</p>
-                                            </div>
-                                            <div>
-                                                <span className="font-semibold text-burgundy tracking-wider">2. BUST</span>
-                                                <p className="text-stone-400 mt-0.5">Measure from the stitches below the armpits from one side to the other.</p>
-                                            </div>
-                                            <div>
-                                                <span className="font-semibold text-burgundy tracking-wider">3. WAIST</span>
-                                                <p className="text-stone-400 mt-0.5">Measure straight across the narrowest waistline from edge to edge.</p>
-                                            </div>
-                                            <div>
-                                                <span className="font-semibold text-burgundy tracking-wider">4. HIPS</span>
-                                                <p className="text-stone-400 mt-0.5">Measure straight across the widest hip line from edge to edge.</p>
-                                            </div>
-                                            <div>
-                                                <span className="font-semibold text-burgundy tracking-wider">5. LENGTH</span>
-                                                <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the collar to the hem.</p>
-                                            </div>
-                                            <div>
-                                                <span className="font-semibold text-burgundy tracking-wider">6. SLEEVES</span>
-                                                <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the sleeve to the cuff.</p>
-                                            </div>
-                                        </div>
-                                        
-                                        {/* Right: Elegant Shirt SVG with annotations */}
-                                        <div className="w-32 h-32 md:w-36 md:h-36 flex-shrink-0 flex items-center justify-center bg-stone-50/50 border border-gold-zari/10 p-2 relative self-center md:self-start">
+                                    
+                                    <div className="flex flex-col items-center gap-6">
+                                        {/* Shirt SVG: Centered and properly sized */}
+                                        <div className="w-40 h-40 md:w-44 md:h-44 flex items-center justify-center bg-stone-50/50 border border-gold-zari/10 p-3 relative">
                                             <svg viewBox="0 0 120 120" className="w-full h-full text-stone-400" fill="none" stroke="currentColor" strokeWidth="1.2">
                                                 {/* Long sleeve shirt outline */}
                                                 <path d="M 30,30 L 40,25 L 48,27 C 55,25 65,25 72,27 L 80,25 L 90,30 L 105,65 L 95,68 L 85,45 L 85,100 L 35,100 L 35,45 L 25,68 L 15,65 Z" fill="#FAF8F5" stroke="#475569" strokeWidth="1.2" />
@@ -532,6 +504,37 @@ export default function ProductDetail({ product }: { product: Product }) {
                                                 <circle cx="91" cy="42.5" r="5" fill="white" stroke="#d97706" strokeWidth="1" />
                                                 <text x="91" y="45" fontSize="7" textAnchor="middle" fill="#d97706" fontWeight="bold">6</text>
                                             </svg>
+                                        </div>
+
+                                        {/* Below: Sizing Descriptions in a 2-Column Grid */}
+                                        <div className="w-full">
+                                            <p className="font-bold text-obsidian uppercase tracking-wider text-[9px] mb-4 text-center">How to measure the product's size?</p>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-[10px] text-stone-500 font-serif leading-relaxed">
+                                                <div>
+                                                    <span className="font-semibold text-burgundy tracking-wider">1. SHOULDER</span>
+                                                    <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the sleeve from one side to the other side.</p>
+                                                </div>
+                                                <div>
+                                                    <span className="font-semibold text-burgundy tracking-wider">2. BUST</span>
+                                                    <p className="text-stone-400 mt-0.5">Measure from the stitches below the armpits from one side to the other.</p>
+                                                </div>
+                                                <div>
+                                                    <span className="font-semibold text-burgundy tracking-wider">3. WAIST</span>
+                                                    <p className="text-stone-400 mt-0.5">Measure straight across the narrowest waistline from edge to edge.</p>
+                                                </div>
+                                                <div>
+                                                    <span className="font-semibold text-burgundy tracking-wider">4. HIPS</span>
+                                                    <p className="text-stone-400 mt-0.5">Measure straight across the widest hip line from edge to edge.</p>
+                                                </div>
+                                                <div>
+                                                    <span className="font-semibold text-burgundy tracking-wider">5. LENGTH</span>
+                                                    <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the collar to the hem.</p>
+                                                </div>
+                                                <div>
+                                                    <span className="font-semibold text-burgundy tracking-wider">6. SLEEVES</span>
+                                                    <p className="text-stone-400 mt-0.5">Measure from where the shoulder seam meets the sleeve to the cuff.</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
