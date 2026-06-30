@@ -25,7 +25,7 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
     if (!show) return null;
 
     return (
-        <div className="absolute top-0 left-0 w-full h-[60vh] z-10 flex items-end justify-center pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-[60vh] z-10 flex items-end justify-center pointer-events-none overflow-hidden">
             <div className="relative w-full max-w-[1200px] h-full flex justify-center items-end">
                 {products.map((product, idx) => {
                     const offset = idx - activeIndex;
@@ -48,12 +48,7 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
                                 damping: 22,
                                 mass: 0.6,
                             }}
-                            className={cn(
-                                "absolute bottom-0 flex justify-center items-end origin-bottom w-[200px] md:w-[280px] transition-all duration-500",
-                                isCenter 
-                                    ? "h-[75vh] md:h-[82.5vh]" 
-                                    : "h-[50vh] md:h-[55vh]"
-                            )}
+                            className="absolute bottom-0 flex justify-center items-end origin-bottom h-[50vh] md:h-[55vh] w-[200px] md:w-[280px]"
                         >
                             <div className="relative w-full h-full">
                                 <Image
