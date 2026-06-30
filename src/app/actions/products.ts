@@ -251,65 +251,13 @@ export async function uploadProductImageWithBgRemoval(
     }
 
     const file = formData.get("file") as File;
-    const imageIndex = formData.get("imageIndex") as string;
 
     if (!file || file.size === 0) return { url: null, bgRemoved: false };
 
     const ext = file.name.split(".").pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
 
-    // Attempt background removal for first two images if API key is available
-    if ((imageIndex === "0" || imageIndex === "1") && process.env.GEMINI_API_KEY) {
-        try {
-            const arrayBuffer = await file.arrayBuffer();
-            const base64 = Buffer.from(arrayBuffer).toString("base64");
-            const fileMimeType = file.type || `image/${ext}`;
-
-            const result = await removeImageBackground(base64, fileMimeType);
-
-            if (result.success) {
-                const processedBuffer = Buffer.from(result.base64, "base64");
-                const processedExt = result.mimeType.split("/").pop() || ext;
-                const processedFileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${processedExt}`;
-
-                const { error: uploadError } = await supabase.storage
-                    .from("product-images")
-                    .upload(processedFileName, processedBuffer, {
-                        contentType: result.mimeType,
-                    });
-
-                if (uploadError) {
-                    console.error("Upload error (processed):", uploadError);
-                    return { url: null, bgRemoved: false };
-                }
-
-                const {
-                    data: { publicUrl },
-                } = supabase.storage
-                    .from("product-images")
-                    .getPublicUrl(processedFileName);
-
-                // Log the usage to bg_removal_log table
-                try {
-                    await supabase.from("bg_removal_log").insert({
-                        image_index: parseInt(imageIndex),
-                        status: "success",
-                        model_used: "gemini-2.5-flash-image",
-                        input_bytes: arrayBuffer.byteLength,
-                        output_bytes: processedBuffer.byteLength,
-                    });
-                } catch (logError) {
-                    // Silently catch — table may not exist yet
-                }
-
-                return { url: publicUrl, bgRemoved: true };
-            }
-        } catch (error) {
-            console.warn("Background removal pipeline failed, falling back to original:", error);
-        }
-    }
-
-    // Fallback: upload original file directly (same as existing uploadProductImage)
+    // Always upload the original image as-is (no automatic BG removal)
     const { error } = await supabase.storage
         .from("product-images")
         .upload(fileName, file);
@@ -324,4 +272,79 @@ export async function uploadProductImageWithBgRemoval(
     } = supabase.storage.from("product-images").getPublicUrl(fileName);
 
     return { url: publicUrl, bgRemoved: false };
+}
+
+// On-demand BG removal: admin triggers this per-image via a button
+export async function removeBgForImageUrl(
+    imageUrl: string
+): Promise<{ url: string | null; success: boolean }> {
+    const supabase = await createClient();
+    try {
+        await verifyAdmin(supabase);
+    } catch (e) {
+        return { url: null, success: false };
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        return { url: null, success: false };
+    }
+
+    try {
+        // Download the image from its public URL
+        const response = await fetch(imageUrl);
+        if (!response.ok) {
+            console.warn("Failed to fetch image for BG removal:", response.statusText);
+            return { url: null, success: false };
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const contentType = response.headers.get("content-type") || "image/png";
+        const base64 = Buffer.from(arrayBuffer).toString("base64");
+
+        const result = await removeImageBackground(base64, contentType);
+
+        if (!result.success) {
+            return { url: null, success: false };
+        }
+
+        const processedBuffer = Buffer.from(result.base64, "base64");
+        const processedExt = result.mimeType.split("/").pop() || "png";
+        const processedFileName = `${Date.now()}-bg-removed-${Math.random().toString(36).substring(7)}.${processedExt}`;
+
+        const { error: uploadError } = await supabase.storage
+            .from("product-images")
+            .upload(processedFileName, processedBuffer, {
+                contentType: result.mimeType,
+            });
+
+        if (uploadError) {
+            console.error("Upload error (bg-removed):", uploadError);
+            return { url: null, success: false };
+        }
+
+        const {
+            data: { publicUrl },
+        } = supabase.storage
+            .from("product-images")
+            .getPublicUrl(processedFileName);
+
+        // Log usage
+        try {
+            await supabase.from("bg_removal_log").insert({
+                image_index: 0,
+                status: "success",
+                model_used: "gemini-2.5-flash-image",
+                input_bytes: arrayBuffer.byteLength,
+                output_bytes: processedBuffer.byteLength,
+            });
+        } catch (logError) {
+            // Silently catch — table may not exist yet
+        }
+
+        return { url: publicUrl, success: true };
+    } catch (error) {
+        console.warn("On-demand BG removal failed:", error);
+        return { url: null, success: false };
+    }
 }

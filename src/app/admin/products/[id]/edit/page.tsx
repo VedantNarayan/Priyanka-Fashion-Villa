@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { updateProduct, uploadProductImageWithBgRemoval, uploadProductImage } from "@/app/actions/products";
+import { updateProduct, uploadProductImageWithBgRemoval, removeBgForImageUrl } from "@/app/actions/products";
 import { getBgRemovalStats } from "@/app/actions/bg-removal-stats";
 import { ArrowLeft, Loader2, Upload, X, Sparkles, Ruler, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -84,34 +84,40 @@ export default function EditProductPage() {
         setLoading(false);
     };
 
+    const [removingBgIndex, setRemovingBgIndex] = useState(-1);
+
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        const currentIndex = images.length;
         setUploading(true);
-        setUploadingIndex(currentIndex);
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("imageIndex", String(currentIndex));
 
         try {
             const result = await uploadProductImageWithBgRemoval(formData);
             if (result.url) {
                 setImages(prev => [...prev, result.url!]);
-                setBgRemovedFlags(prev => [...prev, result.bgRemoved]);
-                if (result.bgRemoved) {
-                    getBgRemovalStats().then(setBgStats).catch(() => {});
-                }
-            }
-        } catch {
-            const url = await uploadProductImage(formData);
-            if (url) {
-                setImages(prev => [...prev, url]);
                 setBgRemovedFlags(prev => [...prev, false]);
             }
+        } catch {
+            // silently fail
         }
         setUploading(false);
-        setUploadingIndex(-1);
+    };
+
+    const handleRemoveBg = async (index: number) => {
+        setRemovingBgIndex(index);
+        try {
+            const result = await removeBgForImageUrl(images[index]);
+            if (result.success && result.url) {
+                setImages(prev => prev.map((u, i) => i === index ? result.url! : u));
+                setBgRemovedFlags(prev => prev.map((f, i) => i === index ? true : f));
+                getBgRemovalStats().then(setBgStats).catch(() => {});
+            }
+        } catch {
+            // silently fail
+        }
+        setRemovingBgIndex(-1);
     };
 
     const removeImage = (index: number) => {
@@ -213,7 +219,7 @@ export default function EditProductPage() {
                     <label className="block text-xs uppercase tracking-wider text-stone-500 mb-2">Product Images</label>
                     <div className="flex items-center gap-2 mb-2">
                         <Sparkles size={14} className="text-amber-500" />
-                        <p className="text-xs text-stone-500">First 2 images get <strong className="text-amber-600">AI background removal</strong>. Remaining upload as-is.</p>
+                        <p className="text-xs text-stone-500">Upload images as-is. Use the <strong className="text-amber-600">✨ button</strong> on each image to remove background on demand.</p>
                     </div>
 
                     {/* BG Removal Usage Counter */}
@@ -261,10 +267,21 @@ export default function EditProductPage() {
                                 </button>
                                 {i === 0 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5">Card</span>}
                                 {i === 1 && <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center py-0.5">Model</span>}
-                                {bgRemovedFlags[i] && (
+                                {bgRemovedFlags[i] ? (
                                     <span className="absolute top-1 left-1 bg-amber-500 text-white text-[8px] px-1 py-0.5 rounded-sm flex items-center gap-0.5">
                                         <Sparkles size={8} /> BG
                                     </span>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveBg(i)}
+                                        disabled={removingBgIndex !== -1}
+                                        className="absolute top-1 left-1 bg-amber-500/90 hover:bg-amber-600 text-white text-[8px] px-1.5 py-1 rounded-sm items-center gap-0.5 hidden group-hover:flex disabled:opacity-50 cursor-pointer transition-colors"
+                                        title="Remove background"
+                                    >
+                                        {removingBgIndex === i ? <Loader2 size={8} className="animate-spin" /> : <Sparkles size={8} />}
+                                        {removingBgIndex === i ? 'Removing...' : 'Remove BG'}
+                                    </button>
                                 )}
                             </div>
                         ))}
@@ -273,7 +290,7 @@ export default function EditProductPage() {
                             {uploading ? (
                                 <div className="text-center">
                                     <Loader2 className="animate-spin text-stone-400 mx-auto" size={20} />
-                                    {uploadingIndex < 2 && <span className="text-[8px] text-amber-500 mt-1 block">Removing BG...</span>}
+                                    <span className="text-[8px] text-stone-400 mt-1 block">Uploading...</span>
                                 </div>
                             ) : (
                                 <>
