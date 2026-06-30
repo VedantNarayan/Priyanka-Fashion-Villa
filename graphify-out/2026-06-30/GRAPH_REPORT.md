@@ -1,16 +1,16 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-30)
 
 ## Corpus Check
-- 104 files · ~69,046 words
+- 104 files · ~71,841 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 439 nodes · 705 edges · 44 communities (30 shown, 14 thin omitted)
+- 440 nodes · 714 edges · 41 communities (27 shown, 14 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8df514a6`
+- Built from commit: `8f081248`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,9 +23,7 @@
 - [[_COMMUNITY_Community 5|Community 5]]
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
-- [[_COMMUNITY_Community 8|Community 8]]
 - [[_COMMUNITY_Community 9|Community 9]]
-- [[_COMMUNITY_Community 10|Community 10]]
 - [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
 - [[_COMMUNITY_Community 13|Community 13]]
@@ -59,37 +57,37 @@
 10. `Product` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `AboutPage()` --calls--> `getAdminSettings()`  [EXTRACTED]
+  src/app/about/page.tsx → src/lib/db.ts
+- `PoliciesPage()` --calls--> `getAdminSettings()`  [EXTRACTED]
+  src/app/policies/page.tsx → src/lib/db.ts
+- `HeroAnimationProps` --references--> `Product`  [EXTRACTED]
+  src/components/home/HeroAnimation.tsx → src/types/index.ts
 - `HeroAnimation()` --calls--> `cn()`  [EXTRACTED]
   src/components/home/HeroAnimation.tsx → src/lib/utils.ts
-- `ProductCard()` --calls--> `cn()`  [EXTRACTED]
-  src/components/ui/ProductCard.tsx → src/lib/utils.ts
-- `CheckoutPage()` --calls--> `useCartStore`  [EXTRACTED]
-  src/app/checkout/page.tsx → src/store/cart.ts
-- `Home()` --calls--> `getProducts()`  [EXTRACTED]
-  src/app/page.tsx → src/lib/db.ts
-- `generateMetadata()` --calls--> `getProduct()`  [INFERRED]
-  src/app/product/[id]/page.tsx → src/lib/db.ts
+- `Footer()` --calls--> `getAdminSettings()`  [EXTRACTED]
+  src/components/layout/Footer.tsx → src/lib/db.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (44 total, 14 thin omitted)
+## Communities (41 total, 14 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.08
-Nodes (22): getProductReviews(), submitReview(), AdminExportAndInsightsProps, CartCount(), CartDrawer(), CheckoutPage(), Hero(), Header() (+14 more)
+Cohesion: 0.12
+Nodes (21): getProductReviews(), submitReview(), CartCount(), CartDrawer(), CheckoutPage(), Hero(), HeroAnimation(), Header() (+13 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.07
-Nodes (28): Home(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarouselProps, generateMetadata(), ProductPage(), products (+20 more)
+Nodes (30): AboutPage(), Home(), HeroAnimationProps, ModelDisplayProps, ProductCarouselProps, generateMetadata(), ProductPage(), Footer() (+22 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.05
+Cohesion: 0.06
 Nodes (18): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), deleteOrder(), updateOrderStatus(), updateTrackingNumber(), AnalyticsProps (+10 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.06
-Nodes (33): dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next, otpauth (+25 more)
+Cohesion: 0.07
+Nodes (25): dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next, otpauth (+17 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.23
@@ -100,32 +98,24 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.18
-Nodes (10): eslintConfig, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+2 more)
+Cohesion: 0.10
+Nodes (18): eslintConfig, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+10 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.22
-Nodes (5): addProduct(), deleteProduct(), updateProduct(), uploadProductImage(), initialState
-
-### Community 8 - "Community 8"
-Cohesion: 0.32
-Nodes (3): createReturn(), updateReturnStatus(), STATUS_STEPS
+Cohesion: 0.07
+Nodes (14): createCoupon(), deleteCoupon(), toggleCoupon(), addProduct(), deleteProduct(), updateProduct(), uploadProductImage(), createReturn() (+6 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.22
 Nodes (8): background_color, description, display, icons, name, short_name, start_url, theme_color
 
-### Community 10 - "Community 10"
-Cohesion: 0.43
-Nodes (3): createCoupon(), deleteCoupon(), toggleCoupon()
-
 ### Community 11 - "Community 11"
-Cohesion: 0.18
+Cohesion: 0.22
 Nodes (3): inter, metadata, playfair
 
 ### Community 12 - "Community 12"
-Cohesion: 0.10
-Nodes (6): a, get(), h(), k(), O(), z()
+Cohesion: 0.08
+Nodes (6): a, F, get(), h(), k(), z()
 
 ### Community 15 - "Community 15"
 Cohesion: 0.40
@@ -136,11 +126,11 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 42 - "Community 42"
-Cohesion: 0.08
-Nodes (18): $(), b(), deleteCacheAndMetadata(), et, F, G, i, j() (+10 more)
+Cohesion: 0.10
+Nodes (18): $(), b(), deleteCacheAndMetadata(), et, G, i, j(), m() (+10 more)
 
 ## Knowledge Gaps
-- **119 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+114 more)
+- **119 isolated node(s):** `CATEGORIES`, `SORT_OPTIONS`, `WishlistItem`, `WishlistState`, `eslintConfig` (+114 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -148,16 +138,16 @@ Nodes (18): $(), b(), deleteCacheAndMetadata(), et, F, G, i, j() (+10 more)
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `sendOrderNotification()` connect `Community 2` to `Community 42`?**
-  _High betweenness centrality (0.189) - this node is a cross-community bridge._
-- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 8`, `Community 10`?**
-  _High betweenness centrality (0.133) - this node is a cross-community bridge._
+  _High betweenness centrality (0.191) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`?**
+  _High betweenness centrality (0.139) - this node is a cross-community bridge._
 - **Why does `$()` connect `Community 42` to `Community 12`?**
-  _High betweenness centrality (0.087) - this node is a cross-community bridge._
-- **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
+  _High betweenness centrality (0.088) - this node is a cross-community bridge._
+- **What connects `CATEGORIES`, `SORT_OPTIONS`, `WishlistItem` to the rest of the system?**
   _119 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.08295625942684766 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12436974789915967 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07215541165587419 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06862745098039216 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.054098360655737705 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.055523085914669784 - nodes in this community are weakly interconnected._

@@ -1,16 +1,16 @@
 # Graph Report - Priyanka Fashionvilla  (2026-06-30)
 
 ## Corpus Check
-- 104 files · ~71,841 words
+- 107 files · ~74,814 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 440 nodes · 717 edges · 43 communities (29 shown, 14 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.81)
+- 449 nodes · 737 edges · 42 communities (28 shown, 14 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 22 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b1a52643`
+- Built from commit: `8f081248`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -33,7 +33,6 @@
 - [[_COMMUNITY_Community 15|Community 15]]
 - [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Community 17|Community 17]]
-- [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 25|Community 25]]
@@ -50,7 +49,7 @@
 ## God Nodes (most connected - your core abstractions)
 1. `$()` - 30 edges
 2. `createClient()` - 26 edges
-3. `createClient()` - 24 edges
+3. `createClient()` - 26 edges
 4. `cn()` - 19 edges
 5. `a` - 18 edges
 6. `compilerOptions` - 16 edges
@@ -74,19 +73,19 @@
 ## Import Cycles
 - None detected.
 
-## Communities (43 total, 14 thin omitted)
+## Communities (42 total, 14 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
 Nodes (22): getProductReviews(), submitReview(), AdminExportAndInsightsProps, CartCount(), CartDrawer(), CheckoutPage(), Hero(), Header() (+14 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.08
-Nodes (21): HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarouselProps, products, CATEGORIES, SORT_OPTIONS, Address (+13 more)
+Cohesion: 0.06
+Nodes (32): AboutPage(), Home(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarouselProps, generateMetadata(), ProductPage() (+24 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.05
-Nodes (18): grantAdminRights(), createCoupon(), deleteCoupon(), toggleCoupon(), deleteOrder(), updateOrderStatus(), updateTrackingNumber(), AnalyticsProps (+10 more)
+Cohesion: 0.07
+Nodes (10): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), createCoupon(), deleteCoupon(), toggleCoupon(), AnalyticsProps (+2 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.07
@@ -105,20 +104,20 @@ Cohesion: 0.10
 Nodes (18): eslintConfig, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+10 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.22
-Nodes (5): addProduct(), deleteProduct(), updateProduct(), uploadProductImage(), initialState
+Cohesion: 0.15
+Nodes (12): getBgRemovalStats(), addProduct(), deleteProduct(), removeImageBackground(), updateProduct(), uploadProductImage(), uploadProductImageWithBgRemoval(), DEFAULT_MEASUREMENTS (+4 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.32
-Nodes (3): createReturn(), updateReturnStatus(), STATUS_STEPS
+Cohesion: 0.14
+Nodes (12): deleteOrder(), updateOrderStatus(), updateTrackingNumber(), AdminOrderDetailsPage(), emailTemplates, sendEmail(), OrderNotification, parseStatusCommand() (+4 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.22
 Nodes (8): background_color, description, display, icons, name, short_name, start_url, theme_color
 
 ### Community 10 - "Community 10"
-Cohesion: 0.53
-Nodes (3): createCategory(), deleteCategory(), updateCategory()
+Cohesion: 0.32
+Nodes (3): createReturn(), updateReturnStatus(), STATUS_STEPS
 
 ### Community 11 - "Community 11"
 Cohesion: 0.22
@@ -132,10 +131,6 @@ Nodes (15): $(), a, b(), deleteCacheAndMetadata(), F, G, get(), h() (+7 more)
 Cohesion: 0.40
 Nodes (4): name, organization_id, organization_slug, ref
 
-### Community 18 - "Community 18"
-Cohesion: 0.22
-Nodes (11): AboutPage(), Home(), generateMetadata(), ProductPage(), Footer(), getAdminSettings(), getProduct(), getProducts() (+3 more)
-
 ### Community 38 - "Community 38"
 Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
@@ -145,24 +140,24 @@ Cohesion: 0.17
 Nodes (9): et, i, m(), s, st(), T(), U(), v (+1 more)
 
 ## Knowledge Gaps
-- **119 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+114 more)
+- **123 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+118 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `sendOrderNotification()` connect `Community 2` to `Community 42`?**
-  _High betweenness centrality (0.193) - this node is a cross-community bridge._
-- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 4`, `Community 7`, `Community 8`, `Community 10`, `Community 18`?**
-  _High betweenness centrality (0.139) - this node is a cross-community bridge._
+- **Why does `removeImageBackground()` connect `Community 7` to `Community 42`?**
+  _High betweenness centrality (0.130) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 8`, `Community 10`?**
+  _High betweenness centrality (0.108) - this node is a cross-community bridge._
 - **Why does `$()` connect `Community 12` to `Community 42`?**
   _High betweenness centrality (0.088) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
-  _119 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _123 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.08295625942684766 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.08412698412698413 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0649895178197065 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.05288207297726071 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._

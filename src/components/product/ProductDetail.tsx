@@ -17,6 +17,11 @@ export default function ProductDetail({ product }: { product: Product }) {
     const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || "M");
     const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || "Default");
     const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+    const [sizeGuideTab, setSizeGuideTab] = useState<'guide' | 'finder'>('guide');
+    const [unit, setUnit] = useState<'in' | 'cm'>('in');
+    const [finderBust, setFinderBust] = useState('');
+    const [finderWaist, setFinderWaist] = useState('');
+    const [recommendedSize, setRecommendedSize] = useState<string | null>(null);
 
     const handleAddToCart = () => {
         addItem({
@@ -252,51 +257,214 @@ export default function ProductDetail({ product }: { product: Product }) {
             </div>
 
             {/* Size Guide Modal Overlay */}
-            {isSizeGuideOpen && (
+            {isSizeGuideOpen && (() => {
+                const sizeChart = (product as any).size_chart;
+                const conv = (v: number) => unit === 'cm' ? (v * 2.54).toFixed(1) : String(v);
+                const unitLabel = unit === 'cm' ? 'cm' : 'in';
+
+                const fallbackMeasurements = [
+                    { size: 'XS', bust: 32, waist: 24, sleeve: 22, length: 54 },
+                    { size: 'S', bust: 34, waist: 26, sleeve: 22.5, length: 55 },
+                    { size: 'M', bust: 36, waist: 28, sleeve: 23, length: 56 },
+                    { size: 'L', bust: 38, waist: 30, sleeve: 23.5, length: 57 },
+                    { size: 'XL', bust: 40, waist: 32, sleeve: 24, length: 58 },
+                    { size: 'XXL', bust: 42, waist: 34, sleeve: 24.5, length: 59 },
+                ];
+                const measurements = sizeChart?.measurements || fallbackMeasurements;
+
+                const handleFindSize = () => {
+                    const b = parseFloat(finderBust);
+                    const w = parseFloat(finderWaist);
+                    if (isNaN(b) || isNaN(w)) return;
+                    if (!sizeChart?.measurements) {
+                        setRecommendedSize(null);
+                        return;
+                    }
+                    let best = sizeChart.measurements[0];
+                    let bestDist = Infinity;
+                    for (const m of sizeChart.measurements) {
+                        const dist = Math.abs(m.bust - b) + Math.abs(m.waist - w);
+                        if (dist < bestDist) { bestDist = dist; best = m; }
+                    }
+                    setRecommendedSize(best.size);
+                };
+
+                return (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/60 backdrop-blur-sm p-4 text-left">
                     <div className="bg-silk-ivory border border-gold-zari/30 max-w-lg w-full p-6 md:p-8 relative shadow-2xl rounded-none">
                         <button
-                            onClick={() => setIsSizeGuideOpen(false)}
+                            onClick={() => { setIsSizeGuideOpen(false); setRecommendedSize(null); }}
                             className="absolute top-4 right-4 text-gold-zari hover:text-burgundy transition-colors p-1"
                         >
                             <X size={20} />
                         </button>
-                        
+
                         <h2 className="font-serif text-2xl uppercase tracking-wider text-obsidian mb-2">Atelier Sizing Guide</h2>
                         <div className="w-12 h-[1px] bg-gold-zari mb-5"></div>
-                        
-                        <p className="text-xs text-rose-ash/80 mb-6 leading-relaxed">
-                            Our standard luxury evening and bridal silhouettes are tailored to drape gracefully. Review our dimensions table to select your perfect fit.
-                        </p>
-                        
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr className="border-b border-gold-zari/25 text-gold-zari uppercase tracking-widest text-[9px]">
-                                        <th className="py-2.5 font-semibold">Size</th>
-                                        <th className="py-2.5 font-semibold">Bust (in)</th>
-                                        <th className="py-2.5 font-semibold">Waist (in)</th>
-                                        <th className="py-2.5 font-semibold">Hips (in)</th>
-                                        <th className="py-2.5 font-semibold">Length (in)</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gold-zari/10 text-rose-ash font-medium">
-                                    <tr><td className="py-2.5 font-bold text-burgundy">XS</td><td className="py-2.5">32</td><td className="py-2.5">24</td><td className="py-2.5">34</td><td className="py-2.5">54</td></tr>
-                                    <tr><td className="py-2.5 font-bold text-burgundy">S</td><td className="py-2.5">34</td><td className="py-2.5">26</td><td className="py-2.5">36</td><td className="py-2.5">55</td></tr>
-                                    <tr><td className="py-2.5 font-bold text-burgundy">M</td><td className="py-2.5">36</td><td className="py-2.5">28</td><td className="py-2.5">38</td><td className="py-2.5">56</td></tr>
-                                    <tr><td className="py-2.5 font-bold text-burgundy">L</td><td className="py-2.5">38</td><td className="py-2.5">30</td><td className="py-2.5">40</td><td className="py-2.5">57</td></tr>
-                                    <tr><td className="py-2.5 font-bold text-burgundy">XL</td><td className="py-2.5">40</td><td className="py-2.5">32</td><td className="py-2.5">42</td><td className="py-2.5">58</td></tr>
-                                    <tr><td className="py-2.5 font-bold text-burgundy">XXL</td><td className="py-2.5">42</td><td className="py-2.5">34</td><td className="py-2.5">44</td><td className="py-2.5">59</td></tr>
-                                </tbody>
-                            </table>
+
+                        {/* Tab Bar */}
+                        <div className="flex border-b border-gold-zari/20 mb-6">
+                            {(['guide', 'finder'] as const).map((tab) => (
+                                <button
+                                    key={tab}
+                                    onClick={() => setSizeGuideTab(tab)}
+                                    className={cn(
+                                        'flex-1 pb-2.5 text-[10px] uppercase tracking-widest font-semibold transition-all',
+                                        sizeGuideTab === tab
+                                            ? 'text-obsidian border-b-2 border-gold-zari'
+                                            : 'text-rose-ash/60 hover:text-obsidian'
+                                    )}
+                                >
+                                    {tab === 'guide' ? 'Size Guide' : 'Find My Size'}
+                                </button>
+                            ))}
                         </div>
-                        
-                        <p className="text-[10px] text-stone-400 mt-6 italic">
-                            * Custom tailors are available for bridal orders. Please contact customer concierge via WhatsApp for exact custom adjustments.
-                        </p>
+
+                        {/* Tab 1: Size Guide */}
+                        {sizeGuideTab === 'guide' && (
+                            <div>
+                                {/* Badges & Unit Toggle */}
+                                <div className="flex items-center justify-between mb-5">
+                                    <div className="flex gap-2 flex-wrap">
+                                        {sizeChart?.fit_type && (
+                                            <span className="text-[9px] uppercase tracking-widest font-semibold px-2.5 py-1 border border-gold-zari/30 text-gold-zari">
+                                                {sizeChart.fit_type}
+                                            </span>
+                                        )}
+                                        {sizeChart?.stretchability && (
+                                            <span className="text-[9px] uppercase tracking-widest font-semibold px-2.5 py-1 border border-burgundy/30 text-burgundy">
+                                                {sizeChart.stretchability}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <button
+                                        onClick={() => setUnit(unit === 'in' ? 'cm' : 'in')}
+                                        className="text-[9px] uppercase tracking-widest font-bold px-3 py-1.5 border border-gold-zari/30 text-gold-zari hover:bg-gold-zari/10 transition-colors"
+                                    >
+                                        {unit === 'in' ? 'Show CM' : 'Show IN'}
+                                    </button>
+                                </div>
+
+                                {/* Measurement Table */}
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left border-collapse text-xs">
+                                        <thead>
+                                            <tr className="border-b border-gold-zari/25 text-gold-zari uppercase tracking-widest text-[9px]">
+                                                <th className="py-2.5 font-semibold">Size</th>
+                                                <th className="py-2.5 font-semibold">Bust ({unitLabel})</th>
+                                                <th className="py-2.5 font-semibold">Waist ({unitLabel})</th>
+                                                <th className="py-2.5 font-semibold">Sleeve ({unitLabel})</th>
+                                                <th className="py-2.5 font-semibold">Length ({unitLabel})</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gold-zari/10 text-rose-ash font-medium">
+                                            {measurements.map((m: any) => (
+                                                <tr key={m.size}>
+                                                    <td className="py-2.5 font-bold text-burgundy">{m.size}</td>
+                                                    <td className="py-2.5">{conv(m.bust)}</td>
+                                                    <td className="py-2.5">{conv(m.waist)}</td>
+                                                    <td className="py-2.5">{conv(m.sleeve)}</td>
+                                                    <td className="py-2.5">{conv(m.length)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <p className="text-[10px] text-stone-400 mt-6 italic">
+                                    * Custom tailors are available for bridal orders. Please contact customer concierge via WhatsApp for exact custom adjustments.
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Tab 2: Find My Size */}
+                        {sizeGuideTab === 'finder' && (
+                            <div>
+                                {sizeChart?.measurements ? (
+                                    <div className="flex flex-col items-center">
+                                        {/* SVG Body Silhouette */}
+                                        <svg viewBox="0 0 120 220" className="w-28 h-auto mb-6 text-gold-zari/40" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                            {/* Head */}
+                                            <ellipse cx="60" cy="22" rx="14" ry="16" />
+                                            {/* Neck */}
+                                            <line x1="54" y1="38" x2="54" y2="50" />
+                                            <line x1="66" y1="38" x2="66" y2="50" />
+                                            {/* Shoulders */}
+                                            <line x1="54" y1="50" x2="25" y2="58" />
+                                            <line x1="66" y1="50" x2="95" y2="58" />
+                                            {/* Arms */}
+                                            <line x1="25" y1="58" x2="18" y2="110" />
+                                            <line x1="95" y1="58" x2="102" y2="110" />
+                                            {/* Torso sides */}
+                                            <path d="M25,58 Q28,80 35,90 Q30,105 38,130" />
+                                            <path d="M95,58 Q92,80 85,90 Q90,105 82,130" />
+                                            {/* Hips to legs */}
+                                            <path d="M38,130 Q35,155 40,190 L45,210" />
+                                            <path d="M82,130 Q85,155 80,190 L75,210" />
+                                            {/* Inner legs */}
+                                            <line x1="55" y1="130" x2="52" y2="210" />
+                                            <line x1="65" y1="130" x2="68" y2="210" />
+                                            {/* Bust measurement line */}
+                                            <line x1="12" y1="72" x2="108" y2="72" strokeDasharray="3,3" className="text-burgundy" stroke="currentColor" />
+                                            <text x="110" y="74" fontSize="7" fill="currentColor" className="text-burgundy" fontWeight="600">B</text>
+                                            {/* Waist measurement line */}
+                                            <line x1="20" y1="92" x2="100" y2="92" strokeDasharray="3,3" className="text-gold-zari" stroke="currentColor" />
+                                            <text x="102" y="94" fontSize="7" fill="currentColor" className="text-gold-zari" fontWeight="600">W</text>
+                                        </svg>
+
+                                        {/* Input Fields */}
+                                        <div className="grid grid-cols-2 gap-4 w-full max-w-xs mb-5">
+                                            <div>
+                                                <label className="block text-[9px] uppercase tracking-widest font-semibold text-gold-zari mb-1.5">Bust (in)</label>
+                                                <input
+                                                    type="number"
+                                                    value={finderBust}
+                                                    onChange={(e) => setFinderBust(e.target.value)}
+                                                    placeholder="e.g. 36"
+                                                    className="w-full h-10 border border-gold-zari/30 bg-white px-3 text-xs text-obsidian placeholder:text-stone-300 focus:outline-none focus:border-gold-zari transition-colors"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[9px] uppercase tracking-widest font-semibold text-gold-zari mb-1.5">Waist (in)</label>
+                                                <input
+                                                    type="number"
+                                                    value={finderWaist}
+                                                    onChange={(e) => setFinderWaist(e.target.value)}
+                                                    placeholder="e.g. 28"
+                                                    className="w-full h-10 border border-gold-zari/30 bg-white px-3 text-xs text-obsidian placeholder:text-stone-300 focus:outline-none focus:border-gold-zari transition-colors"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            onClick={handleFindSize}
+                                            className="w-full max-w-xs h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-burgundy-soft transition-colors"
+                                        >
+                                            Find My Size
+                                        </button>
+
+                                        {recommendedSize && (
+                                            <div className="mt-5 text-center">
+                                                <p className="text-sm text-obsidian">
+                                                    We recommend size <span className="font-bold text-gold-zari text-base">{recommendedSize}</span> for you
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-8">
+                                        <p className="text-xs text-rose-ash leading-relaxed">
+                                            Size finder is not available for this product.<br />
+                                            Please contact our <span className="text-gold-zari font-semibold">Customer Concierge</span> via WhatsApp for personalised sizing assistance.
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
-            )}
+                );
+            })()}
         </div>
     );
 }
