@@ -49,11 +49,15 @@ export default function HeroAnimation({ products, settings, onCardsLanded, onCom
     const centerIndex = Math.floor(products.length / 2);
 
     return (
-        <div className={cn(
-            "fixed inset-0 z-40 flex flex-col items-center justify-center transition-colors duration-[800ms] ease-out-expo",
-            phase >= 4 ? "pointer-events-none" : "pointer-events-auto",
-            phase >= 3 ? "bg-alabaster" : "bg-burgundy"
-        )}>
+        <motion.div 
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className={cn(
+                "fixed inset-0 z-40 flex flex-col items-center justify-center transition-colors duration-[800ms] ease-out-expo",
+                phase >= 4 ? "pointer-events-none" : "pointer-events-auto",
+                phase >= 3 ? "bg-alabaster" : "bg-burgundy"
+            )}
+        >
             {/* Intro Text - Fades out in Phase 3 */}
             <motion.div
                 initial={{ opacity: 1 }}
@@ -149,6 +153,6 @@ export default function HeroAnimation({ products, settings, onCardsLanded, onCom
                     );
                 })}
             </motion.div>
-        </div>
+        </motion.div>
     );
 }

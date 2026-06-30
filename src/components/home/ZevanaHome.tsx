@@ -7,7 +7,7 @@ import ModelDisplay from "@/components/home/ModelDisplay";
 import ProductCarousel from "@/components/home/ProductCarousel";
 import { Product } from "@/types";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ZevanaHome({ products, settings }: { products: Product[]; settings?: Record<string, any> }) {
     const [showMainContent, setShowMainContent] = useState(false); // Show carousel underneath intro
@@ -85,14 +85,16 @@ export default function ZevanaHome({ products, settings }: { products: Product[]
             <Header theme={theme} />
 
             {/* Intro Animation Layer — stays mounted until fully faded out */}
-            {!introComplete && (
-                <HeroAnimation
-                    products={products}
-                    settings={settings}
-                    onCardsLanded={handleCardsLanded}
-                    onComplete={handleIntroComplete}
-                />
-            )}
+            <AnimatePresence>
+                {!introComplete && (
+                    <HeroAnimation
+                        products={products}
+                        settings={settings}
+                        onCardsLanded={handleCardsLanded}
+                        onComplete={handleIntroComplete}
+                    />
+                )}
+            </AnimatePresence>
 
             {/* Main Interactive Layer — fades in while HeroAnimation cards are still at the bottom */}
             {showMainContent && (
