@@ -7,6 +7,7 @@ import ModelDisplay from "@/components/home/ModelDisplay";
 import ProductCarousel from "@/components/home/ProductCarousel";
 import { Product } from "@/types";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function ZevanaHome({ products, settings }: { products: Product[]; settings?: Record<string, any> }) {
     const [showMainContent, setShowMainContent] = useState(false); // Show carousel underneath intro
@@ -15,6 +16,13 @@ export default function ZevanaHome({ products, settings }: { products: Product[]
     const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
     const cms = settings?.homepage_cms || {};
+    
+    // Hero Text Settings
+    const heroQuote = cms.hero?.quote || "At Priyanka Fashionvilla, we craft dresses that move with grace and speak with style.";
+    const heroTitle1 = cms.hero?.title1 || "Designed";
+    const heroTitle2 = cms.hero?.title2 || "To Make";
+    const heroTitle3 = cms.hero?.title3 || "An Entrance";
+    const heroTitleAccent = cms.hero?.titleAccent || "Entrance";
     
     // Story Banner Settings
     const storyBadge = cms.story?.badge || "The Priyanka Fashionvilla Legacy";
@@ -91,6 +99,21 @@ export default function ZevanaHome({ products, settings }: { products: Product[]
                 <>
                     {/* Hero Section */}
                     <section className="relative w-full h-[100dvh] overflow-hidden shrink-0">
+                        {/* Background Text Layer */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                            className="absolute top-[20%] w-full px-6 md:px-16 z-0 flex flex-col md:flex-row justify-between items-start md:items-center text-obsidian gap-6 md:gap-12 pointer-events-none select-none"
+                        >
+                            <p className="max-w-xs md:max-w-md font-serif italic text-base md:text-lg lg:text-xl text-gold-zari tracking-wide opacity-80 text-left">
+                                &ldquo;{heroQuote}&rdquo;
+                            </p>
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif uppercase tracking-[0.15em] text-left md:text-right leading-tight md:leading-none text-obsidian/85">
+                                {heroTitle1}<br className="hidden md:block" /> {heroTitle2}<br /> {heroTitle3.includes(heroTitleAccent) ? heroTitle3.replace(heroTitleAccent, "") : heroTitle3} <span className="text-gold-zari">{heroTitleAccent}</span>
+                            </h1>
+                        </motion.div>
+
                         <ModelDisplay
                             products={products}
                             activeIndex={activeIndex}

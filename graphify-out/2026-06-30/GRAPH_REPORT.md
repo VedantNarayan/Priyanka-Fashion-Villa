@@ -5,7 +5,7 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 456 nodes · 788 edges · 41 communities (27 shown, 14 thin omitted)
+- 457 nodes · 791 edges · 41 communities (27 shown, 14 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 26 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
@@ -46,7 +46,7 @@
 - [[_COMMUNITY_Community 42|Community 42]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `createClient()` - 49 edges
+1. `createClient()` - 50 edges
 2. `$()` - 30 edges
 3. `createClient()` - 27 edges
 4. `cn()` - 19 edges
@@ -64,10 +64,10 @@
   src/app/account/wishlist/page.tsx → src/lib/supabase/server.ts
 - `CheckoutPage()` --calls--> `createClient()`  [INFERRED]
   src/app/checkout/page.tsx → src/lib/supabase/server.ts
-- `ProfileDropdown()` --calls--> `createClient()`  [INFERRED]
-  src/components/layout/ProfileDropdown.tsx → src/lib/supabase/server.ts
 - `HeroAnimation()` --calls--> `cn()`  [EXTRACTED]
   src/components/home/HeroAnimation.tsx → src/lib/utils.ts
+- `ProductCarousel()` --calls--> `useWishlistStore`  [EXTRACTED]
+  src/components/home/ProductCarousel.tsx → src/store/wishlist.ts
 
 ## Import Cycles
 - None detected.
@@ -76,19 +76,19 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
-Nodes (24): getProductReviews(), submitReview(), AdminExportAndInsightsProps, CartCount(), CartDrawer(), CheckoutPage(), Hero(), ProductCarousel() (+16 more)
+Nodes (23): getProductReviews(), submitReview(), AdminExportAndInsightsProps, CartCount(), CartDrawer(), CheckoutPage(), Hero(), Header() (+15 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.07
-Nodes (32): AboutPage(), Home(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarouselProps, generateMetadata(), ProductPage() (+24 more)
+Cohesion: 0.06
+Nodes (33): AboutPage(), Home(), HeroAnimation(), HeroAnimationProps, ModelDisplayProps, ProductCarousel(), ProductCarouselProps, generateMetadata() (+25 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.05
-Nodes (28): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), verifyAdmin(), createCoupon(), deleteCoupon(), toggleCoupon() (+20 more)
+Cohesion: 0.08
+Nodes (14): grantAdminRights(), createCategory(), deleteCategory(), updateCategory(), verifyAdmin(), createCoupon(), deleteCoupon(), toggleCoupon() (+6 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.07
-Nodes (25): dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next, otpauth (+17 more)
+Cohesion: 0.04
+Nodes (43): eslintConfig, dependencies, clsx, crypto-js, @ducanh2912/next-pwa, framer-motion, lucide-react, next (+35 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.23
@@ -99,8 +99,8 @@ Cohesion: 0.10
 Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.10
-Nodes (18): eslintConfig, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node, @types/react (+10 more)
+Cohesion: 0.14
+Nodes (14): deleteOrder(), updateOrderStatus(), updateTrackingNumber(), verifyAdmin(), AdminOrderDetailsPage(), emailTemplates, sendEmail(), OrderNotification (+6 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.16
@@ -135,24 +135,24 @@ Cohesion: 0.17
 Nodes (9): et, i, m(), s, st(), T(), U(), v (+1 more)
 
 ## Knowledge Gaps
-- **123 isolated node(s):** `ProfileDropdownProps`, `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig` (+118 more)
+- **123 isolated node(s):** `eslintConfig`, `nextConfig`, `withPWA`, `nextConfig`, `name` (+118 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 7`, `Community 10`?**
-  _High betweenness centrality (0.191) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 6`, `Community 7`, `Community 10`?**
+  _High betweenness centrality (0.192) - this node is a cross-community bridge._
 - **Why does `removeImageBackground()` connect `Community 7` to `Community 42`?**
   _High betweenness centrality (0.122) - this node is a cross-community bridge._
 - **Why does `$()` connect `Community 12` to `Community 42`?**
   _High betweenness centrality (0.087) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `createClient()` (e.g. with `CheckoutPage()` and `ProfileDropdown()`) actually correct?**
   _`createClient()` has 4 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `ProfileDropdownProps`, `eslintConfig`, `nextConfig` to the rest of the system?**
+- **What connects `eslintConfig`, `nextConfig`, `withPWA` to the rest of the system?**
   _123 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.07966457023060797 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08200290275761973 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.06676342525399129 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0649895178197065 - nodes in this community are weakly interconnected._
