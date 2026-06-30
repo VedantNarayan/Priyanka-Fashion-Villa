@@ -1,6 +1,9 @@
-import Hero from "@/components/home/Hero";
+import ZevanaHome from "@/components/home/ZevanaHome";
+import { getProducts, getAdminSettings } from "@/lib/db";
 
 export default async function Home() {
-  return <Hero />;
+  const products = await getProducts();
+  const settings = await getAdminSettings();
+  return <ZevanaHome products={products} settings={settings} />;
 }
 

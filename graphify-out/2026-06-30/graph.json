@@ -2617,7 +2617,7 @@
       "label": "Home()",
       "file_type": "code",
       "source_file": "src/app/page.tsx",
-      "source_location": "L4",
+      "source_location": "L3",
       "id": "app_page_home",
       "community": 11,
       "norm_label": "home()"
@@ -10064,6 +10064,17 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "source": "app_page",
+      "target": "home_hero",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_page",
       "target": "home_zevanahome"
@@ -10607,9 +10618,9 @@
       "source_file": "src/components/home/Hero.backup.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero_backup",
-      "target": "home_hero_backup_hero",
-      "confidence_score": 1.0
+      "target": "home_hero_backup_hero"
     },
     {
       "relation": "imports_from",
@@ -10618,9 +10629,9 @@
       "source_file": "src/components/home/Hero.backup.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero_backup",
-      "target": "lib_data",
-      "confidence_score": 1.0
+      "target": "lib_data"
     },
     {
       "relation": "imports",
@@ -10629,9 +10640,9 @@
       "source_file": "src/components/home/Hero.backup.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero_backup",
-      "target": "lib_data_products",
-      "confidence_score": 1.0
+      "target": "lib_data_products"
     },
     {
       "relation": "imports_from",
@@ -10640,9 +10651,9 @@
       "source_file": "src/components/home/Hero.backup.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero_backup",
-      "target": "lib_utils",
-      "confidence_score": 1.0
+      "target": "lib_utils"
     },
     {
       "relation": "imports",
@@ -10651,9 +10662,9 @@
       "source_file": "src/components/home/Hero.backup.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero_backup",
-      "target": "lib_utils_cn",
-      "confidence_score": 1.0
+      "target": "lib_utils_cn"
     },
     {
       "relation": "calls",
@@ -10672,9 +10683,9 @@
       "source_file": "src/components/home/Hero.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero",
-      "target": "home_hero_carouselproducts",
-      "confidence_score": 1.0
+      "target": "home_hero_carouselproducts"
     },
     {
       "relation": "contains",
@@ -10692,9 +10703,9 @@
       "source_file": "src/components/home/Hero.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "home_hero",
-      "target": "home_hero_sampleimages",
-      "confidence_score": 1.0
+      "target": "home_hero_sampleimages"
     },
     {
       "relation": "imports_from",
@@ -12748,5 +12759,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1d5fb8064b2905b175eea2ddc984d763720a1c8d"
+  "built_at_commit": "a1d40325c9b1645d277646d4aa2d3454b1363c86"
 }
