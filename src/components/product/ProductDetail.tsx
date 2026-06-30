@@ -28,6 +28,8 @@ export default function ProductDetail({ product }: { product: Product }) {
     const [activeField, setActiveField] = useState<'hw' | 'bust' | 'waist'>('hw');
     const [bustCustomized, setBustCustomized] = useState(false);
     const [waistCustomized, setWaistCustomized] = useState(false);
+    const [finderStep, setFinderStep] = useState<'main' | 'edit'>('main');
+    const [agreedToTerms, setAgreedToTerms] = useState(true);
     const [recommendedSize, setRecommendedSize] = useState<string | null>(null);
 
     const handleAddToCart = () => {
@@ -296,11 +298,57 @@ export default function ProductDetail({ product }: { product: Product }) {
                     calculatedSize = best.size;
                 }
 
+                // Ruler Slider Renderer Helper
+                const renderRulerSlider = (label: string, value: number, min: number, max: number, onChange: (val: number) => void, unitStr: string, subtitle?: string) => {
+                    const percentage = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+                    const midPoint = Math.round(min + (max - min) / 2);
+                    return (
+                        <div className="flex flex-col gap-1.5 w-full">
+                            <div className="flex justify-between items-baseline">
+                                <span className="text-[9px] uppercase tracking-widest font-semibold text-stone-500">{label}</span>
+                                <span className="text-xs font-bold text-obsidian font-serif">{value} {unitStr} {subtitle ? `(${subtitle})` : ''}</span>
+                            </div>
+                            
+                            <div className="relative h-12 bg-white border border-gold-zari/20 rounded-none flex items-center px-4 overflow-hidden">
+                                <div 
+                                    className="absolute inset-x-4 h-6 border-t border-b border-stone-200/60" 
+                                    style={{
+                                        background: 'repeating-linear-gradient(90deg, #c9a563, #c9a563 1px, transparent 1px, transparent 12px)',
+                                        opacity: 0.4
+                                    }}
+                                />
+                                
+                                <div 
+                                    className="absolute h-8 w-[1.5px] bg-obsidian flex flex-col items-center pointer-events-none transition-all duration-75"
+                                    style={{ left: `calc(16px + ${percentage}% * (100% - 32px) / 100)` }}
+                                >
+                                    <div className="w-0 h-0 border-l-[3.5px] border-r-[3.5px] border-b-[5px] border-l-transparent border-r-transparent border-b-obsidian absolute bottom-0 transform translate-y-1"></div>
+                                </div>
+                                
+                                <input 
+                                    type="range" 
+                                    min={min} 
+                                    max={max} 
+                                    value={value} 
+                                    onChange={(e) => onChange(parseFloat(e.target.value))}
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                />
+                            </div>
+                            
+                            <div className="flex justify-between px-4 text-[9px] text-stone-400 font-medium font-serif mt-0.5">
+                                <span>{min}</span>
+                                <span>{midPoint}</span>
+                                <span>{max}</span>
+                            </div>
+                        </div>
+                    );
+                };
+
                 return (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-obsidian/60 backdrop-blur-sm p-4 text-left">
                     <div className="bg-silk-ivory border border-gold-zari/30 max-w-lg w-full p-6 md:p-8 relative shadow-2xl rounded-none">
                         <button
-                            onClick={() => { setIsSizeGuideOpen(false); setRecommendedSize(null); }}
+                            onClick={() => { setIsSizeGuideOpen(false); setRecommendedSize(null); setFinderStep('main'); }}
                             className="absolute top-4 right-4 text-gold-zari hover:text-burgundy transition-colors p-1"
                         >
                             <X size={20} />
@@ -386,251 +434,318 @@ export default function ProductDetail({ product }: { product: Product }) {
 
                         {/* Tab 2: Find My Size */}
                         {sizeGuideTab === 'finder' && (
-                            <div className="flex flex-col">
-                                <div className="flex items-center justify-center gap-6 md:gap-10 py-2 border-b border-gold-zari/10">
-                                    {/* Left Side: Premium SVG Torso Silhouette */}
-                                    <div className="relative w-32 flex-shrink-0 flex justify-center">
-                                        {/* CSS Animations style tag */}
-                                        <style>{`
-                                            @keyframes marchLine {
-                                                0% { stroke-dashoffset: 24; }
-                                                100% { stroke-dashoffset: 0; }
-                                            }
-                                            @keyframes pulseArea {
-                                                0% { opacity: 0.3; }
-                                                50% { opacity: 0.7; }
-                                                100% { opacity: 0.3; }
-                                            }
-                                            @keyframes pulseBustArea {
-                                                0% { fill: rgba(185, 28, 28, 0.05); }
-                                                50% { fill: rgba(185, 28, 28, 0.25); }
-                                                100% { fill: rgba(185, 28, 28, 0.05); }
-                                            }
-                                            @keyframes pulseWaistArea {
-                                                0% { fill: rgba(217, 119, 6, 0.05); }
-                                                50% { fill: rgba(217, 119, 6, 0.25); }
-                                                100% { fill: rgba(217, 119, 6, 0.05); }
-                                            }
-                                            .march-active {
-                                                animation: marchLine 1.5s linear infinite;
-                                            }
-                                            .pulse-height {
-                                                animation: pulseArea 2s ease-in-out infinite;
-                                            }
-                                            .pulse-bust {
-                                                animation: pulseBustArea 1.5s ease-in-out infinite;
-                                            }
-                                            .pulse-waist {
-                                                animation: pulseWaistArea 1.5s ease-in-out infinite;
-                                            }
-                                        `}</style>
-                                        <svg viewBox="0 0 120 250" className="w-24 h-auto text-stone-300" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                          {/* Hair */}
-                                          <path d="M60,10 C65,10 70,14 70,20 C70,28 65,30 60,30 C55,30 50,28 50,20 C50,14 55,10 60,10 Z" fill="#1c1917" />
-                                          {/* Head */}
-                                          <circle cx="60" cy="22" r="8" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1" />
-                                          {/* Neck */}
-                                          <path d="M57,30 L57,36 L63,36 L63,30" stroke="#1c1917" strokeWidth="1.2" />
-                                          {/* Body Outline */}
-                                          <path d="M42,40 C42,40 50,38 60,38 C70,38 78,40 78,40 C85,42 90,46 90,52 C90,60 86,75 84,95 C82,115 85,130 85,140 C85,150 82,165 80,185 C78,205 75,230 75,245 L62,245 L62,150 L58,150 L58,245 L45,245 C45,230 42,205 40,185 C38,165 35,150 35,140 C35,130 38,115 36,95 C34,75 30,60 30,52 C30,46 35,42 42,40 Z" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1.2" />
-                                          
-                                          {/* Active pulses behind crop top/briefs */}
-                                          {activeField === 'bust' && (
-                                              <ellipse cx="60" cy="72" rx="25" ry="12" className="pulse-bust" stroke="none" />
-                                          )}
-                                          {activeField === 'waist' && (
-                                              <ellipse cx="60" cy="98" rx="20" ry="10" className="pulse-waist" stroke="none" />
-                                          )}
-                                          
-                                          {/* Crop Top (Slate blue/grey) */}
-                                          <path d="M34,60 C34,60 48,55 60,55 C72,55 86,60 86,60 C86,65 85,75 83,85 C83,85 60,90 37,85 C35,75 34,65 34,60 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
-                                          <path d="M42,40 L45,55" stroke="#475569" strokeWidth="1.2" />
-                                          <path d="M78,40 L75,55" stroke="#475569" strokeWidth="1.2" />
-
-                                          {/* Briefs (Slate blue/grey) */}
-                                          <path d="M35,115 C35,115 48,110 60,110 C72,110 85,115 85,115 C85,125 78,145 60,145 C42,145 35,125 35,115 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
-                                          
-                                          {/* Height Vertical helper line */}
-                                          {activeField === 'hw' && (
-                                              <g className="pulse-height" stroke="#c9a563">
-                                                  <line x1="108" y1="12" x2="108" y2="245" strokeWidth="1.2" strokeDasharray="3,3" />
-                                                  <path d="M105,17 L108,12 L111,17" strokeWidth="1.2" fill="none" />
-                                                  <path d="M105,240 L108,245 L111,240" strokeWidth="1.2" fill="none" />
-                                              </g>
-                                          )}
-
-                                          {/* Bust Line wrap (active highlight) */}
-                                          <path d="M22,72 Q60,78 98,72" stroke="#b91c1c" strokeWidth={activeField === 'bust' ? "2" : "1.2"} strokeDasharray="5,3" className={activeField === 'bust' ? "march-active" : ""} />
-                                          <path d="M98,72 Q60,66 22,72" stroke="#b91c1c" strokeWidth="1" opacity="0.3" />
-                                          <circle cx="22" cy="72" r={activeField === 'bust' ? "4" : "2.5"} fill="#b91c1c" />
-                                          
-                                          {/* Waist Line wrap (active highlight) */}
-                                          <path d="M31,98 Q60,103 89,98" stroke="#d97706" strokeWidth={activeField === 'waist' ? "2" : "1.2"} strokeDasharray="5,3" className={activeField === 'waist' ? "march-active" : ""} />
-                                          <path d="M89,98 Q60,93 31,98" stroke="#d97706" strokeWidth="1" opacity="0.3" />
-                                          <circle cx="31" cy="98" r={activeField === 'waist' ? "4" : "2.5"} fill="#d97706" />
-
-                                          {/* Line Badges */}
-                                          <circle cx="15" cy="72" r="6" fill="white" stroke="#b91c1c" strokeWidth="1" />
-                                          <text x="15" y="74.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">1</text>
-
-                                          <circle cx="15" cy="98" r="6" fill="white" stroke="#d97706" strokeWidth="1" />
-                                          <text x="15" y="100.5" fontSize="7" textAnchor="middle" fill="#d97706" fontWeight="bold">2</text>
-                                        </svg>
-                                    </div>
-
-                                    {/* Right Side: Stacked Input Cards */}
-                                    <div className="flex flex-col gap-2.5 w-full max-w-[200px]">
-                                        <button 
+                            <div>
+                                {finderStep === 'main' ? (
+                                    <div className="flex flex-col animate-fadeIn">
+                                        {/* Savana-style top button banner */}
+                                        <button
                                             type="button"
-                                            onClick={() => setActiveField('hw')}
-                                            className={cn(
-                                                "p-2.5 border text-center flex flex-col items-center justify-center transition-all duration-300 rounded-none",
-                                                activeField === 'hw' 
-                                                    ? "border-gold-zari bg-gold-zari/5 shadow-[0_2px_8px_rgba(201,165,99,0.12)]" 
-                                                    : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
-                                            )}
+                                            onClick={() => setFinderStep('edit')}
+                                            className="w-full py-3 bg-stone-100 hover:bg-stone-200 text-obsidian text-[10px] font-semibold uppercase tracking-widest transition-colors mb-5 text-center border border-stone-200/50 rounded-none"
                                         >
-                                            <span className="text-xs font-bold text-obsidian uppercase tracking-wider font-serif">
-                                                {finderHeight} cm / {finderWeight} kg
-                                            </span>
-                                            <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Height/Weight</span>
+                                            Add more information
                                         </button>
 
-                                        <button 
-                                            type="button"
-                                            onClick={() => setActiveField('bust')}
-                                            className={cn(
-                                                "p-2.5 border text-center flex items-center justify-between transition-all duration-300 rounded-none",
-                                                activeField === 'bust' 
-                                                    ? "border-burgundy bg-burgundy/5 shadow-[0_2px_8px_rgba(114,35,46,0.12)]" 
-                                                    : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
-                                            )}
-                                        >
-                                            <span className="w-4 h-4 rounded-full bg-burgundy/10 flex items-center justify-center text-[9px] font-bold text-burgundy border border-burgundy/20">1</span>
-                                            <div className="flex flex-col items-center flex-1">
-                                                <span className="text-xs font-bold text-obsidian font-serif">{finderBust} in</span>
-                                                <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Bust</span>
-                                            </div>
-                                            <span className="w-4"></span>
-                                        </button>
+                                        <div className="flex items-center justify-center gap-6 md:gap-10 py-2 border-b border-gold-zari/10">
+                                            {/* Left Side: Premium SVG Torso Silhouette */}
+                                            <div className="relative w-32 flex-shrink-0 flex justify-center">
+                                                {/* CSS Animations style tag */}
+                                                <style>{`
+                                                    @keyframes marchLine {
+                                                        0% { stroke-dashoffset: 24; }
+                                                        100% { stroke-dashoffset: 0; }
+                                                    }
+                                                    @keyframes pulseArea {
+                                                        0% { opacity: 0.3; }
+                                                        50% { opacity: 0.7; }
+                                                        100% { opacity: 0.3; }
+                                                    }
+                                                    @keyframes pulseBustArea {
+                                                        0% { fill: rgba(185, 28, 28, 0.05); }
+                                                        50% { fill: rgba(185, 28, 28, 0.25); }
+                                                        100% { fill: rgba(185, 28, 28, 0.05); }
+                                                    }
+                                                    @keyframes pulseWaistArea {
+                                                        0% { fill: rgba(217, 119, 6, 0.05); }
+                                                        50% { fill: rgba(217, 119, 6, 0.25); }
+                                                        100% { fill: rgba(217, 119, 6, 0.05); }
+                                                    }
+                                                    .march-active {
+                                                        animation: marchLine 1.5s linear infinite;
+                                                    }
+                                                    .pulse-height {
+                                                        animation: pulseArea 2s ease-in-out infinite;
+                                                    }
+                                                    .pulse-bust {
+                                                        animation: pulseBustArea 1.5s ease-in-out infinite;
+                                                    }
+                                                    .pulse-waist {
+                                                        animation: pulseWaistArea 1.5s ease-in-out infinite;
+                                                    }
+                                                `}</style>
+                                                <svg viewBox="0 0 120 250" className="w-24 h-auto text-stone-300" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                                  {/* Hair */}
+                                                  <path d="M60,10 C65,10 70,14 70,20 C70,28 65,30 60,30 C55,30 50,28 50,20 C50,14 55,10 60,10 Z" fill="#1c1917" />
+                                                  {/* Head */}
+                                                  <circle cx="60" cy="22" r="8" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1" />
+                                                  {/* Neck */}
+                                                  <path d="M57,30 L57,36 L63,36 L63,30" stroke="#1c1917" strokeWidth="1.2" />
+                                                  {/* Body Outline */}
+                                                  <path d="M42,40 C42,40 50,38 60,38 C70,38 78,40 78,40 C85,42 90,46 90,52 C90,60 86,75 84,95 C82,115 85,130 85,140 C85,150 82,165 80,185 C78,205 75,230 75,245 L62,245 L62,150 L58,150 L58,245 L45,245 C45,230 42,205 40,185 C38,165 35,150 35,140 C35,130 38,115 36,95 C34,75 30,60 30,52 C30,46 35,42 42,40 Z" fill="#f5f5f4" stroke="#1c1917" strokeWidth="1.2" />
+                                                  
+                                                  {/* Active pulses behind crop top/briefs */}
+                                                  {activeField === 'bust' && (
+                                                      <ellipse cx="60" cy="72" rx="25" ry="12" className="pulse-bust" stroke="none" />
+                                                  )}
+                                                  {activeField === 'waist' && (
+                                                      <ellipse cx="60" cy="98" rx="20" ry="10" className="pulse-waist" stroke="none" />
+                                                  )}
+                                                  
+                                                  {/* Crop Top (Slate blue/grey) */}
+                                                  <path d="M34,60 C34,60 48,55 60,55 C72,55 86,60 86,60 C86,65 85,75 83,85 C83,85 60,90 37,85 C35,75 34,65 34,60 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
+                                                  <path d="M42,40 L45,55" stroke="#475569" strokeWidth="1.2" />
+                                                  <path d="M78,40 L75,55" stroke="#475569" strokeWidth="1.2" />
 
-                                        <button 
-                                            type="button"
-                                            onClick={() => setActiveField('waist')}
-                                            className={cn(
-                                                "p-2.5 border text-center flex items-center justify-between transition-all duration-300 rounded-none",
-                                                activeField === 'waist' 
-                                                    ? "border-gold-zari bg-gold-zari/5 shadow-[0_2px_8px_rgba(201,165,99,0.12)]" 
-                                                    : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
-                                            )}
-                                        >
-                                            <span className="w-4 h-4 rounded-full bg-gold-zari/10 flex items-center justify-center text-[9px] font-bold text-gold-zari border border-gold-zari/20">2</span>
-                                            <div className="flex flex-col items-center flex-1">
-                                                <span className="text-xs font-bold text-obsidian font-serif">{finderWaist} in</span>
-                                                <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Waist</span>
-                                            </div>
-                                            <span className="w-4"></span>
-                                        </button>
-                                    </div>
-                                </div>
+                                                  {/* Briefs (Slate blue/grey) */}
+                                                  <path d="M35,115 C35,115 48,110 60,110 C72,110 85,115 85,115 C85,125 78,145 60,145 C42,145 35,125 35,115 Z" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
+                                                  
+                                                  {/* Height Vertical helper line */}
+                                                  {activeField === 'hw' && (
+                                                      <g className="pulse-height" stroke="#c9a563">
+                                                          <line x1="108" y1="12" x2="108" y2="245" strokeWidth="1.2" strokeDasharray="3,3" />
+                                                          <path d="M105,17 L108,12 L111,17" strokeWidth="1.2" fill="none" />
+                                                          <path d="M105,240 L108,245 L111,240" strokeWidth="1.2" fill="none" />
+                                                      </g>
+                                                  )}
 
-                                {/* Active Sliders Panel */}
-                                <div className="mt-4 bg-stone-50/80 border border-gold-zari/10 p-4 rounded-none min-h-[140px] flex flex-col justify-center">
-                                    {activeField === 'hw' && (
-                                        <div className="flex flex-col gap-4">
-                                            <div>
-                                                <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
-                                                    <span>Height</span>
-                                                    <span className="text-gold-zari font-bold font-serif">{finderHeight} cm</span>
-                                                </div>
-                                                <input 
-                                                    type="range" min="140" max="200" value={finderHeight}
-                                                    onChange={(e) => setFinderHeight(parseInt(e.target.value))}
-                                                    className="w-full accent-gold-zari cursor-pointer"
-                                                />
+                                                  {/* Bust Line wrap (active highlight) */}
+                                                  <path d="M22,72 Q60,78 98,72" stroke="#b91c1c" strokeWidth={activeField === 'bust' ? "2" : "1.2"} strokeDasharray="5,3" className={activeField === 'bust' ? "march-active" : ""} />
+                                                  <path d="M98,72 Q60,66 22,72" stroke="#b91c1c" strokeWidth="1" opacity="0.3" />
+                                                  <circle cx="22" cy="72" r={activeField === 'bust' ? "4" : "2.5"} fill="#b91c1c" />
+                                                  
+                                                  {/* Waist Line wrap (active highlight) */}
+                                                  <path d="M31,98 Q60,103 89,98" stroke="#d97706" strokeWidth={activeField === 'waist' ? "2" : "1.2"} strokeDasharray="5,3" className={activeField === 'waist' ? "march-active" : ""} />
+                                                  <path d="M89,98 Q60,93 31,98" stroke="#d97706" strokeWidth="1" opacity="0.3" />
+                                                  <circle cx="31" cy="98" r={activeField === 'waist' ? "4" : "2.5"} fill="#d97706" />
+
+                                                  {/* Line Badges */}
+                                                  <circle cx="15" cy="72" r="6" fill="white" stroke="#b91c1c" strokeWidth="1" />
+                                                  <text x="15" y="74.5" fontSize="7" textAnchor="middle" fill="#b91c1c" fontWeight="bold">1</text>
+
+                                                  <circle cx="15" cy="98" r="6" fill="white" stroke="#d97706" strokeWidth="1" />
+                                                  <text x="15" y="100.5" fontSize="7" textAnchor="middle" fill="#d97706" fontWeight="bold">2</text>
+                                                </svg>
                                             </div>
-                                            <div>
-                                                <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
-                                                    <span>Weight</span>
-                                                    <span className="text-gold-zari font-bold font-serif">{finderWeight} kg</span>
-                                                </div>
-                                                <input 
-                                                    type="range" min="40" max="110" value={finderWeight}
-                                                    onChange={(e) => {
-                                                        const w = parseInt(e.target.value);
-                                                        setFinderWeight(w);
-                                                        if (!bustCustomized) {
-                                                            const estBust = Math.round((w * 0.4) + 12);
-                                                            setFinderBust(String(estBust));
-                                                        }
-                                                        if (!waistCustomized) {
-                                                            const estWaist = Math.round((w * 0.4) + 4);
-                                                            setFinderWaist(String(estWaist));
-                                                        }
-                                                    }}
-                                                    className="w-full accent-gold-zari cursor-pointer"
-                                                />
+
+                                            {/* Right Side: Stacked Input Cards */}
+                                            <div className="flex flex-col gap-2.5 w-full max-w-[200px]">
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => { setActiveField('hw'); setFinderStep('edit'); }}
+                                                    className={cn(
+                                                        "p-2.5 border text-center flex flex-col items-center justify-center transition-all duration-300 rounded-none",
+                                                        activeField === 'hw' 
+                                                            ? "border-gold-zari bg-gold-zari/5 shadow-[0_2px_8px_rgba(201,165,99,0.12)]" 
+                                                            : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
+                                                    )}
+                                                >
+                                                    <span className="text-xs font-bold text-obsidian uppercase tracking-wider font-serif">
+                                                        {finderHeight} cm / {finderWeight} kg
+                                                    </span>
+                                                    <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Height/Weight</span>
+                                                </button>
+
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => { setActiveField('bust'); setFinderStep('edit'); }}
+                                                    className={cn(
+                                                        "p-2.5 border text-center flex items-center justify-between transition-all duration-300 rounded-none",
+                                                        activeField === 'bust' 
+                                                            ? "border-burgundy bg-burgundy/5 shadow-[0_2px_8px_rgba(114,35,46,0.12)]" 
+                                                            : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
+                                                    )}
+                                                >
+                                                    <span className="w-4 h-4 rounded-full bg-burgundy/10 flex items-center justify-center text-[9px] font-bold text-burgundy border border-burgundy/20">1</span>
+                                                    <div className="flex flex-col items-center flex-1">
+                                                        <span className="text-xs font-bold text-obsidian font-serif">{finderBust} in</span>
+                                                        <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Bust</span>
+                                                    </div>
+                                                    <span className="w-4"></span>
+                                                </button>
+
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => { setActiveField('waist'); setFinderStep('edit'); }}
+                                                    className={cn(
+                                                        "p-2.5 border text-center flex items-center justify-between transition-all duration-300 rounded-none",
+                                                        activeField === 'waist' 
+                                                            ? "border-gold-zari bg-gold-zari/5 shadow-[0_2px_8px_rgba(201,165,99,0.12)]" 
+                                                            : "border-gold-zari/15 bg-white/50 hover:border-gold-zari/45"
+                                                    )}
+                                                >
+                                                    <span className="w-4 h-4 rounded-full bg-gold-zari/10 flex items-center justify-center text-[9px] font-bold text-gold-zari border border-gold-zari/20">2</span>
+                                                    <div className="flex flex-col items-center flex-1">
+                                                        <span className="text-xs font-bold text-obsidian font-serif">{finderWaist} in</span>
+                                                        <span className="text-[9px] uppercase tracking-widest text-stone-500 mt-1">Waist</span>
+                                                    </div>
+                                                    <span className="w-4"></span>
+                                                </button>
                                             </div>
                                         </div>
-                                    )}
 
-                                    {activeField === 'bust' && (
-                                        <div className="flex flex-col gap-2">
-                                            <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
-                                                <span>Bust (inches)</span>
-                                                <span className="text-burgundy font-bold font-serif">{finderBust} in</span>
-                                            </div>
-                                            <input 
-                                                type="range" min="30" max="48" value={finderBust}
-                                                onChange={(e) => {
-                                                    setFinderBust(e.target.value);
-                                                    setBustCustomized(true);
-                                                }}
-                                                className="w-full accent-burgundy cursor-pointer"
-                                            />
-                                            <p className="text-[10px] text-stone-400 mt-2 leading-relaxed italic">
-                                                1. Measure horizontally around the fullest part of your chest, keeping the tape level.
+                                        {/* Results & Action */}
+                                        <div className="mt-6 text-center flex flex-col items-center gap-3">
+                                            <p className="text-xs uppercase tracking-widest text-stone-500">
+                                                Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
                                             </p>
-                                        </div>
-                                    )}
-
-                                    {activeField === 'waist' && (
-                                        <div className="flex flex-col gap-2">
-                                            <div className="flex justify-between text-xs font-semibold text-obsidian mb-1 uppercase tracking-wider">
-                                                <span>Waist (inches)</span>
-                                                <span className="text-gold-zari font-bold font-serif">{finderWaist} in</span>
-                                            </div>
-                                            <input 
-                                                type="range" min="22" max="44" value={finderWaist}
-                                                onChange={(e) => {
-                                                    setFinderWaist(e.target.value);
-                                                    setWaistCustomized(true);
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedSize(calculatedSize);
+                                                    setIsSizeGuideOpen(false);
                                                 }}
-                                                className="w-full accent-gold-zari cursor-pointer"
-                                            />
-                                            <p className="text-[10px] text-stone-400 mt-2 leading-relaxed italic">
-                                                2. Measure around your natural waistline (above the belly button), keeping the tape flat.
-                                            </p>
+                                                className="w-full h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-900 transition-colors shadow-md flex items-center justify-center gap-2"
+                                            >
+                                                Apply Size {calculatedSize} to Product
+                                            </button>
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col gap-5 animate-fadeIn">
+                                        <div className="flex justify-between items-center border-b border-gold-zari/10 pb-3">
+                                            <h3 className="font-serif text-sm font-bold text-obsidian uppercase tracking-wider">For Clothing Size Recommendation</h3>
+                                            
+                                            {/* CM/IN Toggle */}
+                                            <div className="border border-gold-zari/30 rounded-none overflow-hidden flex text-[8px] font-bold tracking-widest">
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => setUnit('cm')}
+                                                    className={cn("px-2.5 py-1.5 transition-colors", unit === 'cm' ? "bg-black text-white" : "bg-white text-black")}
+                                                >
+                                                    CM
+                                                </button>
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => setUnit('in')}
+                                                    className={cn("px-2.5 py-1.5 transition-colors", unit === 'in' ? "bg-black text-white" : "bg-white text-black")}
+                                                >
+                                                    IN
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <p className="text-[10px] text-stone-500 leading-relaxed font-serif italic">
+                                            Your details help us find your perfect fit. Move the slider to enter your body measurements and get personalized size suggestions.
+                                        </p>
 
-                                {/* Results & Real-time Action */}
-                                <div className="mt-5 text-center flex flex-col items-center gap-3">
-                                    <p className="text-xs uppercase tracking-widest text-stone-500">
-                                        Recommended Size: <span className="font-bold text-burgundy text-sm font-serif">{calculatedSize}</span>
-                                    </p>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setSelectedSize(calculatedSize);
-                                            setIsSizeGuideOpen(false);
-                                        }}
-                                        className="w-full h-11 bg-burgundy text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-900 transition-colors shadow-md flex items-center justify-center gap-2"
-                                    >
-                                        Apply Size {calculatedSize} to Product
-                                    </button>
-                                </div>
+                                        {/* Height Slider */}
+                                        {unit === 'in' ? (
+                                            renderRulerSlider(
+                                                "Height",
+                                                Math.round(finderHeight / 2.54),
+                                                55,
+                                                79,
+                                                (val) => setFinderHeight(Math.round(val * 2.54)),
+                                                "inch",
+                                                `${Math.floor(Math.round(finderHeight / 2.54) / 12)} ft ${Math.round(finderHeight / 2.54) % 12} inch`
+                                            )
+                                        ) : (
+                                            renderRulerSlider(
+                                                "Height",
+                                                finderHeight,
+                                                140,
+                                                200,
+                                                (val) => setFinderHeight(val),
+                                                "cm"
+                                            )
+                                        )}
+
+                                        {/* Weight Slider */}
+                                        {renderRulerSlider(
+                                            "Weight",
+                                            finderWeight,
+                                            40,
+                                            110,
+                                            (val) => {
+                                                setFinderWeight(val);
+                                                if (!bustCustomized) {
+                                                    const estBust = Math.round((val * 0.4) + 12);
+                                                    setFinderBust(String(estBust));
+                                                }
+                                                if (!waistCustomized) {
+                                                    const estWaist = Math.round((val * 0.4) + 4);
+                                                    setFinderWaist(String(estWaist));
+                                                }
+                                            },
+                                            "kg"
+                                        )}
+
+                                        {/* Bust Slider */}
+                                        {unit === 'in' ? (
+                                            renderRulerSlider(
+                                                "Bust",
+                                                parseInt(finderBust) || 36,
+                                                30,
+                                                48,
+                                                (val) => { setFinderBust(String(val)); setBustCustomized(true); },
+                                                "inch"
+                                            )
+                                        ) : (
+                                            renderRulerSlider(
+                                                "Bust",
+                                                Math.round((parseInt(finderBust) || 36) * 2.54),
+                                                76,
+                                                122,
+                                                (val) => { setFinderBust(String(Math.round(val / 2.54))); setBustCustomized(true); },
+                                                "cm"
+                                            )
+                                        )}
+
+                                        {/* Waist Slider */}
+                                        {unit === 'in' ? (
+                                            renderRulerSlider(
+                                                "Waistline",
+                                                parseInt(finderWaist) || 28,
+                                                22,
+                                                44,
+                                                (val) => { setFinderWaist(String(val)); setWaistCustomized(true); },
+                                                "inch"
+                                            )
+                                        ) : (
+                                            renderRulerSlider(
+                                                "Waistline",
+                                                Math.round((parseInt(finderWaist) || 28) * 2.54),
+                                                56,
+                                                112,
+                                                (val) => { setFinderWaist(String(Math.round(val / 2.54))); setWaistCustomized(true); },
+                                                "cm"
+                                            )
+                                        )}
+
+                                        {/* Terms Agreement Checkbox */}
+                                        <label className="flex items-start gap-3 cursor-pointer mt-2">
+                                            <input 
+                                                type="checkbox" 
+                                                checked={agreedToTerms}
+                                                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                                                className="mt-0.5 rounded-none accent-black cursor-pointer w-3.5 h-3.5 border-stone-300"
+                                            />
+                                            <span className="text-[9px] text-stone-500 leading-normal font-serif italic">
+                                                I agree the above information will only be used for size recommendation and not allowed for any other commercial purpose
+            </span>
+                                        </label>
+
+                                        {/* Update Button */}
+                                        <button
+                                            type="button"
+                                            disabled={!agreedToTerms}
+                                            onClick={() => setFinderStep('main')}
+                                            className="w-full h-11 bg-black text-white uppercase tracking-widest text-[10px] font-semibold hover:bg-stone-800 transition-colors disabled:opacity-50 mt-2 rounded-none"
+                                        >
+                                            Update
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
