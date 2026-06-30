@@ -40,32 +40,32 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
     return (
         <header className={cn(
             "fixed top-0 left-0 w-full z-50 transition-all duration-[1200ms] ease-out-expo border-b",
-            isDark 
-                ? "bg-[#0D0C0B]/40 backdrop-blur-md border-gold-zari/15 shadow-[0_4px_30px_rgba(0,0,0,0.3)]" 
+            isDark
+                ? "bg-[#0D0C0B]/40 backdrop-blur-md border-gold-zari/15 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
                 : "bg-[#FCFAF7]/80 backdrop-blur-xl border-gold-zari/15 shadow-[0_4px_30px_rgba(197,168,128,0.06)]"
         )}>
             <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between relative">
                 {/* Big Size Icon at Left Top Corner */}
-                <Link href="/" className="flex items-center z-10">
+                <Link href="/" className="block h-20 w-24 overflow-hidden relative z-10">
                     <Image 
                         src="/priyanka-icon.png" 
                         alt="Priyanka's Fashionvilla Icon" 
                         width={120} 
                         height={120} 
-                        className="h-16 md:h-20 w-auto object-contain scale-[2.1] origin-left translate-x-2 md:translate-x-4 hover:scale-[2.2] transition-transform duration-300"
+                        className="absolute inset-0 w-full h-full object-contain scale-[2.1] hover:scale-[2.2] transition-transform duration-300"
                         priority
                     />
                 </Link>
 
                 {/* Big Size Logo in Center of Header */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10">
-                    <Link href="/" className="flex items-center">
+                    <Link href="/" className="block h-20 w-80 overflow-hidden relative">
                         <Image 
                             src="/priyanka-logo.png" 
                             alt="Priyanka's Fashionvilla Logo" 
                             width={320} 
                             height={120} 
-                            className="h-16 md:h-20 w-auto object-contain scale-[2.4] hover:scale-[2.5] transition-transform duration-300"
+                            className="absolute inset-0 w-full h-full object-contain scale-[2.45] hover:scale-[2.55] transition-transform duration-300"
                             priority
                         />
                     </Link>
@@ -79,8 +79,8 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                     {/* Custom Search Icon */}
                     <button className={cn(
                         "w-9 h-9 md:w-10 md:h-10 rounded-full border flex items-center justify-center transition-all duration-500 group",
-                        isDark 
-                            ? "border-gold-zari/25 text-alabaster/90 hover:border-gold-antique hover:text-gold-antique hover:bg-gold-antique/5" 
+                        isDark
+                            ? "border-gold-zari/25 text-alabaster/90 hover:border-gold-antique hover:text-gold-antique hover:bg-gold-antique/5"
                             : "border-gold-zari/35 text-obsidian/90 hover:border-gold-antique hover:text-gold-antique hover:bg-burgundy/5"
                     )}>
                         <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-none stroke-current group-hover:scale-105 transition-transform duration-300" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -94,8 +94,8 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                         onClick={toggleCart}
                         className={cn(
                             "w-9 h-9 md:w-10 md:h-10 rounded-full border flex items-center justify-center transition-all duration-500 group relative",
-                            isDark 
-                                ? "border-gold-zari/25 text-alabaster/90 hover:border-gold-antique hover:text-gold-antique hover:bg-gold-antique/5" 
+                            isDark
+                                ? "border-gold-zari/25 text-alabaster/90 hover:border-gold-antique hover:text-gold-antique hover:bg-gold-antique/5"
                                 : "border-gold-zari/35 text-obsidian/90 hover:border-gold-antique hover:text-gold-antique hover:bg-burgundy/5"
                         )}>
                         <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-none stroke-current group-hover:scale-105 transition-transform duration-300" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -112,8 +112,8 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
                         href="/contact"
                         className={cn(
                             "flex items-center gap-2 px-3 py-2 md:px-5 rounded-full border text-xs md:text-sm uppercase tracking-widest transition-all duration-500 group",
-                            isDark 
-                                ? "border-gold-zari/30 text-alabaster/90 hover:border-gold-antique hover:text-gold-antique hover:bg-gold-antique/5" 
+                            isDark
+                                ? "border-gold-zari/30 text-alabaster/90 hover:border-gold-antique hover:text-gold-antique hover:bg-gold-antique/5"
                                 : "border-gold-zari/40 text-obsidian/90 hover:border-gold-antique hover:text-gold-antique hover:bg-burgundy/5"
                         )}
                     >
