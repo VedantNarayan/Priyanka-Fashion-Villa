@@ -108,12 +108,13 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                             <Link href={`/product/${product.id}`} className="block">
                                 <motion.div
                                     layoutId={`product-card-${product.id}`}
+                                    animate={{ scale: isActive ? 1.0 : 0.9 }}
                                     className={cn(
                                         "relative rounded-none overflow-hidden shadow-2xl bg-stone-900 border border-[#C5A880]/20",
                                         "h-[28vh]",
-                                        isActive ? "scale-100 border-[#D4AF37]/50" : "scale-90"
+                                        isActive ? "border-[#D4AF37]/50" : ""
                                     )}
-                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
                                 >
                                     <Image
                                         src={product.cardImage}

@@ -35,25 +35,20 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
                     return (
                         <motion.div
                             key={product.id}
-                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.1 : 0.9 }}
+                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.0 : 0.8 }}
                             animate={{
                                 opacity: isVisible ? 1 : 0,
                                 x: offset * carouselSpacing,
-                                scale: isCenter ? 1.1 : 0.9,
+                                scale: isCenter ? 1.0 : 0.8,
                                 zIndex: 10 - Math.abs(offset),
                             }}
                             transition={{
                                 type: "spring",
-                                stiffness: 70,
-                                damping: 18,
-                                mass: 0.9,
+                                stiffness: 160,
+                                damping: 22,
+                                mass: 0.6,
                             }}
-                            className={cn(
-                                "absolute bottom-0 flex justify-center items-end origin-bottom transition-all duration-500",
-                                isCenter 
-                                    ? "h-[50vh] md:h-[55vh] w-[200px] md:w-[280px]" 
-                                    : "h-[40vh] md:h-[45vh] w-[180px] md:w-[240px]"
-                            )}
+                            className="absolute bottom-0 flex justify-center items-end origin-bottom h-[50vh] md:h-[55vh] w-[200px] md:w-[280px]"
                         >
                             <div className="relative w-full h-full">
                                 <Image
