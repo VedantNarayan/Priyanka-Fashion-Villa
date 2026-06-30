@@ -10,9 +10,9 @@
     "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/next.config.ts": {
-    "mtime": 1774117963.8760526,
-    "ast_hash": "e4a582bd274b343aa733deba3395d8e4",
-    "semantic_hash": "e4a582bd274b343aa733deba3395d8e4"
+    "mtime": 1782834028.5798194,
+    "ast_hash": "fd736506c08875a916022dbeb847bded",
+    "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/package.json": {
     "mtime": 1782830283.4298975,
@@ -575,12 +575,12 @@
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/public/sw.js": {
-    "mtime": 1782833760.681274,
-    "ast_hash": "14d28e4f1fdf09d12a1485e4c086416a",
+    "mtime": 1782834096.8163111,
+    "ast_hash": "d99808520dc37c395fe2353c917af024",
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/public/workbox-f1770938.js": {
-    "mtime": 1782833760.6812818,
+    "mtime": 1782834096.816293,
     "ast_hash": "80e63d1bc987fbb9f079f9d6a8c9a60e",
     "semantic_hash": ""
   },

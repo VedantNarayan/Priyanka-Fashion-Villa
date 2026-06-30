@@ -169,7 +169,22 @@ export default function EditProductPage() {
             stretchability,
             measurements,
         }));
-        await updateProduct(params.id as string, formData);
+        try {
+            const res = await updateProduct(params.id as string, formData);
+            if (res && 'error' in res) {
+                alert(res.error || "Failed to update product");
+                setSaving(false);
+            } else if (res && 'success' in res && res.success) {
+                router.push("/admin/products");
+                router.refresh();
+            } else {
+                setSaving(false);
+            }
+        } catch (err) {
+            console.error("Error updating product:", err);
+            alert("An unexpected error occurred. Please try again.");
+            setSaving(false);
+        }
     };
 
     if (loading) return <div className="text-stone-400 text-center py-12">Loading product...</div>;
