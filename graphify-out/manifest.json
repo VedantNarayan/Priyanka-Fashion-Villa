@@ -330,13 +330,13 @@
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/src/components/home/ModelDisplay.tsx": {
-    "mtime": 1782835493.222102,
-    "ast_hash": "f02740f7c39a32193e04de66f1a90e96",
+    "mtime": 1782925160.9958234,
+    "ast_hash": "c7df0d9c06d40080f04cb9a081eb0b47",
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/src/components/home/ProductCarousel.tsx": {
-    "mtime": 1782824749.0541565,
-    "ast_hash": "219f2939dd432904653f74995878008c",
+    "mtime": 1782925156.600912,
+    "ast_hash": "3e551a0d9e00a4328f643ec9655722f0",
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/src/components/home/ProductStrip.tsx": {
@@ -575,12 +575,12 @@
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/public/sw.js": {
-    "mtime": 1782924467.57073,
-    "ast_hash": "2e00d5c1179716cacf899aa4381d55bf",
+    "mtime": 1782925170.4250133,
+    "ast_hash": "118df08c93a3437e0774c0b1c1c1b28f",
     "semantic_hash": ""
   },
   "/Users/Vedant/Documents/Priyanka Fashionvilla/public/workbox-f1770938.js": {
-    "mtime": 1782924467.570844,
+    "mtime": 1782925170.4253716,
     "ast_hash": "80e63d1bc987fbb9f079f9d6a8c9a60e",
     "semantic_hash": ""
   },

@@ -125,7 +125,7 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                             ref={(el) => { cardRefs.current[index] = el; }}
                             className={cn(
                                 "snap-center shrink-0 mx-3 md:mx-6 transition-all duration-500",
-                                "w-[200px] md:w-[240px]",
+                                "w-[170px] md:w-[240px]",
                                 isActive ? "opacity-100" : "opacity-60 hover:opacity-80"
                             )}
                         >
@@ -135,7 +135,7 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                                     animate={{ scale: isActive ? 1.0 : 0.9 }}
                                     className={cn(
                                         "relative rounded-none overflow-hidden shadow-2xl bg-stone-900 border border-[#C5A880]/20",
-                                        "h-[28vh]",
+                                        "h-[22vh] md:h-[28vh]",
                                         isActive ? "border-[#D4AF37]/50" : ""
                                     )}
                                     transition={{ type: "spring", stiffness: 200, damping: 25 }}
