@@ -13,7 +13,7 @@ We bridge the gap between luxury and accessibility, bringing you meticulously cu
 When you shop with Priyanka Fashionvilla, you're not just buying clothes — you're investing in confidence. We promise genuine products, hassle-free returns, and a shopping experience that feels as luxurious as the fashion itself.`;
 
     return (
-        <div className="min-h-screen bg-white text-stone-900">
+        <div className="min-h-screen bg-white text-stone-900 pt-20">
             <div className="bg-black text-white py-20 text-center">
                 <h1 className="font-serif text-5xl mb-3">{aboutTitle}</h1>
                 <p className="text-stone-400 text-sm tracking-wide uppercase">{aboutSubtitle}</p>

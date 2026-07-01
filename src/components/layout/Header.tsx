@@ -46,19 +46,28 @@ export default function Header({ theme = 'dark' }: HeaderProps) {
         )}>
             <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between relative">
                 {/* Big Size Icon at Left Top Corner */}
-                <Link href="/" className="flex items-center h-20 z-10">
+                <Link href="/" className="flex items-center gap-1.5 md:gap-3 h-20 z-10">
                     <Image 
                         src="/priyanka-icon.png" 
                         alt="Priyanka's Fashionvilla Icon" 
                         width={96} 
                         height={80} 
-                        className="h-[79px] w-auto object-contain hover:brightness-110 transition-all duration-300"
+                        className="h-12 md:h-[79px] w-auto object-contain hover:brightness-110 transition-all duration-300"
+                        priority
+                    />
+                    {/* Inline Logo Text — visible on mobile and hidden on desktop */}
+                    <Image 
+                        src="/priyanka-logo.png" 
+                        alt="Priyanka's Fashionvilla Logo Text" 
+                        width={280} 
+                        height={80} 
+                        className="h-9 w-auto object-contain md:hidden hover:brightness-110 transition-all duration-300"
                         priority
                     />
                 </Link>
 
-                {/* Big Size Logo in Center of Header */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10">
+                {/* Big Size Logo in Center of Header — hidden on mobile */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-10 hidden md:block">
                     <Link href="/" className="flex items-center h-20">
                         <Image 
                             src="/priyanka-logo.png" 

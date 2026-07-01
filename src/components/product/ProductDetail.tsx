@@ -47,7 +47,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     };
 
     return (
-        <div className="min-h-screen bg-alabaster text-obsidian">
+        <div className="min-h-screen bg-alabaster text-obsidian pt-20">
             <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
 
                 {/* Back Link */}

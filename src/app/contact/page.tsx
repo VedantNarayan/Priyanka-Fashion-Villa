@@ -24,7 +24,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white text-stone-900">
+        <div className="min-h-screen bg-white text-stone-900 pt-20">
             <div className="bg-black text-white py-20 text-center">
                 <h1 className="font-serif text-5xl mb-3">Contact Us</h1>
                 <p className="text-stone-400 text-sm tracking-wide uppercase">We&apos;d love to hear from you</p>
