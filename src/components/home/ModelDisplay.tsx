@@ -25,7 +25,7 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
     if (!show) return null;
 
     return (
-        <div className="absolute top-0 left-0 w-full h-[68vh] md:h-[60vh] z-10 flex items-end justify-center pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-[78vh] md:h-[60vh] z-10 flex items-end justify-center pointer-events-none overflow-hidden">
             <div className="relative w-full max-w-[1200px] h-full flex justify-center items-end">
                 {products.map((product, idx) => {
                     const offset = idx - activeIndex;
