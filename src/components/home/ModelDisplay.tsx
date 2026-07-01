@@ -25,7 +25,7 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
     if (!show) return null;
 
     return (
-        <div className="absolute top-0 left-0 w-full h-[72vh] z-10 flex items-end justify-center pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-[68vh] md:h-[60vh] z-10 flex items-end justify-center pointer-events-none overflow-hidden">
             <div className="relative w-full max-w-[1200px] h-full flex justify-center items-end">
                 {products.map((product, idx) => {
                     const offset = idx - activeIndex;
@@ -35,11 +35,11 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
                     return (
                         <motion.div
                             key={product.id}
-                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.25 : 0.6 }}
+                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.0 : 0.8 }}
                             animate={{
-                                opacity: isCenter ? 1 : (isVisible ? 0.4 : 0),
+                                opacity: isVisible ? 1 : 0,
                                 x: offset * carouselSpacing,
-                                scale: isCenter ? 1.25 : 0.6,
+                                scale: isCenter ? 1.0 : 0.8,
                                 zIndex: 10 - Math.abs(offset),
                             }}
                             transition={{
