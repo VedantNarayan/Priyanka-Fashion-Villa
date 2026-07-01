@@ -35,11 +35,11 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
                     return (
                         <motion.div
                             key={product.id}
-                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.0 : 0.8 }}
+                            initial={{ opacity: 0, x: offset * carouselSpacing, scale: isCenter ? 1.25 : 0.8 }}
                             animate={{
                                 opacity: isVisible ? 1 : 0,
                                 x: offset * carouselSpacing,
-                                scale: isCenter ? 1.0 : 0.8,
+                                scale: isCenter ? 1.25 : 0.8,
                                 zIndex: 10 - Math.abs(offset),
                             }}
                             transition={{
