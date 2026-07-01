@@ -1,7 +1,7 @@
-# Graph Report - Priyanka Fashionvilla  (2026-07-02)
+# Graph Report - Priyanka Fashionvilla  (2026-06-30)
 
 ## Corpus Check
-- 108 files · ~123,988 words
+- 108 files · ~113,796 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3194ab64`
+- Built from commit: `63ef0680`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -65,8 +65,8 @@
   src/app/checkout/page.tsx → src/lib/supabase/server.ts
 - `ProfileDropdown()` --calls--> `createClient()`  [INFERRED]
   src/components/layout/ProfileDropdown.tsx → src/lib/supabase/server.ts
-- `AboutPage()` --calls--> `getAdminSettings()`  [EXTRACTED]
-  src/app/about/page.tsx → src/lib/db.ts
+- `Hero()` --calls--> `cn()`  [EXTRACTED]
+  src/components/home/Hero.tsx → src/lib/utils.ts
 
 ## Import Cycles
 - None detected.

@@ -45,6 +45,13 @@ export const metadata: Metadata = {
     title: 'Priyanka Fashionvilla',
     description: 'Luxury Women\'s Fashion',
   },
+  icons: {
+    icon: [
+      { url: '/priyanka-icon.png', type: 'image/png' }
+    ],
+    shortcut: '/priyanka-icon.png',
+    apple: '/priyanka-icon.png',
+  },
 };
 
 export default function RootLayout({
