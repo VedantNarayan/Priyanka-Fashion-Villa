@@ -90,11 +90,11 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="absolute bottom-0 left-0 w-full h-[32vh] md:h-[40vh] z-20 flex bg-transparent md:bg-[#FAF8F5]/65 md:backdrop-blur-xl md:border-t md:border-[#C5A880]/25 shadow-none md:shadow-[0_-10px_40px_rgba(0,0,0,0.03)]"
+            className="absolute bottom-0 left-0 w-full h-[32vh] md:h-[40vh] z-20 flex bg-[#FAF8F5]/65 backdrop-blur-xl border-t border-[#C5A880]/25 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]"
         >
             <div
                 ref={containerRef}
-                className="w-full h-full flex items-start overflow-x-auto snap-x snap-mandatory px-[50vw] scrollbar-hide pt-2 md:pt-3.5 pb-4"
+                className="w-full h-full flex items-start overflow-x-auto snap-x snap-mandatory px-[50vw] scrollbar-hide pt-5 md:pt-3.5 pb-4"
                 style={{ paddingLeft: '50vw', paddingRight: '50vw' }}
             >
                 {products.map((product, index) => {
