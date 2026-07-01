@@ -48,7 +48,7 @@ export default function ModelDisplay({ products, activeIndex, show }: ModelDispl
                                 damping: 22,
                                 mass: 0.6,
                             }}
-                            className="absolute bottom-[5vh] md:bottom-0 flex justify-center items-end origin-bottom h-[52vh] md:h-[55vh] w-[200px] md:w-[280px]"
+                            className="absolute bottom-0 flex justify-center items-end origin-bottom h-[52vh] md:h-[55vh] w-[200px] md:w-[280px]"
                         >
                             <div className="relative w-full h-full">
                                 <Image

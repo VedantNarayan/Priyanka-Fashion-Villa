@@ -94,7 +94,7 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
         >
             <div
                 ref={containerRef}
-                className="w-full h-full flex items-start overflow-x-auto snap-x snap-mandatory px-[50vw] scrollbar-hide pt-5 md:pt-3.5 pb-4"
+                className="w-full h-full flex items-start overflow-x-auto snap-x snap-mandatory px-[50vw] scrollbar-hide pt-8 md:pt-3.5 pb-4"
                 style={{ paddingLeft: '50vw', paddingRight: '50vw' }}
             >
                 {products.map((product, index) => {
