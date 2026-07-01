@@ -90,7 +90,7 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="absolute bottom-0 left-0 w-full h-[40vh] z-20 flex items-center bg-[#FAF8F5]/65 backdrop-blur-xl border-t border-[#C5A880]/25 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]"
+            className="absolute bottom-0 left-0 w-full h-[32vh] md:h-[40vh] z-20 flex items-center bg-[#FAF8F5]/65 backdrop-blur-xl border-t border-[#C5A880]/25 shadow-[0_-10px_40px_rgba(0,0,0,0.03)]"
         >
             <div
                 ref={containerRef}
@@ -124,7 +124,7 @@ export default function ProductCarousel({ products, activeIndex, setActiveIndex 
                             key={product.id}
                             ref={(el) => { cardRefs.current[index] = el; }}
                             className={cn(
-                                "snap-center shrink-0 mx-3 md:mx-6 transition-all duration-500",
+                                "snap-center shrink-0 mx-2 md:mx-4 transition-all duration-500",
                                 "w-[170px] md:w-[240px]",
                                 isActive ? "opacity-100" : "opacity-60 hover:opacity-80"
                             )}
